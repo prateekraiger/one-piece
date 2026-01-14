@@ -42,7 +42,7 @@ const FRUIT_TYPES = [
 
 const DevilFruitSection: React.FC = () => {
   return (
-    <section className="relative w-full py-16 px-6 bg-black overflow-hidden">
+    <section id="devil-fruits" className="relative w-full py-16 px-6 bg-black overflow-hidden">
       {/* Atmosphere */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/10 via-black to-black opacity-50" />
 

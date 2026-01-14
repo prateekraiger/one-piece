@@ -172,13 +172,24 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
             ) !important;
           }
 
+          /* NIKA WHITE HEADERS (Voyage, Devil Fruits, Haki, Wanted) */
           body.gear5-active #voyage h2,
-          body.gear5-active #voyage h3 {
-            background: linear-gradient(135deg, #7e22ce 0%, #ec4899 50%, #f59e0b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: none !important;
+          body.gear5-active #voyage h3,
+          body.gear5-active #devil-fruits h3,
+          body.gear5-active #haki h3,
+          body.gear5-active #haki h2,
+          body.gear5-active #wanted h2 {
+            background: none !important;
+            -webkit-text-fill-color: #ffffff !important;
+            color: #ffffff !important;
+            text-shadow:
+              2px 2px 0px #9333ea,
+              -1px -1px 0px #9333ea,
+              1px -1px 0px #9333ea,
+              -1px 1px 0px #9333ea,
+              1px 1px 0px #9333ea,
+              0 0 30px rgba(251, 191, 36, 0.9) !important;
+            filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
           }
 
           body.gear5-active #voyage p,

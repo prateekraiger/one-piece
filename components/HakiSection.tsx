@@ -39,7 +39,7 @@ const HakiSection: React.FC = () => {
   const [hoveredHaki, setHoveredHaki] = useState<string | null>(null);
 
   return (
-    <section className="relative w-full py-32 bg-[#0a0a0a] overflow-hidden text-center">
+    <section id="haki" className="relative w-full py-32 bg-[#0a0a0a] overflow-hidden text-center">
       {/* SVG Filters for insane effects */}
       <svg className="hidden">
         <defs>
@@ -52,7 +52,7 @@ const HakiSection: React.FC = () => {
               <feMergeNode in="SourceGraphic"/>
             </feMerge>
           </filter>
-          
+
           {/* Metallic hardening effect for Armament */}
           <filter id="metallic-shine">
             <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
@@ -63,7 +63,7 @@ const HakiSection: React.FC = () => {
             <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/>
             <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
           </filter>
-          
+
           {/* Future sight shimmer */}
           <filter id="future-sight">
             <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="2" result="turbulence">
@@ -78,7 +78,7 @@ const HakiSection: React.FC = () => {
         <h2 className="text-5xl md:text-7xl font-serif font-black text-white/10 mb-8 select-none absolute top-10 left-1/2 -translate-x-1/2 w-full">
           WILLPOWER
         </h2>
-        
+
         <div className="relative pt-20 pb-12">
            <h3 className="text-3xl font-bold text-white mb-2">HAKI</h3>
            <p className="text-slate-500 text-sm tracking-widest uppercase">The Ambition</p>
@@ -88,7 +88,7 @@ const HakiSection: React.FC = () => {
           {HAKI_TYPES.map((haki) => {
             const isActive = activeHaki === haki.id;
             const isHovered = hoveredHaki === haki.id;
-            
+
             return (
               <motion.div
                 key={haki.id}
@@ -103,14 +103,14 @@ const HakiSection: React.FC = () => {
                   boxShadow: isHovered || isActive ? `0 0 60px ${haki.glowColor}, inset 0 0 60px ${haki.auraColor}` : 'none'
                 }}
                 // Conqueror's Pressure Effect (Shake)
-                animate={isActive && haki.id === 'conqueror' ? { 
+                animate={isActive && haki.id === 'conqueror' ? {
                     x: [0, -4, 4, -2, 2, 0],
                     y: [0, -2, 2, 0],
                   } : {}}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
               >
                 {/* MEGA AURA EFFECTS */}
-                
+
                 {/* Pulsing Aura Rings */}
                 {isHovered && (
                   <div className="absolute inset-0 pointer-events-none">
@@ -118,7 +118,7 @@ const HakiSection: React.FC = () => {
                       <motion.div
                         key={`ring-${idx}`}
                         className="absolute inset-0 rounded-2xl border-2"
-                        style={{ 
+                        style={{
                           borderColor: haki.auraColor,
                         }}
                         initial={{ scale: 1, opacity: 0.8 }}
@@ -168,15 +168,15 @@ const HakiSection: React.FC = () => {
                 )}
 
                 {/* --- INTERACTIVE VISUAL FEEDBACK LAYERS --- */}
-                
+
                 {/* Armament: Hardening (Dark Metallic Overlay) */}
                 {(isActive || isHovered) && haki.id === 'armament' && (
                    <>
-                     <motion.div 
+                     <motion.div
                        initial={{ opacity: 0 }}
                        animate={{ opacity: isActive ? 1 : 0.5 }}
                        className="absolute inset-0 bg-slate-950/90 z-0 pointer-events-none"
-                       style={{ 
+                       style={{
                          filter: 'url(#metallic-shine)',
                          mixBlendMode: 'hard-light'
                        }}
@@ -194,16 +194,16 @@ const HakiSection: React.FC = () => {
                       {/* Radar pulses */}
                       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 flex items-center justify-center">
                         {[...Array(4)].map((_, i) => (
-                           <motion.div 
+                           <motion.div
                              key={i}
                              className="absolute border-2 border-red-500/40 rounded-full"
                              initial={{ width: '20px', height: '20px', opacity: 1 }}
                              animate={{ width: '800px', height: '800px', opacity: 0 }}
-                             transition={{ 
-                               duration: 3, 
-                               repeat: Infinity, 
-                               delay: i * 0.75, 
-                               ease: "easeOut" 
+                             transition={{
+                               duration: 3,
+                               repeat: Infinity,
+                               delay: i * 0.75,
+                               ease: "easeOut"
                              }}
                            />
                         ))}
@@ -222,12 +222,12 @@ const HakiSection: React.FC = () => {
                 {(isActive || isHovered) && haki.id === 'conqueror' && (
                    <>
                      {/* Screen darkening pressure */}
-                     <motion.div 
+                     <motion.div
                        className="absolute inset-0 z-0 bg-black/70"
                        initial={{ opacity: 0 }}
                        animate={{ opacity: isActive ? 0.7 : 0.4 }}
                      />
-                     
+
                      {/* Lightning bolts */}
                      <div className="absolute inset-0 pointer-events-none overflow-hidden">
                        {[...Array(6)].map((_, idx) => (
@@ -253,7 +253,7 @@ const HakiSection: React.FC = () => {
                          />
                        ))}
                      </div>
-                     
+
                      {/* Lightning arcs */}
                      <svg className="absolute inset-0 w-full h-full pointer-events-none">
                        {[...Array(3)].map((_, idx) => (
@@ -265,7 +265,7 @@ const HakiSection: React.FC = () => {
                            fill="none"
                            filter="url(#lightning-glow)"
                            initial={{ pathLength: 0, opacity: 0 }}
-                           animate={{ 
+                           animate={{
                              pathLength: [0, 1, 0],
                              opacity: [0, 1, 0]
                            }}
@@ -285,7 +285,7 @@ const HakiSection: React.FC = () => {
 
                 <div className="relative h-full flex flex-col justify-end p-8 text-left z-10">
                   <motion.div layout="position" className="mb-4">
-                    <motion.span 
+                    <motion.span
                       className="text-4xl block"
                       style={{
                         filter: (isHovered || isActive) ? `drop-shadow(0 0 20px ${haki.glowColor})` : 'none'
@@ -299,8 +299,8 @@ const HakiSection: React.FC = () => {
                       {haki.particle}
                     </motion.span>
                   </motion.div>
-                  
-                  <motion.h4 
+
+                  <motion.h4
                     layout="position"
                     className={`font-serif text-2xl font-bold text-white mb-1 transition-all duration-300 ${isActive ? 'text-4xl' : ''}`}
                     style={
@@ -312,9 +312,9 @@ const HakiSection: React.FC = () => {
                   >
                     {haki.name}
                   </motion.h4>
-                  
-                  <motion.p 
-                    layout="position" 
+
+                  <motion.p
+                    layout="position"
                     className="text-xs text-amber-500 uppercase tracking-widest mb-4"
                     style={{
                       textShadow: (isHovered || isActive) ? `0 0 10px ${haki.auraColor}` : 'none'
@@ -322,7 +322,7 @@ const HakiSection: React.FC = () => {
                   >
                     {haki.trans}
                   </motion.p>
-                  
+
                   <AnimatePresence>
                     {isActive && (
                       <motion.div
@@ -334,7 +334,7 @@ const HakiSection: React.FC = () => {
                         <p className="text-slate-300 leading-relaxed max-w-lg relative mb-6">
                           {haki.desc}
                         </p>
-                        
+
                         {/* Visual Interaction Area */}
                         <div className="mt-8 h-32 w-full rounded-lg border-2 border-white/10 bg-black/50 flex items-center justify-center relative overflow-hidden group/demo"
                           style={{
@@ -344,14 +344,14 @@ const HakiSection: React.FC = () => {
                            <span className="text-xs text-slate-600 uppercase z-10 relative font-bold tracking-wider">
                              {haki.id === 'armament' ? 'Hardening Active' : haki.id === 'observation' ? 'Future Sight Active' : 'Conqueror\'s Haki Released'}
                            </span>
-                           
+
                            {haki.id === 'armament' && (
-                             <motion.div 
+                             <motion.div
                                className="absolute inset-0 bg-slate-900 opacity-0 group-hover/demo:opacity-90 transition-opacity duration-500 rounded-lg"
                                style={{ filter: 'url(#metallic-shine)' }}
                              />
                            )}
-                           
+
                            {haki.id === 'conqueror' && (
                              <>
                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500/20 to-transparent opacity-0 group-hover/demo:opacity-100 transition-opacity">
@@ -363,10 +363,10 @@ const HakiSection: React.FC = () => {
                                </div>
                              </>
                            )}
-                           
+
                            {haki.id === 'observation' && (
                               <>
-                                <motion.div 
+                                <motion.div
                                   className="absolute w-3 h-3 bg-red-500 rounded-full"
                                   style={{ boxShadow: `0 0 20px ${haki.glowColor}` }}
                                   animate={{ x: [-40, 40, -40], y: [-20, 20, -20] }}

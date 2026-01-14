@@ -91,7 +91,7 @@ const CharacterGrid: React.FC = () => {
 
   return (
     <LayoutGroup>
-      <section ref={targetRef} className="relative h-[350vh] bg-[#080808]">
+      <section id="wanted" ref={targetRef} className="relative h-[350vh] bg-[#080808]">
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
 
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-[#080808] to-[#080808]" />
