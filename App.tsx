@@ -17,25 +17,33 @@ const App: React.FC = () => {
         <NoiseOverlay />
         <SoundController />
 
-        {/* Sticky Navigation Hint */}
-        <nav className="fixed top-0 left-0 w-full z-40 px-6 py-6 flex justify-between items-center pointer-events-none mix-blend-difference text-white">
-           <span className="font-serif font-bold text-lg pointer-events-auto cursor-pointer">OP ARCHIVE</span>
-           <div className="flex gap-4 pointer-events-auto">
-             <button className="text-sm font-bold uppercase tracking-widest hover:text-amber-500 transition-colors">Menu</button>
+        {/* Sticky Navigation */}
+        <nav className="fixed top-0 left-0 w-full z-40 px-6 py-6 flex justify-between items-center backdrop-blur-sm bg-black/20 border-b border-white/5">
+           <span className="font-serif font-bold text-xl text-white tracking-wider cursor-pointer hover:text-amber-500 transition-colors">
+             OP ARCHIVE
+           </span>
+           <div className="flex gap-8 text-white text-sm font-bold uppercase tracking-wider">
+             <a href="#voyage" className="hover:text-amber-500 transition-colors cursor-pointer">Voyage</a>
+             <a href="#powers" className="hover:text-amber-500 transition-colors cursor-pointer">Powers</a>
+             <a href="#crew" className="hover:text-amber-500 transition-colors cursor-pointer">Crew</a>
            </div>
         </nav>
 
         <Hero />
         <LuffyShowcase />
-        <ArcTimeline />
+        <div id="voyage">
+          <ArcTimeline />
+        </div>
 
         {/* Power Systems */}
-        <div className="relative z-10 border-t border-white/5">
+        <div id="powers" className="relative z-10 border-t border-white/5">
           <DevilFruitSection />
           <HakiSection />
         </div>
 
-        <CharacterGrid />
+        <div id="crew">
+          <CharacterGrid />
+        </div>
         <Footer />
       </main>
     </SmoothScroll>

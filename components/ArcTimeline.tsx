@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { motion, AnimatePresence, LayoutGroup, useMotionValue, useTransform, animate } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence, LayoutGroup, useScroll, useTransform } from 'framer-motion';
 import { ARCS } from '../constants';
 import { Arc } from '../types';
 
@@ -112,64 +112,37 @@ const ArcDetail: React.FC<{ arc: Arc; onClose: () => void }> = ({ arc, onClose }
 };
 
 const ArcTimeline: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedArc, setSelectedArc] = useState<Arc | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const x = useMotionValue(0);
-  const scrollProgress = useTransform(x, (value) => {
-    if (!scrollContainerRef.current) return 0;
-    const maxScroll = scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth;
-    return Math.abs(value) / maxScroll;
+
+  // Track scroll progress through this section
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
   });
 
-  const handleDragEnd = (_: any, info: any) => {
-    setIsDragging(false);
-    if (!scrollContainerRef.current) return;
-    
-    const velocity = info.velocity.x;
-    const currentX = x.get();
-    const maxScroll = -(scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth);
-    
-    // Calculate target position based on velocity
-    let targetX = currentX + velocity * 0.5;
-    targetX = Math.max(maxScroll, Math.min(0, targetX));
-    
-    animate(x, targetX, {
-      type: "spring",
-      stiffness: 300,
-      damping: 30,
-      mass: 1
-    });
-  };
-
-  const scroll = (direction: 'left' | 'right') => {
-    if (!scrollContainerRef.current) return;
-    const scrollAmount = direction === 'left' ? 600 : -600;
-    const currentX = x.get();
-    const maxScroll = -(scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth);
-    let targetX = currentX + scrollAmount;
-    targetX = Math.max(maxScroll, Math.min(0, targetX));
-    
-    animate(x, targetX, {
-      type: "spring",
-      stiffness: 200,
-      damping: 30
-    });
-  };
+  // Transform scroll into horizontal movement
+  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-80%']);
 
   return (
     <LayoutGroup>
-      <section className="relative bg-gradient-to-b from-ocean-black via-slate-950 to-ocean-black py-32 overflow-hidden">
+      <section 
+        ref={sectionRef}
+        className="relative bg-gradient-to-b from-ocean-black via-slate-950 to-ocean-black overflow-hidden"
+        style={{ height: '400vh' }} // Extended height for scroll-driven animation
+      >
         
-        {/* Background Elements */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px] animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '1s' }} />
-        </div>
+        {/* Sticky container for horizontal scroll effect */}
+        <div className="sticky top-0 h-screen overflow-hidden">
+          {/* Background Elements */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px] animate-pulse" />
+            <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '1s' }} />
+          </div>
 
-        <div className="container mx-auto px-6 mb-16 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b-2 border-white/10 pb-8">
-            <div>
+          <div className="container mx-auto px-6 pt-32 relative z-10">
+            <div className="mb-16 border-b-2 border-white/10 pb-8">
               <motion.h2 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -180,58 +153,31 @@ const ArcTimeline: React.FC = () => {
               </motion.h2>
               <p className="text-amber-400 font-serif italic text-2xl tracking-wide">Chronicles of the Grand Line</p>
             </div>
-            <div className="mt-6 md:mt-0 flex gap-4">
-               <button 
-                 onClick={() => scroll('left')} 
-                 className="w-14 h-14 rounded-full border-2 border-white/30 flex items-center justify-center hover:bg-amber-500 hover:border-amber-500 hover:text-black transition-all duration-300 text-white text-xl font-bold shadow-lg hover:shadow-amber-500/50"
-               >
-                 ←
-               </button>
-               <button 
-                 onClick={() => scroll('right')} 
-                 className="w-14 h-14 rounded-full border-2 border-white/30 flex items-center justify-center hover:bg-amber-500 hover:border-amber-500 hover:text-black transition-all duration-300 text-white text-xl font-bold shadow-lg hover:shadow-amber-500/50"
-               >
-                 →
-               </button>
-            </div>
           </div>
-        </div>
 
-        {/* Horizontal Scroll Container */}
-        <div className="relative overflow-hidden">
-          <motion.div
-            ref={scrollContainerRef}
-            style={{ x }}
-            drag="x"
-            dragConstraints={{
-              left: -(scrollContainerRef.current?.scrollWidth ?? 0) + (scrollContainerRef.current?.clientWidth ?? 0),
-              right: 0
-            }}
-            dragElastic={0.1}
-            onDragStart={() => setIsDragging(true)}
-            onDragEnd={handleDragEnd}
-            className={`flex gap-10 px-6 md:px-16 py-8 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
-          >
-            {ARCS.map((arc, index) => (
-              <ArcCard
-                key={arc.id}
-                arc={arc}
-                index={index}
-                onSelect={setSelectedArc}
-              />
-            ))}
-          </motion.div>
-
-          {/* Scroll Progress Bar */}
-          <div className="mx-6 md:mx-16 mt-8 h-1 bg-white/10 rounded-full overflow-hidden">
-             <motion.div
-               style={{ scaleX: scrollProgress }}
-               className="h-full bg-gradient-to-r from-amber-500 to-amber-300 origin-left"
-             />
+          {/* Horizontal Scroll Container - Driven by vertical scroll */}
+          <div className="relative overflow-hidden h-full flex items-center">
+            <motion.div
+              ref={scrollContainerRef}
+              style={{ x }}
+              className="flex gap-10 px-6 md:px-16 will-change-transform"
+            >
+              {ARCS.map((arc, index) => (
+                <ArcCard
+                  key={arc.id}
+                  arc={arc}
+                  index={index}
+                  onSelect={setSelectedArc}
+                />
+              ))}
+              <div className="w-screen shrink-0" /> {/* Spacer for end scroll */}
+            </motion.div>
           </div>
-        </div>
 
-        <p className="text-center text-slate-500 text-sm mt-12 font-light tracking-wide">← Drag to explore • Click to view details →</p>
+          <p className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center text-slate-500 text-sm font-light tracking-wide">
+            Scroll to explore • Click to view details
+          </p>
+        </div>
       </section>
 
       <AnimatePresence>
