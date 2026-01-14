@@ -119,20 +119,20 @@ const ArcTimeline: React.FC = () => {
   // Track scroll progress through this section
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"]
   });
 
   // Transform scroll into horizontal movement
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-80%']);
+  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-90%"]); // Adjusted end point
+  const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]); // Fade out instruction faster
 
   return (
     <LayoutGroup>
-      <section 
+      <section
         ref={sectionRef}
         className="relative bg-gradient-to-b from-ocean-black via-slate-950 to-ocean-black overflow-hidden"
-        style={{ height: '400vh' }} // Extended height for scroll-driven animation
+        style={{ height: '300vh' }} // Extended height for scroll-driven animation
       >
-        
+
         {/* Sticky container for horizontal scroll effect */}
         <div className="sticky top-0 h-screen overflow-hidden">
           {/* Background Elements */}
@@ -143,7 +143,7 @@ const ArcTimeline: React.FC = () => {
 
           <div className="container mx-auto px-6 pt-32 relative z-10">
             <div className="mb-16 border-b-2 border-white/10 pb-8">
-              <motion.h2 
+              <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

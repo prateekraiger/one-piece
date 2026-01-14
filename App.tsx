@@ -12,19 +12,6 @@ import HakiSection from './components/HakiSection';
 import SoundController from './components/ui/SoundController';
 import SmoothScroll from './components/SmoothScroll';
 
-const SectionWrapper: React.FC<{ children: React.ReactNode; id?: string; className?: string }> = ({ children, id, className }) => (
-  <motion.div
-    id={id}
-    className={className}
-    initial={{ opacity: 0, y: 50 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-10%" }}
-    transition={{ duration: 0.8, ease: "easeOut" }}
-  >
-    {children}
-  </motion.div>
-);
-
 const App: React.FC = () => {
   return (
     <SmoothScroll>
@@ -47,9 +34,7 @@ const App: React.FC = () => {
 
         <Hero />
 
-        <SectionWrapper>
-          <LuffyShowcase />
-        </SectionWrapper>
+        <LuffyShowcase />
 
         <div id="voyage">
           <ArcTimeline />
@@ -57,12 +42,8 @@ const App: React.FC = () => {
 
         {/* Power Systems */}
         <div id="powers" className="relative z-10 border-t border-white/5">
-          <SectionWrapper>
-            <DevilFruitSection />
-          </SectionWrapper>
-          <SectionWrapper>
-            <HakiSection />
-          </SectionWrapper>
+          <DevilFruitSection />
+          <HakiSection />
         </div>
 
         <div id="crew">

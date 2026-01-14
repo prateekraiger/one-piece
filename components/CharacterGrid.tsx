@@ -6,14 +6,18 @@ const CharacterGrid: React.FC = () => {
   const targetRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
+    offset: ["start start", "end end"]
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-95%"]);
+  // Transform scroll into horizontal movement
+  // Tuned to end perfectly at the last card.
+  // -75% is approx optimal for 10 cards * 30vw vs 100vw viewport.
+  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-80%']);
   const headerOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.2]);
   const headerScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.9]);
 
   return (
-    <section ref={targetRef} className="relative h-[500vh] bg-[#080808]">
+    <section ref={targetRef} className="relative h-[350vh] bg-[#080808]">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
 
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-[#080808] to-[#080808]" />
