@@ -8,7 +8,7 @@ const ArcCard: React.FC<{ arc: Arc; index: number; onSelect: (arc: Arc) => void 
     <motion.div
       layoutId={`card-${arc.id}`}
       onClick={() => onSelect(arc)}
-      className="group relative h-[65vh] md:h-[75vh] w-[85vw] md:w-[45vw] flex-shrink-0 cursor-pointer overflow-hidden rounded-2xl perspective-1000 shadow-2xl hover:shadow-amber-500/20"
+      className="group relative h-[55vh] md:h-[60vh] w-[85vw] md:w-[38vw] flex-shrink-0 cursor-pointer overflow-hidden rounded-2xl perspective-1000 shadow-2xl hover:shadow-amber-500/20"
       whileHover={{ scale: 1.03, y: -10 }}
       transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
@@ -119,64 +119,74 @@ const ArcTimeline: React.FC = () => {
   // Track scroll progress through this section
   const { scrollYProgress } = useScroll({
     target: sectionRef,
+    offset: ["start start", "end end"]
   });
 
   // Transform scroll into horizontal movement
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-65%"]); // Adjusted to stop earlier without empty space
-  const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]); // Fade out instruction faster
+  // Tuned to end perfectly at the last card.
+  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-85%']);
+
+  // Parallax Header Transforms
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  const headerScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.9]);
+  const headerY = useTransform(scrollYProgress, [0, 0.15], [0, -50]);
 
   return (
     <LayoutGroup>
       <section
         ref={sectionRef}
-        className="relative bg-gradient-to-b from-ocean-black via-slate-950 to-ocean-black overflow-hidden"
-        style={{ height: '180vh' }} // Reduced height for tighter scroll
+        className="relative h-[350vh] bg-[#080808]" // Matched height and seamless background
       >
+        <div className="sticky top-0 h-screen overflow-hidden flex items-center">
 
-        {/* Sticky container for horizontal scroll effect */}
-        <div className="sticky top-0 h-screen overflow-hidden">
-          {/* Background Elements */}
+          {/* Background Elements - Subtle Atmosphere */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px] animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '1s' }} />
+             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900/40 via-[#080808] to-[#080808]" />
+             <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[150px] animate-pulse" />
+             <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/5 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '1s' }} />
           </div>
 
-          <div className="container mx-auto px-6 pt-32 relative z-10">
-            <div className="mb-16 border-b-2 border-white/10 pb-8">
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-6xl md:text-8xl font-serif font-black text-white tracking-tighter mb-4 uppercase"
-              >
-                The Voyage Log
-              </motion.h2>
-              <p className="text-amber-400 font-serif italic text-2xl tracking-wide">Chronicles of the Grand Line</p>
-            </div>
+          {/* Parallax Header - Fades out to let cards take focus */}
+          <motion.div
+            style={{ opacity: headerOpacity, scale: headerScale, y: headerY }}
+            className="absolute top-24 left-6 md:left-20 z-20 origin-top-left pointer-events-none"
+          >
+             <div className="mb-2 border-b-2 border-amber-500/30 pb-4 inline-block pr-12">
+               <h2 className="text-6xl md:text-8xl font-serif font-black text-white tracking-tighter uppercase mb-2 drop-shadow-2xl">
+                 The Voyage Log
+               </h2>
+               <p className="text-amber-500 font-serif italic text-2xl tracking-wide">
+                 Chronicles of the Grand Line
+               </p>
+             </div>
+             <p className="text-slate-500 text-sm font-mono tracking-widest uppercase mt-4">
+               Scroll to explore the journey
+             </p>
+          </motion.div>
+
+          {/* Horizontal Scroll Container */}
+          <motion.div
+            style={{ x }}
+            className="flex gap-10 pl-[50vw] md:pl-[40vw] pr-20 items-center relative z-10 will-change-transform"
+          >
+            {ARCS.map((arc, index) => (
+              <ArcCard
+                key={arc.id}
+                arc={arc}
+                index={index}
+                onSelect={setSelectedArc}
+              />
+            ))}
+          </motion.div>
+
+          {/* Progress Bar */}
+          <div className="absolute bottom-10 left-10 right-10 h-1 bg-white/5 rounded-full overflow-hidden z-20">
+             <motion.div
+               style={{ scaleX: scrollYProgress }}
+               className="h-full bg-amber-500/50 origin-left"
+             />
           </div>
 
-          {/* Horizontal Scroll Container - Driven by vertical scroll */}
-          <div className="relative overflow-hidden h-full flex items-center">
-            <motion.div
-              ref={scrollContainerRef}
-              style={{ x }}
-              className="flex gap-10 px-6 md:px-16 will-change-transform pt-20" // added pt-20 to move cards down
-            >
-              {ARCS.map((arc, index) => (
-                <ArcCard
-                  key={arc.id}
-                  arc={arc}
-                  index={index}
-                  onSelect={setSelectedArc}
-                />
-              ))}
-              {/* Spacer removed to eliminate gap */}
-            </motion.div>
-          </div>
-
-          <p className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center text-slate-500 text-sm font-light tracking-wide">
-            Scroll to explore • Click to view details
-          </p>
         </div>
       </section>
 
