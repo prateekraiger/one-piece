@@ -55,7 +55,7 @@ export const CHARACTERS: Character[] = [
     epithet: 'Straw Hat',
     bounty: '3,000,000,000 ฿',
     role: 'Captain',
-    image: 'https://picsum.photos/seed/luffy/800/1000',
+    image: 'https://i.pinimg.com/736x/88/44/48/884448550cb1737f26f74a0c8ab431c3.jpg',
     crew: true
   },
   {
@@ -64,7 +64,7 @@ export const CHARACTERS: Character[] = [
     epithet: 'Pirate Hunter',
     bounty: '1,111,000,000 ฿',
     role: 'Combatant',
-    image: 'https://picsum.photos/seed/zoro/800/1000',
+    image: 'https://i.pinimg.com/736x/7d/55/7c/7d557c67425877840134443177694939.jpg',
     crew: true
   },
   {
@@ -73,7 +73,16 @@ export const CHARACTERS: Character[] = [
     epithet: 'Cat Burglar',
     bounty: '366,000,000 ฿',
     role: 'Navigator',
-    image: 'https://picsum.photos/seed/nami/800/1000',
+    image: 'https://i.pinimg.com/736x/55/65/d2/5565d21c372674288019e0996895ce82.jpg',
+    crew: true
+  },
+  {
+    id: 'usopp',
+    name: 'Usopp',
+    epithet: 'God Usopp',
+    bounty: '500,000,000 ฿',
+    role: 'Sniper',
+    image: 'https://i.pinimg.com/736x/1a/0d/16/1a0d165f17154238779603c80961c0d4.jpg',
     crew: true
   },
   {
@@ -82,17 +91,53 @@ export const CHARACTERS: Character[] = [
     epithet: 'Black Leg',
     bounty: '1,032,000,000 ฿',
     role: 'Cook',
-    image: 'https://picsum.photos/seed/sanji/800/1000',
+    image: 'https://i.pinimg.com/736x/67/83/b2/6783b27b9264c399b508d51f6784534f.jpg',
     crew: true
   },
   {
-    id: 'shanks',
-    name: 'Shanks',
-    epithet: 'Red-Haired',
-    bounty: '4,048,900,000 ฿',
-    role: 'Emperor',
-    image: 'https://picsum.photos/seed/shanks/800/1000',
-    crew: false
+    id: 'chopper',
+    name: 'Tony Tony Chopper',
+    epithet: 'Cotton Candy Lover',
+    bounty: '1,000 ฿',
+    role: 'Doctor',
+    image: 'https://i.pinimg.com/736x/e4/c1/9d/e4c19d4b31562308630325373a0026e4.jpg',
+    crew: true
+  },
+  {
+    id: 'robin',
+    name: 'Nico Robin',
+    epithet: 'Devil Child',
+    bounty: '930,000,000 ฿',
+    role: 'Archaeologist',
+    image: 'https://i.pinimg.com/736x/32/79/6c/32796c342733923cc84e2776c592881a.jpg',
+    crew: true
+  },
+  {
+    id: 'franky',
+    name: 'Franky',
+    epithet: 'Iron Man',
+    bounty: '394,000,000 ฿',
+    role: 'Shipwright',
+    image: 'https://i.pinimg.com/736x/e7/87/0d/e7870d0fd352528a4753049b49372ca8.jpg',
+    crew: true
+  },
+  {
+    id: 'brook',
+    name: 'Brook',
+    epithet: 'Soul King',
+    bounty: '383,000,000 ฿',
+    role: 'Musician',
+    image: 'https://i.pinimg.com/736x/c5/4a/1c/c54a1c575080c59267154881ae67399a.jpg',
+    crew: true
+  },
+  {
+    id: 'jinbe',
+    name: 'Jinbe',
+    epithet: 'Knight of the Sea',
+    bounty: '1,100,000,000 ฿',
+    role: 'Helmsman',
+    image: 'https://i.pinimg.com/736x/c9/79/f1/c979f18749340917208790089856f687.jpg',
+    crew: true
   }
 ];
 
