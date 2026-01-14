@@ -130,7 +130,7 @@ const ArcTimeline: React.FC = () => {
       <section
         ref={sectionRef}
         className="relative bg-gradient-to-b from-ocean-black via-slate-950 to-ocean-black overflow-hidden"
-        style={{ height: '300vh' }} // Extended height for scroll-driven animation
+        style={{ height: '200vh' }} // Extended height for scroll-driven animation
       >
 
         {/* Sticky container for horizontal scroll effect */}

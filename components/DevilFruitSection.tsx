@@ -42,10 +42,10 @@ const FRUIT_TYPES = [
 
 const DevilFruitSection: React.FC = () => {
   return (
-    <section className="relative w-full py-32 px-6 bg-black overflow-hidden">
+    <section className="relative w-full py-16 px-6 bg-black overflow-hidden">
       {/* Atmosphere */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/10 via-black to-black opacity-50" />
-      
+
       {/* SVG Filters for Distortion Effect (Paramecia) */}
       <svg className="hidden">
         <defs>
@@ -55,7 +55,7 @@ const DevilFruitSection: React.FC = () => {
             </feTurbulence>
             <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" />
           </filter>
-          
+
           {/* Glow filters for each type */}
           <filter id="glow-green" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
@@ -64,7 +64,7 @@ const DevilFruitSection: React.FC = () => {
               <feMergeNode in="SourceGraphic"/>
             </feMerge>
           </filter>
-          
+
           <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
             <feMerge>
@@ -72,7 +72,7 @@ const DevilFruitSection: React.FC = () => {
               <feMergeNode in="SourceGraphic"/>
             </feMerge>
           </filter>
-          
+
           <filter id="glow-amber" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
             <feMerge>
@@ -85,7 +85,7 @@ const DevilFruitSection: React.FC = () => {
 
       <div className="container mx-auto relative z-10">
         <div className="mb-20 text-center">
-           <motion.h2 
+           <motion.h2
              initial={{ opacity: 0, letterSpacing: '0.1em' }}
              whileInView={{ opacity: 1, letterSpacing: '0.2em' }}
              transition={{ duration: 1 }}
@@ -123,7 +123,7 @@ const DevilFruitSection: React.FC = () => {
                   <motion.div
                     key={idx}
                     className={`absolute inset-0 rounded-xl border-2`}
-                    style={{ 
+                    style={{
                       borderColor: type.auraColor,
                       filter: 'blur(4px)'
                     }}
@@ -145,8 +145,8 @@ const DevilFruitSection: React.FC = () => {
               <div className="absolute top-8 right-8 w-32 h-32 overflow-hidden rounded-full opacity-40 group-hover:opacity-90 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12"
                 style={{ filter: `url(#glow-${type.glowColor})` }}
               >
-                <img 
-                  src={type.image} 
+                <img
+                  src={type.image}
                   alt={type.name}
                   className="w-full h-full object-cover"
                 />
@@ -155,10 +155,10 @@ const DevilFruitSection: React.FC = () => {
 
               {/* --- TYPE SPECIFIC VISUALS --- */}
               <div className="absolute inset-0 z-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-                
+
                 {/* Paramecia: Spatial Distortion */}
                 {type.id === 'paramecia' && (
-                   <div 
+                   <div
                      className="absolute inset-0 bg-green-500/10 mix-blend-overlay"
                      style={{ filter: 'url(#fruit-turbulence)' }}
                    />
@@ -167,7 +167,7 @@ const DevilFruitSection: React.FC = () => {
                 {/* Zoan: Breathing Silhouette */}
                 {type.id === 'zoan' && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.div 
+                    <motion.div
                       className="w-64 h-64 rounded-full bg-red-500/20 blur-3xl"
                       animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.7, 0.3] }}
                       transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -182,13 +182,13 @@ const DevilFruitSection: React.FC = () => {
                        <motion.div
                          key={j}
                          className="absolute w-2 h-2 bg-amber-400 rounded-full"
-                         style={{ 
+                         style={{
                            left: `${Math.random() * 100}%`,
                            bottom: '-10px',
                            filter: 'blur(2px)',
                            boxShadow: '0 0 10px rgba(251, 191, 36, 0.8)'
                          }}
-                         animate={{ 
+                         animate={{
                            y: [0, -550],
                            opacity: [0, 1, 1, 0],
                            scale: [0.5, 1.5, 2, 0]
@@ -275,7 +275,7 @@ const DevilFruitSection: React.FC = () => {
         </div>
 
         {/* --- MANDATORY CONCLUSION --- */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ margin: "-50px" }}
@@ -284,12 +284,12 @@ const DevilFruitSection: React.FC = () => {
         >
           <div className="h-px w-full bg-gradient-to-r from-transparent via-amber-900/50 to-transparent mb-8" />
           <p className="font-serif text-slate-400 text-lg md:text-xl leading-relaxed tracking-wide italic">
-            "To consume the fruit is to make a covenant with demons. 
-            You will gain power enough to tear down the heavens, but know this: 
+            "To consume the fruit is to make a covenant with demons.
+            You will gain power enough to tear down the heavens, but know this:
             <br/><br/>
-            <span className="text-slate-200 not-italic font-bold">Freedom is the price.</span> 
+            <span className="text-slate-200 not-italic font-bold">Freedom is the price.</span>
             <br/>
-            The sea—mother of all life—will reject you forever. 
+            The sea—mother of all life—will reject you forever.
             You will sink like a hammer into the abyss, powerful, yet helpless."
           </p>
           <div className="h-px w-full bg-gradient-to-r from-transparent via-amber-900/50 to-transparent mt-8" />
