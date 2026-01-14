@@ -11,48 +11,53 @@ import DevilFruitSection from './components/DevilFruitSection';
 import HakiSection from './components/HakiSection';
 import SoundController from './components/ui/SoundController';
 import SmoothScroll from './components/SmoothScroll';
+import { Gear5Provider } from './components/Gear5Context';
+import Gear5Trigger from './components/Gear5Trigger';
 
 const App: React.FC = () => {
   return (
-    <SmoothScroll>
-      <main className="relative min-h-screen w-full bg-ocean-black text-slate-200 selection:bg-amber-500 selection:text-black">
-        <NoiseOverlay />
-        <SeaDust />
-        <SoundController />
+    <Gear5Provider>
+      <SmoothScroll>
+        <main className="relative min-h-screen w-full bg-ocean-black text-slate-200 selection:bg-amber-500 selection:text-black">
+          <NoiseOverlay />
+          <SeaDust />
+          <SoundController />
+          <Gear5Trigger />
 
-        {/* Sticky Navigation */}
-        <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center backdrop-blur-sm bg-black/20 border-b border-white/5 transition-all duration-300 hover:bg-black/40">
-           <span className="font-serif font-black text-xl text-white tracking-widest cursor-pointer hover:text-amber-500 transition-colors">
-             OP ARCHIVE
-           </span>
-           <div className="hidden md:flex gap-8 text-white text-xs font-bold uppercase tracking-[0.2em]">
-             <a href="#voyage" className="hover:text-amber-500 transition-colors cursor-pointer">Voyage</a>
-             <a href="#powers" className="hover:text-amber-500 transition-colors cursor-pointer">Powers</a>
-             <a href="#crew" className="hover:text-amber-500 transition-colors cursor-pointer">Crew</a>
-           </div>
-        </nav>
+          {/* Sticky Navigation */}
+          <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center backdrop-blur-sm bg-black/20 border-b border-white/5 transition-all duration-300 hover:bg-black/40">
+             <span className="font-serif font-black text-xl text-white tracking-widest cursor-pointer hover:text-amber-500 transition-colors">
+               OP ARCHIVE
+             </span>
+             <div className="hidden md:flex gap-8 text-white text-xs font-bold uppercase tracking-[0.2em]">
+               <a href="#voyage" className="hover:text-amber-500 transition-colors cursor-pointer">Voyage</a>
+               <a href="#powers" className="hover:text-amber-500 transition-colors cursor-pointer">Powers</a>
+               <a href="#crew" className="hover:text-amber-500 transition-colors cursor-pointer">Crew</a>
+             </div>
+          </nav>
 
-        <Hero />
+          <Hero />
 
-        <LuffyShowcase />
+          <LuffyShowcase />
 
-        <div id="voyage">
-          <ArcTimeline />
-        </div>
+          <div id="voyage">
+            <ArcTimeline />
+          </div>
 
-        {/* Power Systems */}
-        <div id="powers" className="relative z-10 border-t border-white/5">
-          <DevilFruitSection />
-          <HakiSection />
-        </div>
+          {/* Power Systems */}
+          <div id="powers" className="relative z-10 border-t border-white/5">
+            <DevilFruitSection />
+            <HakiSection />
+          </div>
 
-        <div id="crew">
-          <CharacterGrid />
-        </div>
+          <div id="crew">
+            <CharacterGrid />
+          </div>
 
-        <Footer />
-      </main>
-    </SmoothScroll>
+          <Footer />
+        </main>
+      </SmoothScroll>
+    </Gear5Provider>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, LayoutGroup, useScroll, useTransform } from 'framer-motion';
 import { ARCS } from '../constants';
 import { Arc } from '../types';
+import GrandLineMap from './GrandLineMap';
 
 const ArcCard: React.FC<{ arc: Arc; index: number; onSelect: (arc: Arc) => void }> = ({ arc, index, onSelect }) => {
   return (
@@ -133,6 +134,9 @@ const ArcTimeline: React.FC = () => {
 
   return (
     <LayoutGroup>
+      {/* GRAND LINE MAP TRACKER */}
+      <GrandLineMap progress={scrollYProgress} />
+
       <section
         ref={sectionRef}
         className="relative h-[350vh] bg-[#080808]" // Matched height and seamless background
