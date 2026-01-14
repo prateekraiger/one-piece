@@ -58,10 +58,10 @@ const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5, duration: 0.8 }}
-      className={`fixed right-6 top-1/2 -translate-y-1/2 z-[50] hidden md:flex flex-col items-center h-[70vh] w-20 py-8 rounded-full shadow-2xl overflow-hidden transition-all duration-700 border-2 ${
+      className={`fixed right-8 top-[15%] z-[50] hidden md:flex flex-col items-center h-[75vh] w-24 py-10 rounded-full shadow-2xl overflow-hidden transition-all duration-700 border-4 backdrop-blur-md ${
         isGear5
-          ? 'bg-gradient-to-b from-white via-purple-50 to-pink-50 border-purple-300 shadow-[0_0_50px_rgba(168,85,247,0.6)]'
-          : 'bg-gradient-to-b from-[#1a1815] via-[#2a2420] to-[#1a1815] border-[#6b5a44] shadow-[0_0_40px_rgba(0,0,0,0.9),inset_0_0_30px_rgba(245,158,11,0.1)]'
+          ? 'bg-gradient-to-b from-white via-purple-100 to-pink-100 border-purple-400 shadow-[0_0_60px_rgba(168,85,247,0.7)]'
+          : 'bg-gradient-to-b from-[#1a1815] via-[#2a2420] to-[#1a1815] border-[#8b7355] shadow-[0_0_50px_rgba(0,0,0,0.9),inset_0_0_40px_rgba(245,158,11,0.15)]'
       }`}
     >
       {/* Paper Texture Overlay */}
@@ -74,9 +74,8 @@ const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
         isGear5 ? 'border-purple-200/40' : 'border-amber-600/20'
       }`} />
 
-      {/* Top Label */}
-      <div className={`text-[10px] font-serif uppercase tracking-[0.2em] writing-vertical-rl rotate-180 mb-6 transition-all duration-700 font-bold ${
-        isGear5 ? 'text-purple-600 drop-shadow-[0_2px_4px_rgba(168,85,247,0.5)]' : 'text-[#c9a967] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'
+      <div className={`text-[10px] font-serif uppercase tracking-[0.2em] writing-vertical-rl mb-6 transition-all duration-700 font-bold ${
+        isGear5 ? 'text-purple-700 drop-shadow-[0_2px_4px_rgba(168,85,247,0.5)]' : 'text-[#c9a967] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'
       }`}>
         Grand Line
       </div>
@@ -84,15 +83,15 @@ const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
       <div className="relative flex-1 w-full flex justify-center">
         {/* The Track Line Container */}
         <div className={`absolute top-0 bottom-0 w-[4px] rounded-full transition-colors duration-700 ${
-          isGear5 ? 'bg-purple-200/30' : 'bg-black/20'
+          isGear5 ? 'bg-purple-300/50' : 'bg-black/20'
         }`} />
 
         {/* The Fill Line */}
         <motion.div
             style={{ height: topPosition }}
             className={`absolute top-0 w-[4px] shadow-[0_0_20px_currentColor] rounded-full transition-all duration-700 ${
-              isGear5 
-                ? 'bg-gradient-to-b from-purple-500 via-pink-500 to-purple-500 text-purple-500' 
+              isGear5
+                ? 'bg-gradient-to-b from-purple-600 via-pink-600 to-purple-600 text-purple-600'
                 : 'bg-gradient-to-b from-amber-500 via-amber-600 to-amber-700 text-amber-600'
             }`}
         />
@@ -102,17 +101,17 @@ const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
           const progress_val = topPosition.get();
           const nodeProgress = (i / (ARCS.length - 1)) * 100;
           const isActive = parseFloat(String(progress_val)) >= nodeProgress;
-          
+
           return (
             <motion.div
               key={i}
               className={`absolute w-3 h-3 rounded-full border-2 transition-all duration-700 ${
-                isGear5 
-                  ? (isActive 
-                      ? 'bg-purple-500 border-white shadow-[0_0_10px_rgba(168,85,247,0.8)]' 
-                      : 'bg-white border-purple-300 shadow-[0_0_5px_rgba(168,85,247,0.3)]')
-                  : (isActive 
-                      ? 'bg-amber-500 border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)]' 
+                isGear5
+                  ? (isActive
+                      ? 'bg-purple-600 border-white shadow-[0_0_10px_rgba(168,85,247,0.8)]'
+                      : 'bg-white border-purple-400 shadow-[0_0_5px_rgba(168,85,247,0.3)]')
+                  : (isActive
+                      ? 'bg-amber-500 border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)]'
                       : 'bg-[#2a2620] border-[#8b7355] shadow-[0_0_5px_rgba(0,0,0,0.5)]')
               }`}
               style={{
@@ -155,14 +154,14 @@ const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
       </div>
 
       {/* Bottom Label */}
-      <div className={`text-[10px] font-serif uppercase tracking-[0.2em] writing-vertical-rl rotate-180 mt-6 transition-all duration-700 font-bold ${
-        isGear5 ? 'text-purple-600 drop-shadow-[0_2px_4px_rgba(168,85,247,0.5)]' : 'text-[#c9a967] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'
+      <div className={`text-[10px] font-serif uppercase tracking-[0.2em] writing-vertical-rl mt-6 transition-all duration-700 font-bold ${
+        isGear5 ? 'text-purple-700 drop-shadow-[0_2px_4px_rgba(168,85,247,0.5)]' : 'text-[#c9a967] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'
       }`}>
         New World
       </div>
 
       {/* Glowing Effect */}
-      <motion.div 
+      <motion.div
         className={`absolute inset-0 rounded-full blur-2xl transition-all duration-700 pointer-events-none ${
           isGear5 ? 'bg-purple-400/20' : 'bg-amber-600/10'
         }`}

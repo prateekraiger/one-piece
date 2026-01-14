@@ -13,7 +13,7 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   useEffect(() => {
     // Audio Setup
-    audioRef.current = new Audio('https://ia804705.us.archive.org/26/items/one-piece-drums-of-liberation/One%20Piece%20-%20Drums%20Of%20Liberation.mp3'); // Public Archive.org link
+    audioRef.current = new Audio('/audio/gear5.mp3');
     audioRef.current.loop = true;
     audioRef.current.volume = 0.6;
 
@@ -23,17 +23,25 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, []);
 
   const toggleGear5 = () => {
-    setIsGear5((prev) => !prev);
+    const nextState = !isGear5;
+
+    if (audioRef.current) {
+      if (nextState) {
+        audioRef.current.play().catch(e => console.error("Audio playback failed:", e));
+      } else {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    }
+
+    setIsGear5(nextState);
   };
 
   useEffect(() => {
     if (isGear5) {
       document.body.classList.add('gear5-active');
-      audioRef.current?.play().catch(e => console.log('Audio play failed (user interaction needed):', e));
     } else {
       document.body.classList.remove('gear5-active');
-      audioRef.current?.pause();
-      if (audioRef.current) audioRef.current.currentTime = 0;
     }
   }, [isGear5]);
 
@@ -45,7 +53,7 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
           /* ===================================== */
           /* 🌟 GEAR 5: SUN GOD NIKA MODE 🌟 */
           /* ===================================== */
-          
+
           :root {
             --gear5-white: #ffffff;
             --gear5-purple: #a855f7;
@@ -157,7 +165,7 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
 
           /* ========== VOYAGE SECTION ========== */
           body.gear5-active #voyage section {
-            background: linear-gradient(to bottom, 
+            background: linear-gradient(to bottom,
               rgba(255, 255, 255, 1) 0%,
               rgba(254, 243, 255, 0.8) 50%,
               rgba(255, 247, 237, 0.8) 100%
@@ -181,7 +189,7 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
           body.gear5-active #voyage .group {
             background: rgba(255, 255, 255, 0.95) !important;
             border: 2px solid rgba(168, 85, 247, 0.3) !important;
-            box-shadow: 
+            box-shadow:
               0 10px 40px -10px rgba(168, 85, 247, 0.4),
               0 0 0 1px rgba(236, 72, 153, 0.1) inset !important;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -189,7 +197,7 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
 
           body.gear5-active #voyage .group:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 
+            box-shadow:
               0 20px 60px -10px rgba(168, 85, 247, 0.6),
               0 0 0 2px rgba(236, 72, 153, 0.3) inset !important;
           }
@@ -201,7 +209,7 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
 
           /* ========== LUFFY SHOWCASE (GEAR SELECTOR) ========== */
           body.gear5-active section:has(.font-serif:contains('Evolution')) {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg,
               rgba(255, 255, 255, 1) 0%,
               rgba(254, 243, 255, 0.9) 50%,
               rgba(255, 247, 237, 0.9) 100%
@@ -234,7 +242,7 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
+            background:
               radial-gradient(circle at 15% 15%, rgba(251, 191, 36, 0.15), transparent 30%),
               radial-gradient(circle at 85% 85%, rgba(236, 72, 153, 0.15), transparent 30%),
               radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08), transparent 50%);
@@ -258,12 +266,12 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
           body.gear5-active::-webkit-scrollbar-track {
             background: linear-gradient(to bottom, #fdf4ff, #fff7ed);
           }
-          
+
           body.gear5-active::-webkit-scrollbar-thumb {
             background: linear-gradient(135deg, #a855f7, #ec4899);
             border-radius: 10px;
           }
-          
+
           body.gear5-active::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(135deg, #7e22ce, #db2777);
           }
