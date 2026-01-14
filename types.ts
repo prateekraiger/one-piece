@@ -16,6 +16,9 @@ export interface Character {
   role: string;
   image: string;
   crew?: boolean;
+  description: string;
+  quote: string;
+  color: string;
 }
 
 export interface Gear {

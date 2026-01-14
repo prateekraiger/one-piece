@@ -65,7 +65,10 @@ export const CHARACTERS: Character[] = [
     bounty: '3,000,000,000 ฿',
     role: 'Captain',
     image: '/characters/luffy.png',
-    crew: true
+    crew: true,
+    color: 'from-red-600 to-red-900',
+    description: 'The Captain of the Straw Hat Pirates. He ate the Gomu Gomu no Mi, becoming a rubber human. His dream is to find the One Piece and become the King of the Pirates. He fights with complete freedom.',
+    quote: "I'm gonna be King of the Pirates!"
   },
   {
     id: 'zoro',
@@ -74,7 +77,10 @@ export const CHARACTERS: Character[] = [
     bounty: '1,111,000,000 ฿',
     role: 'Combatant',
     image: '/characters/zoro.png',
-    crew: true
+    crew: true,
+    color: 'from-green-600 to-green-900',
+    description: 'A master swordsman who practices the Three Sword Style. He aims to become the World\'s Greatest Swordsman. His loyalty to his captain is absolute, and his ambition cuts through steel.',
+    quote: "Nothing happened."
   },
   {
     id: 'nami',
@@ -83,7 +89,10 @@ export const CHARACTERS: Character[] = [
     bounty: '366,000,000 ฿',
     role: 'Navigator',
     image: '/characters/nami.png',
-    crew: true
+    crew: true,
+    color: 'from-orange-400 to-orange-700',
+    description: 'A genius navigator who can predict the weather with her body. She dreams of drawing a map of the entire world. She fights with the Clima-Tact, manipulating the weather itself.',
+    quote: "Luffy... Help me."
   },
   {
     id: 'usopp',
@@ -92,7 +101,10 @@ export const CHARACTERS: Character[] = [
     bounty: '500,000,000 ฿',
     role: 'Sniper',
     image: '/characters/usopp.png',
-    crew: true
+    crew: true,
+    color: 'from-yellow-600 to-amber-800',
+    description: 'A sniper with terrifying accuracy and a negative attitude. He dreams of becoming a brave warrior of the sea. His lies often come true, and his aim never falters when it matters.',
+    quote: "I have 8,000 followers!"
   },
   {
     id: 'sanji',
@@ -101,7 +113,10 @@ export const CHARACTERS: Character[] = [
     bounty: '1,032,000,000 ฿',
     role: 'Cook',
     image: '/characters/sanji.png',
-    crew: true
+    crew: true,
+    color: 'from-blue-600 to-blue-900',
+    description: 'A chef who seeks the All Blue. He fights only with his legs to protect his hands for cooking. A gentleman who will never kick a woman, even if it kills him.',
+    quote: "I was just... lighting my cigarette."
   },
   {
     id: 'chopper',
@@ -110,7 +125,10 @@ export const CHARACTERS: Character[] = [
     bounty: '1,000 ฿',
     role: 'Doctor',
     image: '/characters/chopper.png',
-    crew: true
+    crew: true,
+    color: 'from-pink-400 to-pink-700',
+    description: 'A reindeer who ate the Hito Hito no Mi. He is a skilled doctor who wants to cure every disease. Though often mistaken for a pet, he is a monster in his own right.',
+    quote: "I'll become a doctor who can cure anything!"
   },
   {
     id: 'robin',
@@ -119,7 +137,10 @@ export const CHARACTERS: Character[] = [
     bounty: '930,000,000 ฿',
     role: 'Archaeologist',
     image: '/characters/robin.png',
-    crew: true
+    crew: true,
+    color: 'from-purple-600 to-purple-900',
+    description: 'The sole survivor of Ohara. She can read Poneglyphs and seeks the true history of the world. For years she ran, but now she has found a place to call home.',
+    quote: "I want to live!"
   },
   {
     id: 'franky',
@@ -128,7 +149,10 @@ export const CHARACTERS: Character[] = [
     bounty: '394,000,000 ฿',
     role: 'Shipwright',
     image: '/characters/franky.png',
-    crew: true
+    crew: true,
+    color: 'from-cyan-500 to-cyan-800',
+    description: 'A cyborg shipwright who built the Thousand Sunny. He dreams of creating a ship that can sail to the end of the world. He runs on cola and is always SUPER!',
+    quote: "SUUUUPER!"
   },
   {
     id: 'brook',
@@ -137,7 +161,10 @@ export const CHARACTERS: Character[] = [
     bounty: '383,000,000 ฿',
     role: 'Musician',
     image: '/characters/brook.png',
-    crew: true
+    crew: true,
+    color: 'from-slate-200 to-slate-500',
+    description: 'A revived skeleton musician. He waited 50 years to keep a promise to a whale. He fights with the chill of the underworld and cuts the soul itself.',
+    quote: "May I see your panties?"
   },
   {
     id: 'jinbe',
@@ -146,7 +173,10 @@ export const CHARACTERS: Character[] = [
     bounty: '1,100,000,000 ฿',
     role: 'Helmsman',
     image: '/characters/jinbe.png',
-    crew: true
+    crew: true,
+    color: 'from-indigo-600 to-indigo-900',
+    description: 'A whale shark Fish-Man and master of Fish-Man Karate. He dreams of peace between humans and Fish-Men. A man of honor who joined the crew after settling his debts.',
+    quote: "I'm a man who wants to join the future Pirate King's crew!"
   }
 ];
 
