@@ -47,6 +47,15 @@ export const ARCS: Arc[] = [
     quote: "I'm not a hero. Heroes share their meat. I want to eat all the meat!",
   },
   {
+    id: 'wano',
+    title: 'Wano Country',
+    jpTitle: 'ワノ国',
+    description: 'Samurai, Kaido, and the Drums of Liberation. The dawn of the world approaches.',
+    image: 'https://picsum.photos/seed/wano/1920/1080',
+    color: 'from-purple-600 to-pink-900',
+    quote: "I'm not a hero. Heroes share their meat. I want to eat all the meat!",
+  },
+  {
     id: 'egghead',
     title: 'Egghead Island',
     jpTitle: 'エッグヘッド',
@@ -55,7 +64,6 @@ export const ARCS: Arc[] = [
     color: 'from-cyan-400 to-indigo-900',
     quote: "This world... as it is now... will sink into the sea!",
   }
-
 ];
 
 export const CHARACTERS: Character[] = [

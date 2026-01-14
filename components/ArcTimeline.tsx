@@ -130,7 +130,7 @@ const ArcTimeline: React.FC = () => {
 
   return (
     <LayoutGroup>
-      <section ref={targetRef} className="relative h-[400vh] bg-ocean-black">
+      <section ref={targetRef} className="relative h-[500vh] bg-ocean-black">
         <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden">
 
           {/* Background Elements */}
