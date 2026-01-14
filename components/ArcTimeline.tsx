@@ -145,7 +145,7 @@ const ArcTimeline: React.FC = () => {
 
           {/* Background Elements - Subtle Atmosphere */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900/40 via-[#080808] to-[#080808]" />
+             <div className="voyage-bg-layer absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900/40 via-[#080808] to-[#080808]" />
              <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[150px] animate-pulse" />
              <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/5 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '1s' }} />
           </div>

@@ -51,17 +51,18 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
       {isGear5 && (
         <style>{`
           /* ===================================== */
-          /* 🌟 GEAR 5: SUN GOD NIKA MODE 🌟 */
+          /* 🌟 GEAR 5: SUN GOD NIKA MODE (BLUE/WHITE/GOLD) 🌟 */
           /* ===================================== */
 
           :root {
             --gear5-white: #ffffff;
-            --gear5-purple: #a855f7;
-            --gear5-purple-light: #c084fc;
-            --gear5-purple-dark: #7e22ce;
-            --gear5-pink: #ec4899;
-            --gear5-yellow: #fbbf24;
-            --gear5-gradient: linear-gradient(135deg, #fbbf24 0%, #ec4899 50%, #a855f7 100%);
+            --gear5-blue-light: #e0f2fe; /* Sky 100 */
+            --gear5-blue: #38bdf8;       /* Sky 400 */
+            --gear5-blue-dark: #0284c7;  /* Sky 600 */
+            --gear5-blue-accent: #0ea5e9; /* Sky 500 */
+            --gear5-gold: #fbbf24;
+            --gear5-amber: #f59e0b;
+            --gear5-gradient: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #bae6fd 100%);
           }
 
           /* ========== CLOUDY TEXT ANIMATION ========== */
@@ -87,25 +88,22 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
           .cloudy-text {
             animation: cloudyWave 3s ease-in-out infinite;
             text-shadow:
-              2px 2px 0px #9333ea,
-              -1px -1px 0px #9333ea,
-              1px -1px 0px #9333ea,
-              -1px 1px 0px #9333ea,
-              1px 1px 0px #9333ea,
-              0 0 30px rgba(251, 191, 36, 0.9),
-              0 0 60px rgba(168, 85, 247, 0.6) !important;
-            filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
+              2px 2px 0px rgba(14, 165, 233, 0.2),
+              0 0 30px rgba(56, 189, 248, 0.4),
+              0 0 60px rgba(255, 255, 255, 0.9) !important;
+            color: #ffffff !important;
+            -webkit-text-stroke: 1px #0ea5e9;
           }
 
           /* ========== BODY & BACKGROUND ========== */
           body.gear5-active {
-            background: linear-gradient(to bottom, 
-              #fef3f7 0%, 
-              #fdf4ff 25%,
-              #fff7ed 50%, 
-              #fef3f7 75%,
-              #fdf4ff 100%) !important;
-            color: #1e1b4b !important;
+            background: linear-gradient(to bottom,
+              #ffffff 0%,
+              #f0f9ff 25%,
+              #e0f2fe 50%,
+              #f0f9ff 75%,
+              #ffffff 100%) !important;
+            color: #0f172a !important; /* Slate 900 */
             overflow-x: hidden;
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
           }
@@ -113,8 +111,8 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
           /* Main Container */
           body.gear5-active main {
             animation: drumPulse 1.2s ease-in-out infinite;
-            background: radial-gradient(circle at 20% 30%, rgba(251, 191, 36, 0.08), transparent 50%),
-                        radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.08), transparent 50%);
+            background: radial-gradient(circle at 20% 30%, rgba(251, 191, 36, 0.1), transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.1), transparent 50%) !important;
           }
 
           @keyframes drumPulse {
@@ -124,77 +122,172 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
             75% { transform: scale(1.002) rotate(0.05deg); }
           }
 
-          /* ========== SECTION BACKGROUNDS ========== */
+          /* ========== GLOBAL WHITE BACKGROUND ENFORCEMENT ========== */
+
+          /* 1. Force Body Gradient to shine through by making containers transparent */
+          body.gear5-active #voyage,
+          body.gear5-active #powers,
+          body.gear5-active #devil-fruits,
+          body.gear5-active #haki,
+          body.gear5-active #crew,
+          body.gear5-active main > section,
+          body.gear5-active .min-h-screen {
+            background-color: transparent !important;
+            background-image: none !important;
+          }
+
+          /* 2. Target Specific Hardcoded Dark Backgrounds */
           body.gear5-active .bg-ocean-black,
           body.gear5-active .bg-slate-900,
           body.gear5-active .bg-black,
-          body.gear5-active .bg-\\[\\#0a0a0a\\] {
-            background: linear-gradient(135deg, 
-              rgba(254, 243, 247, 0.95) 0%,
-              rgba(253, 244, 255, 0.95) 50%,
-              rgba(255, 247, 237, 0.95) 100%) !important;
-            color: #1e1b4b !important;
+          body.gear5-active .bg-\[\#0a0a0a\],
+          body.gear5-active .bg-\[\#080808\], /* ArcTimeline specific */
+          body.gear5-active .bg-gray-900,
+          body.gear5-active .bg-zinc-900,
+          body.gear5-active .bg-neutral-900 {
+             background-color: rgba(255, 255, 255, 0.4) !important;
+             background-image: none !important;
+             border-color: #bae6fd !important;
+          }
+
+          /* 3. Kill Dark Gradients in ArcTimeline & Others */
+          body.gear5-active .voyage-bg-layer,
+          body.gear5-active .bg-\[radial-gradient\(ellipse_at_top\,_var\(--tw-gradient-stops\)\)\],
+          body.gear5-active .from-slate-900\/40,
+          body.gear5-active .via-\[\#080808\],
+          body.gear5-active .to-\[\#080808\],
+          body.gear5-active .bg-gradient-to-t,
+          body.gear5-active .bg-gradient-to-b,
+          body.gear5-active .bg-gradient-to-r,
+          body.gear5-active .bg-gradient-to-br {
+             background: none !important;
+             --tw-gradient-from: transparent !important;
+             --tw-gradient-to: transparent !important;
+             --tw-gradient-stops: transparent !important;
+          }
+
+          /* 4. Special Handling for Haki/Devil Fruit Cards */
+          /* We want these to be white cards with blue borders, not transparent */
+          body.gear5-active #devil-fruits .group,
+          body.gear5-active #haki .group, /* Assuming group class on cards */
+          body.gear5-active .card-container {
+             background-color: rgba(255, 255, 255, 0.8) !important;
+             backdrop-filter: blur(10px);
+             border: 1px solid #bae6fd !important;
+          }
+
+          /* 5. Specific Component Fixes */
+
+          /* Haki Section Colors - Override the props passed to components if classes are used */
+          body.gear5-active .bg-slate-900,
+          body.gear5-active .bg-red-900\/20,
+          body.gear5-active .bg-amber-900\/20 {
+             background-color: #f0f9ff !important; /* Very light blue */
+             border: 1px solid #7dd3fc !important;
+          }
+
+          /* Voyage Timeline Lines */
+          body.gear5-active .bg-white\/5 {
+             background-color: rgba(14, 165, 233, 0.1) !important;
+          }
+
+          /* Overlays */
+          body.gear5-active .absolute.inset-0.bg-black\/50,
+          body.gear5-active .absolute.inset-0.bg-black\/60,
+          body.gear5-active .absolute.inset-0.bg-black\/80,
+          body.gear5-active .absolute.inset-0.bg-black\/95 {
+             background-color: rgba(255, 255, 255, 0.2) !important;
+             background-image: none !important;
+          }
+
+          /* Remove Dark Overlays from Images in Timeline */
+          body.gear5-active .mix-blend-overlay {
+             mix-blend-mode: normal !important;
+             opacity: 0.1 !important;
           }
 
           /* ========== TEXT COLORS ========== */
           body.gear5-active .text-white:not(.cloudy-text),
           body.gear5-active .text-slate-200,
-          body.gear5-active .text-slate-300 {
-            color: #7e22ce !important;
+          body.gear5-active .text-slate-300,
+          body.gear5-active .text-gray-300,
+          body.gear5-active h1,
+          body.gear5-active h2,
+          body.gear5-active h3,
+          body.gear5-active h4 {
+            color: #0c4a6e !important; /* Sky 900 */
           }
 
           body.gear5-active .text-slate-400,
           body.gear5-active .text-slate-500,
-          body.gear5-active .text-slate-600 {
-            color: #a855f7 !important;
+          body.gear5-active .text-slate-600,
+          body.gear5-active p {
+            color: #334155 !important; /* Slate 700 */
           }
 
+          /* Gold Accents - Keep these */
           body.gear5-active .text-amber-500,
           body.gear5-active .text-amber-400 {
-            background: linear-gradient(135deg, #f59e0b, #ec4899, #a855f7);
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            color: #f59e0b !important;
+          }
+
+          /* Blue Accents */
+          body.gear5-active .text-cyan-400,
+          body.gear5-active .text-cyan-500 {
+             color: #0ea5e9 !important;
           }
 
           /* ========== NAVIGATION ========== */
           body.gear5-active nav {
             background: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 2px solid rgba(168, 85, 247, 0.3) !important;
-            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
+            backdrop-filter: blur(20px) saturate(100%);
+            border-bottom: 2px solid #e0f2fe !important;
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.1);
           }
 
           body.gear5-active nav a,
           body.gear5-active nav span {
-            color: #7e22ce !important;
-            font-weight: 700;
+            color: #0369a1 !important; /* Sky 700 */
+            font-weight: 800;
           }
 
           body.gear5-active nav a:hover {
-            color: #ec4899 !important;
-            text-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+            color: #f59e0b !important;
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
           }
 
           /* ========== CARDS & CONTAINERS ========== */
-          body.gear5-active .border-white\\/5,
-          body.gear5-active .border-white\\/10,
-          body.gear5-active .border-white\\/20,
-          body.gear5-active .border-white\\/30 {
-            border-color: rgba(168, 85, 247, 0.3) !important;
+          body.gear5-active .border-white\/5,
+          body.gear5-active .border-white\/10,
+          body.gear5-active .border-white\/20,
+          body.gear5-active .border-white\/30,
+          body.gear5-active .border-slate-800 {
+            border-color: #bae6fd !important; /* Sky 200 */
           }
 
-          body.gear5-active .bg-black\\/40,
-          body.gear5-active .bg-black\\/50,
-          body.gear5-active .bg-black\\/80 {
-            background: rgba(255, 255, 255, 0.9) !important;
-            border: 2px solid rgba(168, 85, 247, 0.2);
-            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.2);
+          body.gear5-active .bg-black\/40,
+          body.gear5-active .bg-black\/50,
+          body.gear5-active .bg-black\/80,
+          body.gear5-active .bg-slate-900,
+          body.gear5-active .bg-slate-800 {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 2px solid #e0f2fe;
+            box-shadow: 0 10px 40px rgba(14, 165, 233, 0.1);
+          }
+
+          /* Fix Character Grid Cards in Style */
+          body.gear5-active .group.relative.overflow-hidden {
+             background: #ffffff !important;
+             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
           }
 
           /* ========== RUBBER PHYSICS ========== */
-          body.gear5-active img:not([class*=\"fixed\"]):hover,
-          body.gear5-active button:not([class*=\"fixed\"]):hover,
+          body.gear5-active img:not([class*="fixed"]):hover,
+          body.gear5-active button:not([class*="fixed"]):hover,
           body.gear5-active .card:hover {
             animation: rubberBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
           }
@@ -211,71 +304,58 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
           /* ========== LUFFY SHOWCASE / CAPTAIN EVOLUTION THEME ========== */
           body.gear5-active section:has(.font-serif) {
             background: linear-gradient(135deg,
-              rgba(254, 243, 247, 0.95) 0%,
-              rgba(253, 244, 255, 0.9) 50%,
-              rgba(255, 247, 237, 0.95) 100%
+              #ffffff 0%,
+              #f0f9ff 100%
             ) !important;
           }
 
           /* Gear selection buttons in Luffy Showcase */
-          body.gear5-active .border-amber-500\\/50 {
-            border-color: rgba(168, 85, 247, 0.6) !important;
+          body.gear5-active .border-amber-500\/50 {
+            border-color: #38bdf8 !important;
             background: rgba(255, 255, 255, 0.95) !important;
-            box-shadow: 0 0 40px rgba(168, 85, 247, 0.4) !important;
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.2) !important;
           }
 
-          /* ========== VOYAGE SECTION ========== */
-          body.gear5-active #voyage section {
-            background: linear-gradient(to bottom,
-              rgba(254, 243, 247, 0.95) 0%,
-              rgba(253, 244, 255, 0.85) 50%,
-              rgba(255, 247, 237, 0.95) 100%
-            ) !important;
+          /* ========== HAKI & DEVIL FRUITS FIXES ========== */
+          /* Ensure text is clearly visible on white */
+          body.gear5-active #haki .text-xl,
+          body.gear5-active #devil-fruits .text-xl {
+             color: #0c4a6e !important;
+             font-weight: 700;
           }
 
-          body.gear5-active #voyage p,
-          body.gear5-active #voyage .text-slate-400 {
-            color: #7e22ce !important;
+          body.gear5-active #haki .absolute.inset-0 {
+             /* Remove dark image overlays in Haki */
+             background: linear-gradient(to top, rgba(255,255,255,0.9), transparent) !important;
           }
 
-          body.gear5-active #voyage .group {
-            background: rgba(255, 255, 255, 0.95) !important;
-            border: 2px solid rgba(168, 85, 247, 0.3) !important;
-            box-shadow:
-              0 10px 40px -10px rgba(168, 85, 247, 0.4),
-              0 0 0 1px rgba(236, 72, 153, 0.1) inset !important;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          /* Cards inner text */
+          body.gear5-active #devil-fruits p,
+          body.gear5-active #haki p {
+              color: #475569 !important; /* Slate 600 */
           }
 
-          body.gear5-active #voyage .group:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow:
-              0 20px 60px -10px rgba(168, 85, 247, 0.6),
-              0 0 0 2px rgba(236, 72, 153, 0.3) inset !important;
+          /* ========== SCROLLBAR ========== */
+          body.gear5-active::-webkit-scrollbar-track {
+            background: #f0f9ff;
           }
 
-          body.gear5-active #voyage .absolute.inset-0.bg-gradient-to-t {
-            opacity: 0.15 !important;
-            background: linear-gradient(to top, rgba(126, 34, 206, 0.3), transparent) !important;
+          body.gear5-active::-webkit-scrollbar-thumb {
+            background: #7dd3fc;
+            border-radius: 10px;
           }
 
-          /* ========== DEVIL FRUITS & HAKI SECTIONS ========== */
-          body.gear5-active #devil-fruits .from-green-900\\/40,
-          body.gear5-active #devil-fruits .from-red-900\\/40,
-          body.gear5-active #devil-fruits .from-amber-900\\/40,
-          body.gear5-active #haki .bg-slate-900,
-          body.gear5-active #haki .bg-red-900\\/20,
-          body.gear5-active #haki .bg-amber-900\\/20 {
-            background: rgba(255, 255, 255, 0.8) !important;
-            border-color: rgba(168, 85, 247, 0.3) !important;
+          body.gear5-active::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
           }
 
-          /* ========== SHADOWS & GLOWS ========== */
-          body.gear5-active [class*=\"shadow-\"] {
-            filter: drop-shadow(0 4px 20px rgba(168, 85, 247, 0.3));
+          /* ========== FOOTER ========== */
+          body.gear5-active footer {
+            background: #f0f9ff !important;
+            border-top: 2px solid #e0f2fe !important;
           }
 
-          /* ========== SPECIAL EFFECTS ========== */
+          /* ========== SPECIAL EFFECT (THE CLOUD VIBE) ========== */
           body.gear5-active::before {
             content: '';
             position: fixed;
@@ -284,43 +364,11 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
             right: 0;
             bottom: 0;
             background:
-              radial-gradient(circle at 15% 15%, rgba(251, 191, 36, 0.15), transparent 30%),
-              radial-gradient(circle at 85% 85%, rgba(236, 72, 153, 0.15), transparent 30%),
-              radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08), transparent 50%);
+              radial-gradient(circle at 15% 15%, rgba(14, 165, 233, 0.05), transparent 40%),
+              radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.05), transparent 40%),
+              radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.9), transparent 60%);
             pointer-events: none;
             z-index: 0;
-            animation: floatingGlow 8s ease-in-out infinite;
-          }
-
-          @keyframes floatingGlow {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
-          }
-
-          /* Ensure content stays above the effect */
-          body.gear5-active main {
-            position: relative;
-            z-index: 1;
-          }
-
-          /* ========== SCROLLBAR ========== */
-          body.gear5-active::-webkit-scrollbar-track {
-            background: linear-gradient(to bottom, #fdf4ff, #fff7ed);
-          }
-
-          body.gear5-active::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #a855f7, #ec4899);
-            border-radius: 10px;
-          }
-
-          body.gear5-active::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #7e22ce, #db2777);
-          }
-
-          /* ========== FOOTER ========== */
-          body.gear5-active footer {
-            background: linear-gradient(to top, #fdf4ff, rgba(255, 255, 255, 0.8)) !important;
-            border-top: 2px solid rgba(168, 85, 247, 0.2) !important;
           }
         `}</style>
       )}
