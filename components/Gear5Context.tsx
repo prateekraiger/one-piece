@@ -64,9 +64,47 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
             --gear5-gradient: linear-gradient(135deg, #fbbf24 0%, #ec4899 50%, #a855f7 100%);
           }
 
+          /* ========== CLOUDY TEXT ANIMATION ========== */
+          @keyframes cloudyWave {
+            0%, 100% {
+              transform: translateY(0) scale(1);
+              filter: blur(0px);
+            }
+            25% {
+              transform: translateY(-3px) scale(1.02);
+              filter: blur(0.5px);
+            }
+            50% {
+              transform: translateY(0) scale(1.04);
+              filter: blur(0px);
+            }
+            75% {
+              transform: translateY(3px) scale(1.02);
+              filter: blur(0.5px);
+            }
+          }
+
+          .cloudy-text {
+            animation: cloudyWave 3s ease-in-out infinite;
+            text-shadow:
+              2px 2px 0px #9333ea,
+              -1px -1px 0px #9333ea,
+              1px -1px 0px #9333ea,
+              -1px 1px 0px #9333ea,
+              1px 1px 0px #9333ea,
+              0 0 30px rgba(251, 191, 36, 0.9),
+              0 0 60px rgba(168, 85, 247, 0.6) !important;
+            filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
+          }
+
           /* ========== BODY & BACKGROUND ========== */
           body.gear5-active {
-            background: linear-gradient(to bottom, #ffffff 0%, #fdf4ff 50%, #fff7ed 100%) !important;
+            background: linear-gradient(to bottom, 
+              #fef3f7 0%, 
+              #fdf4ff 25%,
+              #fff7ed 50%, 
+              #fef3f7 75%,
+              #fdf4ff 100%) !important;
             color: #1e1b4b !important;
             overflow-x: hidden;
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -89,26 +127,31 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
           /* ========== SECTION BACKGROUNDS ========== */
           body.gear5-active .bg-ocean-black,
           body.gear5-active .bg-slate-900,
-          body.gear5-active .bg-black {
-            background: linear-gradient(180deg, #ffffff 0%, #fef3f7 100%) !important;
+          body.gear5-active .bg-black,
+          body.gear5-active .bg-\\[\\#0a0a0a\\] {
+            background: linear-gradient(135deg, 
+              rgba(254, 243, 247, 0.95) 0%,
+              rgba(253, 244, 255, 0.95) 50%,
+              rgba(255, 247, 237, 0.95) 100%) !important;
             color: #1e1b4b !important;
           }
 
           /* ========== TEXT COLORS ========== */
-          body.gear5-active .text-white,
+          body.gear5-active .text-white:not(.cloudy-text),
           body.gear5-active .text-slate-200,
           body.gear5-active .text-slate-300 {
-            color: #1e1b4b !important;
+            color: #7e22ce !important;
           }
 
           body.gear5-active .text-slate-400,
-          body.gear5-active .text-slate-500 {
-            color: #6b21a8 !important;
+          body.gear5-active .text-slate-500,
+          body.gear5-active .text-slate-600 {
+            color: #a855f7 !important;
           }
 
           body.gear5-active .text-amber-500,
           body.gear5-active .text-amber-400 {
-            background: linear-gradient(135deg, #f59e0b, #ec4899);
+            background: linear-gradient(135deg, #f59e0b, #ec4899, #a855f7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -116,10 +159,10 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
 
           /* ========== NAVIGATION ========== */
           body.gear5-active nav {
-            background: rgba(255, 255, 255, 0.85) !important;
+            background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 2px solid rgba(168, 85, 247, 0.2) !important;
-            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.15);
+            border-bottom: 2px solid rgba(168, 85, 247, 0.3) !important;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
           }
 
           body.gear5-active nav a,
@@ -136,11 +179,13 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
           /* ========== CARDS & CONTAINERS ========== */
           body.gear5-active .border-white\\/5,
           body.gear5-active .border-white\\/10,
-          body.gear5-active .border-white\\/20 {
-            border-color: rgba(168, 85, 247, 0.25) !important;
+          body.gear5-active .border-white\\/20,
+          body.gear5-active .border-white\\/30 {
+            border-color: rgba(168, 85, 247, 0.3) !important;
           }
 
           body.gear5-active .bg-black\\/40,
+          body.gear5-active .bg-black\\/50,
           body.gear5-active .bg-black\\/80 {
             background: rgba(255, 255, 255, 0.9) !important;
             border: 2px solid rgba(168, 85, 247, 0.2);
@@ -163,38 +208,34 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
             100% { transform: scale3d(1, 1, 1) rotate(0deg); }
           }
 
-          /* ========== VOYAGE SECTION ========== */
-          body.gear5-active #voyage section {
-            background: linear-gradient(to bottom,
-              rgba(255, 255, 255, 1) 0%,
-              rgba(254, 243, 255, 0.8) 50%,
-              rgba(255, 247, 237, 0.8) 100%
+          /* ========== LUFFY SHOWCASE / CAPTAIN EVOLUTION THEME ========== */
+          body.gear5-active section:has(.font-serif) {
+            background: linear-gradient(135deg,
+              rgba(254, 243, 247, 0.95) 0%,
+              rgba(253, 244, 255, 0.9) 50%,
+              rgba(255, 247, 237, 0.95) 100%
             ) !important;
           }
 
-          /* NIKA WHITE HEADERS (Voyage, Devil Fruits, Haki, Wanted) */
-          body.gear5-active #voyage h2,
-          body.gear5-active #voyage h3,
-          body.gear5-active #devil-fruits h3,
-          body.gear5-active #haki h3,
-          body.gear5-active #haki h2,
-          body.gear5-active #wanted h2 {
-            background: none !important;
-            -webkit-text-fill-color: #ffffff !important;
-            color: #ffffff !important;
-            text-shadow:
-              2px 2px 0px #9333ea,
-              -1px -1px 0px #9333ea,
-              1px -1px 0px #9333ea,
-              -1px 1px 0px #9333ea,
-              1px 1px 0px #9333ea,
-              0 0 30px rgba(251, 191, 36, 0.9) !important;
-            filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
+          /* Gear selection buttons in Luffy Showcase */
+          body.gear5-active .border-amber-500\\/50 {
+            border-color: rgba(168, 85, 247, 0.6) !important;
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.4) !important;
+          }
+
+          /* ========== VOYAGE SECTION ========== */
+          body.gear5-active #voyage section {
+            background: linear-gradient(to bottom,
+              rgba(254, 243, 247, 0.95) 0%,
+              rgba(253, 244, 255, 0.85) 50%,
+              rgba(255, 247, 237, 0.95) 100%
+            ) !important;
           }
 
           body.gear5-active #voyage p,
           body.gear5-active #voyage .text-slate-400 {
-            color: #581c87 !important;
+            color: #7e22ce !important;
           }
 
           body.gear5-active #voyage .group {
@@ -218,26 +259,15 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
             background: linear-gradient(to top, rgba(126, 34, 206, 0.3), transparent) !important;
           }
 
-          /* ========== LUFFY SHOWCASE (GEAR SELECTOR) ========== */
-          body.gear5-active section:has(.font-serif:contains('Evolution')) {
-            background: linear-gradient(135deg,
-              rgba(255, 255, 255, 1) 0%,
-              rgba(254, 243, 255, 0.9) 50%,
-              rgba(255, 247, 237, 0.9) 100%
-            ) !important;
-          }
-
-          body.gear5-active .border-amber-500\\/50 {
-            border-color: rgba(168, 85, 247, 0.6) !important;
-            background: rgba(255, 255, 255, 0.95) !important;
-            box-shadow: 0 0 40px rgba(168, 85, 247, 0.4) !important;
-          }
-
-          body.gear5-active .text-amber-500 {
-            background: linear-gradient(135deg, #f59e0b, #ec4899) !important;
-            -webkit-background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            background-clip: text !important;
+          /* ========== DEVIL FRUITS & HAKI SECTIONS ========== */
+          body.gear5-active #devil-fruits .from-green-900\\/40,
+          body.gear5-active #devil-fruits .from-red-900\\/40,
+          body.gear5-active #devil-fruits .from-amber-900\\/40,
+          body.gear5-active #haki .bg-slate-900,
+          body.gear5-active #haki .bg-red-900\\/20,
+          body.gear5-active #haki .bg-amber-900\\/20 {
+            background: rgba(255, 255, 255, 0.8) !important;
+            border-color: rgba(168, 85, 247, 0.3) !important;
           }
 
           /* ========== SHADOWS & GLOWS ========== */

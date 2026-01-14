@@ -9,7 +9,6 @@ import CharacterGrid from './components/CharacterGrid';
 import Footer from './components/Footer';
 import DevilFruitSection from './components/DevilFruitSection';
 import HakiSection from './components/HakiSection';
-import SoundController from './components/ui/SoundController';
 import SmoothScroll from './components/SmoothScroll';
 import { Gear5Provider } from './components/Gear5Context';
 import Gear5Trigger from './components/Gear5Trigger';
@@ -21,7 +20,6 @@ const App: React.FC = () => {
         <main className="relative min-h-screen w-full bg-ocean-black text-slate-200 selection:bg-amber-500 selection:text-black">
           <NoiseOverlay />
           <SeaDust />
-          <SoundController />
           <Gear5Trigger />
 
           {/* Sticky Navigation */}

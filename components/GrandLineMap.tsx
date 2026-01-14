@@ -1,7 +1,11 @@
-import React from 'react';
-import { motion, MotionValue, useTransform } from 'framer-motion';
+import React, { useRef, useEffect, useState } from 'react';
+import { motion, useMotionValue } from 'framer-motion';
 import { ARCS } from '../constants';
 import { useGear5 } from './Gear5Context';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const MerryIcon = () => (
   <svg width="50" height="50" viewBox="0 0 100 100" className="drop-shadow-md">
@@ -43,18 +47,67 @@ const SunnyIcon = () => (
     </svg>
 );
 
-interface GrandLineMapProps {
-  progress: MotionValue<number>;
-}
-
-const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
+const GrandLineMap: React.FC = () => {
   const { isGear5 } = useGear5();
+  const mapRef = useRef<HTMLDivElement>(null);
+  const shipRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+  const [currentProgress, setCurrentProgress] = useState(0);
+  const [isMerry, setIsMerry] = useState(true);
 
-  // Map Vertical Progress [0, 1] to the height of the container
-  const topPosition = useTransform(progress, [0, 1], ['5%', '95%']);
+  useEffect(() => {
+    if (!mapRef.current || !shipRef.current || !lineRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Animate the progress line based on scroll
+      gsap.to(lineRef.current, {
+        height: '95%',
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            setCurrentProgress(progress);
+            
+            // Switch ship at midpoint
+            if (progress > 0.45 && isMerry) {
+              setIsMerry(false);
+            } else if (progress <= 0.45 && !isMerry) {
+              setIsMerry(true);
+            }
+          },
+        },
+      });
+
+      // Animate the ship position
+      gsap.to(shipRef.current, {
+        top: '95%',
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+        },
+      });
+
+      // Pulse animation for the map container
+      gsap.to(mapRef.current, {
+        scale: 1.02,
+        duration: 2,
+        yoyo: true,
+        repeat: -1,
+        ease: 'power1.inOut',
+      });
+    }, mapRef);
+
+    return () => ctx.revert();
+  }, [isMerry]);
 
   return (
     <motion.div
+      ref={mapRef}
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5, duration: 0.8 }}
@@ -86,21 +139,21 @@ const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
           isGear5 ? 'bg-purple-300/50' : 'bg-black/20'
         }`} />
 
-        {/* The Fill Line */}
-        <motion.div
-            style={{ height: topPosition }}
-            className={`absolute top-0 w-[4px] shadow-[0_0_20px_currentColor] rounded-full transition-all duration-700 ${
-              isGear5
-                ? 'bg-gradient-to-b from-purple-600 via-pink-600 to-purple-600 text-purple-600'
-                : 'bg-gradient-to-b from-amber-500 via-amber-600 to-amber-700 text-amber-600'
-            }`}
+        {/* The Fill Line (GSAP Animated) */}
+        <div
+          ref={lineRef}
+          className={`absolute top-0 w-[4px] shadow-[0_0_20px_currentColor] rounded-full transition-all duration-700 ${
+            isGear5
+              ? 'bg-gradient-to-b from-purple-600 via-pink-600 to-purple-600 text-purple-600'
+              : 'bg-gradient-to-b from-amber-500 via-amber-600 to-amber-700 text-amber-600'
+          }`}
+          style={{ height: '5%' }}
         />
 
         {/* Nodes */}
         {ARCS.map((arc, i) => {
-          const progress_val = topPosition.get();
-          const nodeProgress = (i / (ARCS.length - 1)) * 100;
-          const isActive = parseFloat(String(progress_val)) >= nodeProgress;
+          const nodeProgress = (i / (ARCS.length - 1));
+          const isActive = currentProgress >= nodeProgress;
 
           return (
             <motion.div
@@ -115,7 +168,7 @@ const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
                       : 'bg-[#2a2620] border-[#8b7355] shadow-[0_0_5px_rgba(0,0,0,0.5)]')
               }`}
               style={{
-                top: `${nodeProgress}%`,
+                top: `${nodeProgress * 100}%`,
                 zIndex: 10
               }}
               animate={isActive ? {
@@ -131,10 +184,11 @@ const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
           );
         })}
 
-        {/* The Ship */}
-        <motion.div
-           className="absolute -translate-x-1/2 -ml-0.5 z-20"
-           style={{ top: topPosition }}
+        {/* The Ship (GSAP Animated) */}
+        <div
+          ref={shipRef}
+          className="absolute -translate-x-1/2 -ml-0.5 z-20"
+          style={{ top: '5%' }}
         >
            <motion.div
              className="relative -left-[23px] -top-[25px]"
@@ -147,10 +201,12 @@ const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
              <div className={`relative hover:scale-125 transition-all duration-300 cursor-help ${
                isGear5 ? 'drop-shadow-[0_0_15px_rgba(168,85,247,0.6)]' : 'drop-shadow-[0_0_10px_rgba(245,158,11,0.5)]'
              }`}>
-               <ShowShip progress={progress} isGear5={isGear5} />
+               <div className={`transition-all duration-700 ${isGear5 ? 'brightness-110 saturate-150' : ''}`}>
+                 {isMerry ? <MerryIcon /> : <SunnyIcon />}
+               </div>
              </div>
            </motion.div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Bottom Label */}
@@ -178,24 +234,5 @@ const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
     </motion.div>
   );
 };
-
-// Component to handle ship switching conditionally
-const ShowShip: React.FC<{ progress: MotionValue<number>; isGear5?: boolean }> = ({ progress, isGear5 }) => {
-    const [isMerry, setIsMerry] = React.useState(true);
-
-    React.useEffect(() => {
-        const unsubscribe = progress.on("change", (latest) => {
-            if (latest > 0.45 && isMerry) setIsMerry(false);
-            if (latest <= 0.45 && !isMerry) setIsMerry(true);
-        });
-        return () => unsubscribe();
-    }, [progress, isMerry]);
-
-    return (
-      <div className={`transition-all duration-700 ${isGear5 ? 'brightness-110 saturate-150' : ''}`}>
-        {isMerry ? <MerryIcon /> : <SunnyIcon />}
-      </div>
-    );
-}
 
 export default GrandLineMap;

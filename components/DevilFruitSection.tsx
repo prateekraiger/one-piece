@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Tornado, Flame, Zap } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGear5 } from './Gear5Context';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const FRUIT_TYPES = [
   {
@@ -9,8 +15,9 @@ const FRUIT_TYPES = [
     desc: 'The power to alter one\'s body or environment. Infinite possibility. Chaos made manifest.',
     color: 'from-green-900/40 to-slate-900',
     border: 'group-hover:border-green-500/70',
-    icon: '🌪️',
+    icon: Tornado,
     image: 'https://i.pinimg.com/originals/05/c8/95/05c8952bb0b11ce78b73b45b18f5d4df.gif',
+    mainImage: 'https://i.pinimg.com/736x/a9/d2/4f/a9d24f4b3a3a7ca91f1f7e7e5c0c8e8e.jpg',
     glowColor: 'green',
     auraColor: 'rgba(34, 197, 94, 0.3)',
   },
@@ -21,8 +28,9 @@ const FRUIT_TYPES = [
     desc: 'The power of the beast. Evolution accelerated. The will of the animal resides within.',
     color: 'from-red-900/40 to-slate-900',
     border: 'group-hover:border-red-500/70',
-    icon: '🦁',
+    icon: Zap,
     image: 'https://i.pinimg.com/originals/e0/75/ba/e075ba13d38fe15bea4bf73aed06d0df.gif',
+    mainImage: 'https://i.pinimg.com/736x/0c/72/12/0c7212f3e5d5c5f5d5d5e5f5d5d5e5d5.jpg',
     glowColor: 'red',
     auraColor: 'rgba(239, 68, 68, 0.3)',
   },
@@ -33,16 +41,40 @@ const FRUIT_TYPES = [
     desc: 'The power of nature itself. Fluidity and destruction. To become the element is to forsake mortality.',
     color: 'from-amber-900/40 to-slate-900',
     border: 'group-hover:border-amber-500/70',
-    icon: '🔥',
+    icon: Flame,
     image: 'https://i.pinimg.com/originals/f1/14/85/f11485eb5caba65ed67a88ddad0a51c1.gif',
+    mainImage: 'https://i.pinimg.com/originals/63/c7/45/63c745e3c3f5e5d5d5e5f5d5d5e5d5d5.gif',
     glowColor: 'amber',
     auraColor: 'rgba(251, 191, 36, 0.3)',
   }
 ];
 
 const DevilFruitSection: React.FC = () => {
+  const { isGear5 } = useGear5();
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (titleRef.current) {
+      gsap.fromTo(
+        titleRef.current,
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          scrollTrigger: {
+            trigger: titleRef.current,
+            start: 'top 80%',
+            end: 'top 50%',
+            scrub: 1,
+          },
+        }
+      );
+    }
+  }, []);
+
   return (
-    <section id="devil-fruits" className="relative w-full py-16 px-6 bg-black overflow-hidden">
+    <section ref={sectionRef} id="devil-fruits" className="relative w-full py-16 px-6 bg-black overflow-hidden">
       {/* Atmosphere */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/10 via-black to-black opacity-50" />
 
@@ -93,7 +125,11 @@ const DevilFruitSection: React.FC = () => {
            >
              Forbidden Archives
            </motion.h2>
-           <h3 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">Devil Fruits</h3>
+           <h3 ref={titleRef} className={`text-4xl md:text-6xl font-serif font-bold mb-6 transition-all duration-700 ${
+             isGear5
+               ? 'text-white cloudy-text'
+               : 'text-white'
+           }`}>Devil Fruits</h3>
            <p className="max-w-2xl mx-auto text-slate-500 font-light italic">
              "They are the sea devil's incarnations. Those who eat them gain a power... but the sea hates them."
            </p>
@@ -141,7 +177,17 @@ const DevilFruitSection: React.FC = () => {
                 ))}
               </div>
 
-              {/* Devil Fruit Image */}
+              {/* Devil Fruit Main Image Background */}
+              <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-all duration-700">
+                <img
+                  src={type.mainImage || type.image}
+                  alt={type.name}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black" />
+              </div>
+
+              {/* Devil Fruit Icon */}
               <div className="absolute top-8 right-8 w-32 h-32 overflow-hidden rounded-full opacity-40 group-hover:opacity-90 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12"
                 style={{ filter: `url(#glow-${type.glowColor})` }}
               >
@@ -238,7 +284,7 @@ const DevilFruitSection: React.FC = () => {
               </div>
 
               <div className="h-full flex flex-col justify-end relative z-10">
-                <div className={`text-5xl mb-6 opacity-50 group-hover:opacity-100 transition-all duration-500 ${
+                <div className={`mb-6 opacity-50 group-hover:opacity-100 transition-all duration-500 ${
                   type.id === 'paramecia' ? 'group-hover:translate-x-2 group-hover:-translate-y-2' : ''
                 } ${
                    type.id === 'zoan' ? 'group-hover:scale-125' : ''
@@ -249,7 +295,7 @@ const DevilFruitSection: React.FC = () => {
                   filter: type.id === 'logia' ? `drop-shadow(0 0 20px ${type.auraColor})` : 'none'
                 }}
                 >
-                   {type.icon}
+                   <type.icon size={48} className="text-white" strokeWidth={1.5} />
                 </div>
                 <h4 className="text-3xl font-bold text-white mb-4 font-serif group-hover:text-shadow-lg transition-all"
                   style={{

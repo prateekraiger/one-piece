@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Shield, Eye, Zap } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGear5 } from './Gear5Context';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const HAKI_TYPES = [
   {
@@ -8,7 +14,8 @@ const HAKI_TYPES = [
     trans: 'Color of Arms',
     desc: 'An invisible armor that can be evolved into a weapon. It allows the user to bypass Devil Fruit defenses.',
     visualColor: 'bg-slate-900',
-    particle: '⚫',
+    icon: Shield,
+    image: 'https://i.pinimg.com/originals/b5/2f/9e/b52f9e8a8f7b6c5d4e3f2a1b0c9d8e7f.gif',
     glowColor: 'rgba(15, 23, 42, 0.8)',
     auraColor: 'rgba(71, 85, 105, 0.6)'
   },
@@ -18,7 +25,8 @@ const HAKI_TYPES = [
     trans: 'Color of Observation',
     desc: 'The power to hear the "voice" of living things. Grants extrasensory perception and future sight.',
     visualColor: 'bg-red-900/20',
-    particle: '🔴',
+    icon: Eye,
+    image: 'https://i.pinimg.com/originals/f2/e3/d4/f2e3d4c5b6a7988776655443322110ab.gif',
     glowColor: 'rgba(220, 38, 38, 0.8)',
     auraColor: 'rgba(239, 68, 68, 0.6)'
   },
@@ -28,7 +36,8 @@ const HAKI_TYPES = [
     trans: 'Color of the Supreme King',
     desc: 'The power to overwhelm the will of others. It cannot be trained, only strengthened by personal growth.',
     visualColor: 'bg-amber-900/20',
-    particle: '⚡',
+    icon: Zap,
+    image: 'https://i.pinimg.com/originals/d6/c7/b8/d6c7b8a9f0e1d2c3b4a5968778695a4b.gif',
     glowColor: 'rgba(217, 119, 6, 0.9)',
     auraColor: 'rgba(251, 191, 36, 0.7)'
   }
@@ -37,9 +46,31 @@ const HAKI_TYPES = [
 const HakiSection: React.FC = () => {
   const [activeHaki, setActiveHaki] = useState<string | null>(null);
   const [hoveredHaki, setHoveredHaki] = useState<string | null>(null);
+  const { isGear5 } = useGear5();
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (titleRef.current) {
+      gsap.fromTo(
+        titleRef.current,
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          scrollTrigger: {
+            trigger: titleRef.current,
+            start: 'top 80%',
+            end: 'top 50%',
+            scrub: 1,
+          },
+        }
+      );
+    }
+  }, []);
 
   return (
-    <section id="haki" className="relative w-full py-32 bg-[#0a0a0a] overflow-hidden text-center">
+    <section ref={sectionRef} id="haki" className="relative w-full py-32 bg-[#0a0a0a] overflow-hidden text-center">
       {/* SVG Filters for insane effects */}
       <svg className="hidden">
         <defs>
@@ -80,7 +111,11 @@ const HakiSection: React.FC = () => {
         </h2>
 
         <div className="relative pt-20 pb-12">
-           <h3 className="text-3xl font-bold text-white mb-2">HAKI</h3>
+           <h3 ref={titleRef} className={`text-3xl font-bold mb-2 transition-all duration-700 ${
+             isGear5
+               ? 'text-white cloudy-text'
+               : 'text-white'
+           }`}>HAKI</h3>
            <p className="text-slate-500 text-sm tracking-widest uppercase">The Ambition</p>
         </div>
 
@@ -109,6 +144,16 @@ const HakiSection: React.FC = () => {
                   } : {}}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
               >
+                {/* Background Image */}
+                <div className="absolute inset-0 opacity-10 transition-opacity duration-700 group-hover:opacity-20">
+                  <img
+                    src={haki.image}
+                    alt={haki.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black" />
+                </div>
+
                 {/* MEGA AURA EFFECTS */}
 
                 {/* Pulsing Aura Rings */}
@@ -285,8 +330,8 @@ const HakiSection: React.FC = () => {
 
                 <div className="relative h-full flex flex-col justify-end p-8 text-left z-10">
                   <motion.div layout="position" className="mb-4">
-                    <motion.span
-                      className="text-4xl block"
+                    <motion.div
+                      className="block"
                       style={{
                         filter: (isHovered || isActive) ? `drop-shadow(0 0 20px ${haki.glowColor})` : 'none'
                       }}
@@ -296,8 +341,8 @@ const HakiSection: React.FC = () => {
                       } : {}}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
-                      {haki.particle}
-                    </motion.span>
+                      <haki.icon size={48} className="text-white" strokeWidth={1.5} />
+                    </motion.div>
                   </motion.div>
 
                   <motion.h4
