@@ -1,61 +1,93 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import NoiseOverlay from './components/ui/NoiseOverlay';
 import SeaDust from './components/ui/SeaDust';
-import Hero from './components/Hero';
-import LuffyShowcase from './components/LuffyShowcase';
-import ArcTimeline from './components/ArcTimeline';
-import CharacterGrid from './components/CharacterGrid';
 import Footer from './components/Footer';
-import DevilFruitSection from './components/DevilFruitSection';
-import HakiSection from './components/HakiSection';
 import SmoothScroll from './components/SmoothScroll';
 import { Gear5Provider } from './components/Gear5Context';
 import Gear5Trigger from './components/Gear5Trigger';
+import { Menu, X } from 'lucide-react';
+
+// Pages
+import HomePage from './src/pages/HomePage';
+import VoyagePage from './src/pages/VoyagePage';
+import DevilFruitsPage from './src/pages/DevilFruitsPage';
+import HakiPage from './src/pages/HakiPage';
+import WantedPage from './src/pages/WantedPage';
+
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path ? 'text-amber-500' : 'text-white';
+
+  return (
+    <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center backdrop-blur-md bg-black/40 border-b border-white/5 transition-all duration-300">
+       <Link to="/" className="font-serif font-black text-xl text-white tracking-widest cursor-pointer hover:text-amber-500 transition-colors z-50">
+         OP ARCHIVE
+       </Link>
+
+       {/* Desktop Nav */}
+       <div className="hidden md:flex gap-8 text-white text-xs font-bold uppercase tracking-[0.2em]">
+         <Link to="/voyage" className={`hover:text-amber-500 transition-colors ${isActive('/voyage')}`}>Voyage</Link>
+         <Link to="/devil-fruits" className={`hover:text-amber-500 transition-colors ${isActive('/devil-fruits')}`}>Devil Fruits</Link>
+         <Link to="/haki" className={`hover:text-amber-500 transition-colors ${isActive('/haki')}`}>Haki</Link>
+         <Link to="/wanted" className={`hover:text-amber-500 transition-colors ${isActive('/wanted')}`}>Crew</Link>
+       </div>
+
+       {/* Mobile Menu Toggle */}
+       <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white z-50 hover:text-amber-500 transition-colors">
+         {isOpen ? <X size={24} /> : <Menu size={24} />}
+       </button>
+
+       {/* Mobile Nav Overlay */}
+       <AnimatePresence>
+         {isOpen && (
+           <motion.div
+             initial={{ opacity: 0, y: -20 }}
+             animate={{ opacity: 1, y: 0 }}
+             exit={{ opacity: 0, y: -20 }}
+             className="absolute top-0 left-0 w-full h-screen bg-black/95 flex flex-col items-center justify-center gap-8 text-xl font-serif font-bold uppercase tracking-widest md:hidden z-40"
+           >
+             <Link to="/" onClick={() => setIsOpen(false)} className="text-white hover:text-amber-500">Home</Link>
+             <Link to="/voyage" onClick={() => setIsOpen(false)} className="text-white hover:text-amber-500">Voyage</Link>
+             <Link to="/devil-fruits" onClick={() => setIsOpen(false)} className="text-white hover:text-amber-500">Devil Fruits</Link>
+             <Link to="/haki" onClick={() => setIsOpen(false)} className="text-white hover:text-amber-500">Haki</Link>
+             <Link to="/wanted" onClick={() => setIsOpen(false)} className="text-white hover:text-amber-500">Crew</Link>
+           </motion.div>
+         )}
+       </AnimatePresence>
+    </nav>
+  );
+};
 
 const App: React.FC = () => {
   return (
-    <Gear5Provider>
-      <SmoothScroll>
-        <main className="relative min-h-screen w-full bg-ocean-black text-slate-200 selection:bg-amber-500 selection:text-black">
-          <NoiseOverlay />
-          <SeaDust />
-          <Gear5Trigger />
+    <Router>
+      <Gear5Provider>
+        <SmoothScroll>
+          <main className="relative min-h-screen w-full bg-ocean-black text-slate-200 selection:bg-amber-500 selection:text-black">
+            <NoiseOverlay />
+            <SeaDust />
+            <Gear5Trigger />
+            <Navbar />
 
-          {/* Sticky Navigation */}
-          <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center backdrop-blur-sm bg-black/20 border-b border-white/5 transition-all duration-300 hover:bg-black/40">
-             <span className="font-serif font-black text-xl text-white tracking-widest cursor-pointer hover:text-amber-500 transition-colors">
-               OP ARCHIVE
-             </span>
-             <div className="hidden md:flex gap-8 text-white text-xs font-bold uppercase tracking-[0.2em]">
-               <a href="#voyage" className="hover:text-amber-500 transition-colors cursor-pointer">Voyage</a>
-               <a href="#powers" className="hover:text-amber-500 transition-colors cursor-pointer">Powers</a>
-               <a href="#crew" className="hover:text-amber-500 transition-colors cursor-pointer">Crew</a>
-             </div>
-          </nav>
+            <div className="pt-0">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/voyage" element={<VoyagePage />} />
+                <Route path="/devil-fruits" element={<DevilFruitsPage />} />
+                <Route path="/haki" element={<HakiPage />} />
+                <Route path="/wanted" element={<WantedPage />} />
+              </Routes>
+            </div>
 
-          <Hero />
-
-          <LuffyShowcase />
-
-          <div id="voyage">
-            <ArcTimeline />
-          </div>
-
-          {/* Power Systems */}
-          <div id="powers" className="relative z-10 border-t border-white/5">
-            <DevilFruitSection />
-            <HakiSection />
-          </div>
-
-          <div id="crew">
-            <CharacterGrid />
-          </div>
-
-          <Footer />
-        </main>
-      </SmoothScroll>
-    </Gear5Provider>
+            <Footer />
+          </main>
+        </SmoothScroll>
+      </Gear5Provider>
+    </Router>
   );
 };
 
