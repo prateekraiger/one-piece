@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence, LayoutGroup, useSpring } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, AnimatePresence, LayoutGroup, useMotionValue, useTransform, animate } from 'framer-motion';
 import { ARCS } from '../constants';
 import { Arc } from '../types';
 
@@ -8,36 +8,36 @@ const ArcCard: React.FC<{ arc: Arc; index: number; onSelect: (arc: Arc) => void 
     <motion.div
       layoutId={`card-${arc.id}`}
       onClick={() => onSelect(arc)}
-      className="group relative h-[60vh] md:h-[70vh] w-[80vw] md:w-[40vw] flex-shrink-0 cursor-pointer overflow-hidden rounded-3xl mx-4 md:mx-8 first:ml-0 last:mr-0 perspective-1000"
-      whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="group relative h-[65vh] md:h-[75vh] w-[85vw] md:w-[45vw] flex-shrink-0 cursor-pointer overflow-hidden rounded-2xl perspective-1000 shadow-2xl hover:shadow-amber-500/20"
+      whileHover={{ scale: 1.03, y: -10 }}
+      transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
-      <div className={`absolute inset-0 bg-gradient-to-br ${arc.color} opacity-20 group-hover:opacity-40 transition-opacity duration-700`} />
+      <div className={`absolute inset-0 bg-gradient-to-br ${arc.color} opacity-30 group-hover:opacity-50 transition-opacity duration-700 mix-blend-overlay`} />
 
-      <div className="relative h-full w-full overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md group-hover:border-amber-500/50 transition-colors duration-500">
+      <div className="relative h-full w-full overflow-hidden border-2 border-white/10 bg-black/60 backdrop-blur-sm group-hover:border-amber-500/70 transition-all duration-500">
         <motion.img
           layoutId={`image-${arc.id}`}
           src={arc.image}
           alt={arc.title}
-          className="absolute inset-0 h-full w-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-in-out"
+          className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000 ease-out"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500" />
 
-        <div className="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+        <div className="absolute bottom-0 left-0 p-10 w-full transform translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
           <motion.div layoutId={`content-${arc.id}`}>
-             <div className="flex items-center gap-4 mb-2 overflow-hidden">
-                <span className="text-amber-500 text-xs font-bold tracking-[0.2em] uppercase shrink-0">Log {String(index + 1).padStart(2, '0')}</span>
-                <div className="h-[1px] w-full bg-white/20 group-hover:bg-amber-500 transition-colors" />
+             <div className="flex items-center gap-4 mb-3 overflow-hidden">
+                <span className="text-amber-400 text-xs font-black tracking-[0.3em] uppercase shrink-0 drop-shadow-lg">Chapter {String(index + 1).padStart(2, '0')}</span>
+                <div className="h-[2px] w-full bg-gradient-to-r from-amber-500 to-transparent group-hover:from-amber-400 transition-colors" />
              </div>
 
-             <h2 className="font-serif text-3xl md:text-5xl font-bold text-white mb-2 leading-none tracking-tight">{arc.title}</h2>
-             <p className="text-slate-400 text-sm md:text-base line-clamp-2 md:line-clamp-3 max-w-md group-hover:text-slate-200 transition-colors delay-75">
+             <h2 className="font-serif text-4xl md:text-6xl font-black text-white mb-3 leading-none tracking-tighter drop-shadow-2xl">{arc.title}</h2>
+             <p className="text-slate-300 text-sm md:text-lg line-clamp-2 md:line-clamp-3 max-w-lg group-hover:text-white transition-colors delay-75 font-light leading-relaxed">
                {arc.description}
              </p>
 
-             <div className="mt-6 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                <span className="text-xs font-bold uppercase tracking-widest text-amber-500">Read Log</span>
-                <span className="text-xl text-amber-500 group-hover:translate-x-2 transition-transform">→</span>
+             <div className="mt-8 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all duration-500 delay-150">
+                <span className="text-xs font-black uppercase tracking-[0.2em] text-amber-400 drop-shadow-lg">Explore Arc</span>
+                <span className="text-2xl text-amber-400 group-hover:translate-x-3 transition-transform duration-300 drop-shadow-lg">→</span>
              </div>
           </motion.div>
         </div>
@@ -47,22 +47,19 @@ const ArcCard: React.FC<{ arc: Arc; index: number; onSelect: (arc: Arc) => void 
 };
 
 const ArcDetail: React.FC<{ arc: Arc; onClose: () => void }> = ({ arc, onClose }) => {
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = 'unset'; };
-  }, []);
-
   return (
     <motion.div
-      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 backdrop-blur-xl"
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/98 backdrop-blur-2xl"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6 }}
+      onClick={onClose}
     >
       <motion.div
         layoutId={`card-${arc.id}`}
         className="relative w-full h-full overflow-hidden flex flex-col md:flex-row"
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Cinematic Header Image */}
         <div className="relative w-full md:w-1/2 h-1/2 md:h-full overflow-hidden">
@@ -71,16 +68,16 @@ const ArcDetail: React.FC<{ arc: Arc; onClose: () => void }> = ({ arc, onClose }
             src={arc.image}
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black via-transparent to-transparent opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black via-black/40 to-transparent" />
         </div>
 
         {/* Content Section */}
-        <div className="relative w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center p-8 md:p-20 bg-black">
+        <div className="relative w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center p-8 md:p-20 bg-black overflow-y-auto">
            <button
              onClick={onClose}
-             className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors z-50 p-2"
+             className="absolute top-8 right-8 text-white/50 hover:text-amber-400 transition-colors z-50 p-3 rounded-full hover:bg-white/10"
            >
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
            </button>
 
            <motion.div
@@ -89,21 +86,21 @@ const ArcDetail: React.FC<{ arc: Arc; onClose: () => void }> = ({ arc, onClose }
              transition={{ delay: 0.3, duration: 0.8, ease: "circOut" }}
            >
              <div className="flex items-center gap-4 mb-6">
-               <span className="h-[1px] w-12 bg-amber-500" />
-               <h3 className="font-serif text-amber-500 text-lg md:text-xl italic">{arc.jpTitle}</h3>
+               <span className="h-[2px] w-16 bg-amber-500" />
+               <h3 className="font-serif text-amber-400 text-xl md:text-2xl italic font-semibold">{arc.jpTitle}</h3>
              </div>
 
-             <h1 className="font-serif text-4xl md:text-7xl font-black text-white mb-8 leading-[0.9] tracking-tighter">
+             <h1 className="font-serif text-5xl md:text-8xl font-black text-white mb-10 leading-[0.85] tracking-tighter">
                {arc.title.split(' ').map((word, i) => (
                  <span key={i} className="block">{word}</span>
                ))}
              </h1>
 
-             <blockquote className="text-lg md:text-2xl text-slate-300 font-serif italic border-l-2 border-amber-500 pl-6 py-2 mb-10 leading-relaxed">
+             <blockquote className="text-xl md:text-3xl text-slate-200 font-serif italic border-l-4 border-amber-500 pl-8 py-3 mb-12 leading-relaxed">
                "{arc.quote}"
              </blockquote>
 
-             <p className="text-slate-400 leading-relaxed mb-12 max-w-xl">
+             <p className="text-slate-300 text-lg leading-relaxed mb-12 max-w-xl font-light">
                {arc.description} The impact of this arc on the Grand Line was monumental, shaping the era that followed.
              </p>
 
@@ -115,38 +112,106 @@ const ArcDetail: React.FC<{ arc: Arc; onClose: () => void }> = ({ arc, onClose }
 };
 
 const ArcTimeline: React.FC = () => {
-  const targetRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedArc, setSelectedArc] = useState<Arc | null>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
+  const [isDragging, setIsDragging] = useState(false);
+  const x = useMotionValue(0);
+  const scrollProgress = useTransform(x, (value) => {
+    if (!scrollContainerRef.current) return 0;
+    const maxScroll = scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth;
+    return Math.abs(value) / maxScroll;
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-95%"]);
+  const handleDragEnd = (_: any, info: any) => {
+    setIsDragging(false);
+    if (!scrollContainerRef.current) return;
+    
+    const velocity = info.velocity.x;
+    const currentX = x.get();
+    const maxScroll = -(scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth);
+    
+    // Calculate target position based on velocity
+    let targetX = currentX + velocity * 0.5;
+    targetX = Math.max(maxScroll, Math.min(0, targetX));
+    
+    animate(x, targetX, {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+      mass: 1
+    });
+  };
 
-  // Smooth out the spring animation for the title
-  const titleY = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+  const scroll = (direction: 'left' | 'right') => {
+    if (!scrollContainerRef.current) return;
+    const scrollAmount = direction === 'left' ? 600 : -600;
+    const currentX = x.get();
+    const maxScroll = -(scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth);
+    let targetX = currentX + scrollAmount;
+    targetX = Math.max(maxScroll, Math.min(0, targetX));
+    
+    animate(x, targetX, {
+      type: "spring",
+      stiffness: 200,
+      damping: 30
+    });
+  };
 
   return (
     <LayoutGroup>
-      <section ref={targetRef} className="relative h-[500vh] bg-ocean-black">
-        <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden">
+      <section className="relative bg-gradient-to-b from-ocean-black via-slate-950 to-ocean-black py-32 overflow-hidden">
+        
+        {/* Background Elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px] animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '1s' }} />
+        </div>
 
-          {/* Background Elements */}
-          <div className="absolute inset-0 bg-ocean-black pointer-events-none">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[120px]" />
+        <div className="container mx-auto px-6 mb-16 relative z-10">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b-2 border-white/10 pb-8">
+            <div>
+              <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-6xl md:text-8xl font-serif font-black text-white tracking-tighter mb-4 uppercase"
+              >
+                The Voyage Log
+              </motion.h2>
+              <p className="text-amber-400 font-serif italic text-2xl tracking-wide">Chronicles of the Grand Line</p>
+            </div>
+            <div className="mt-6 md:mt-0 flex gap-4">
+               <button 
+                 onClick={() => scroll('left')} 
+                 className="w-14 h-14 rounded-full border-2 border-white/30 flex items-center justify-center hover:bg-amber-500 hover:border-amber-500 hover:text-black transition-all duration-300 text-white text-xl font-bold shadow-lg hover:shadow-amber-500/50"
+               >
+                 ←
+               </button>
+               <button 
+                 onClick={() => scroll('right')} 
+                 className="w-14 h-14 rounded-full border-2 border-white/30 flex items-center justify-center hover:bg-amber-500 hover:border-amber-500 hover:text-black transition-all duration-300 text-white text-xl font-bold shadow-lg hover:shadow-amber-500/50"
+               >
+                 →
+               </button>
+            </div>
           </div>
+        </div>
 
+        {/* Horizontal Scroll Container */}
+        <div className="relative overflow-hidden">
           <motion.div
-            style={{ y: titleY, opacity }}
-            className="absolute top-20 z-10 text-center"
+            ref={scrollContainerRef}
+            style={{ x }}
+            drag="x"
+            dragConstraints={{
+              left: -(scrollContainerRef.current?.scrollWidth ?? 0) + (scrollContainerRef.current?.clientWidth ?? 0),
+              right: 0
+            }}
+            dragElastic={0.1}
+            onDragStart={() => setIsDragging(true)}
+            onDragEnd={handleDragEnd}
+            className={`flex gap-10 px-6 md:px-16 py-8 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
           >
-            <h2 className="text-5xl md:text-8xl font-serif font-black text-white tracking-tight mb-4">THE VOYAGE LOG</h2>
-            <p className="text-amber-500 font-serif italic text-xl tracking-widest">Scroll to Traverse History</p>
-          </motion.div>
-
-          <motion.div style={{ x }} className="flex gap-4 px-20 relative z-20 items-center h-full">
             {ARCS.map((arc, index) => (
               <ArcCard
                 key={arc.id}
@@ -158,13 +223,15 @@ const ArcTimeline: React.FC = () => {
           </motion.div>
 
           {/* Scroll Progress Bar */}
-          <div className="absolute bottom-10 left-10 right-10 h-1 bg-white/10 rounded-full overflow-hidden">
+          <div className="mx-6 md:mx-16 mt-8 h-1 bg-white/10 rounded-full overflow-hidden">
              <motion.div
-               style={{ scaleX: scrollYProgress }}
-               className="h-full bg-amber-500 origin-left"
+               style={{ scaleX: scrollProgress }}
+               className="h-full bg-gradient-to-r from-amber-500 to-amber-300 origin-left"
              />
           </div>
         </div>
+
+        <p className="text-center text-slate-500 text-sm mt-12 font-light tracking-wide">← Drag to explore • Click to view details →</p>
       </section>
 
       <AnimatePresence>
