@@ -58,47 +58,79 @@ const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5, duration: 0.8 }}
-      className={`fixed right-6 top-1/2 -translate-y-1/2 z-[50] hidden md:flex flex-col items-center h-[70vh] w-20 py-8 rounded-full shadow-2xl overflow-hidden transition-colors duration-500 border-2 ${
+      className={`fixed right-6 top-1/2 -translate-y-1/2 z-[50] hidden md:flex flex-col items-center h-[70vh] w-20 py-8 rounded-full shadow-2xl overflow-hidden transition-all duration-700 border-2 ${
         isGear5
-          ? 'bg-white border-purple-200 shadow-purple-500/20'
-          : 'bg-[#1a1815] border-[#4a4036] shadow-black/80'
+          ? 'bg-gradient-to-b from-white via-purple-50 to-pink-50 border-purple-300 shadow-[0_0_50px_rgba(168,85,247,0.6)]'
+          : 'bg-gradient-to-b from-[#1a1815] via-[#2a2420] to-[#1a1815] border-[#6b5a44] shadow-[0_0_40px_rgba(0,0,0,0.9),inset_0_0_30px_rgba(245,158,11,0.1)]'
       }`}
     >
       {/* Paper Texture Overlay */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/aged-paper.png')]" />
+      <div className={`absolute inset-0 opacity-20 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/aged-paper.png')] transition-opacity duration-700 ${
+        isGear5 ? 'opacity-30' : 'opacity-20'
+      }`} />
+
+      {/* Decorative Inner Border */}
+      <div className={`absolute inset-2 rounded-full border transition-colors duration-700 ${
+        isGear5 ? 'border-purple-200/40' : 'border-amber-600/20'
+      }`} />
 
       {/* Top Label */}
-      <div className={`text-[10px] font-serif uppercase tracking-[0.2em] writing-vertical-rl rotate-180 mb-6 transition-colors ${
-        isGear5 ? 'text-purple-600' : 'text-[#8b7355]'
+      <div className={`text-[10px] font-serif uppercase tracking-[0.2em] writing-vertical-rl rotate-180 mb-6 transition-all duration-700 font-bold ${
+        isGear5 ? 'text-purple-600 drop-shadow-[0_2px_4px_rgba(168,85,247,0.5)]' : 'text-[#c9a967] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'
       }`}>
         Grand Line
       </div>
 
       <div className="relative flex-1 w-full flex justify-center">
         {/* The Track Line Container */}
-        <div className="absolute top-0 bottom-0 w-[4px] bg-black/10 rounded-full" />
+        <div className={`absolute top-0 bottom-0 w-[4px] rounded-full transition-colors duration-700 ${
+          isGear5 ? 'bg-purple-200/30' : 'bg-black/20'
+        }`} />
 
         {/* The Fill Line */}
         <motion.div
             style={{ height: topPosition }}
-            className={`absolute top-0 w-[4px] shadow-[0_0_15px_currentColor] rounded-full transition-colors duration-500 ${
-              isGear5 ? 'bg-purple-500 text-purple-500' : 'bg-amber-600 text-amber-600'
+            className={`absolute top-0 w-[4px] shadow-[0_0_20px_currentColor] rounded-full transition-all duration-700 ${
+              isGear5 
+                ? 'bg-gradient-to-b from-purple-500 via-pink-500 to-purple-500 text-purple-500' 
+                : 'bg-gradient-to-b from-amber-500 via-amber-600 to-amber-700 text-amber-600'
             }`}
         />
 
         {/* Nodes */}
-        {ARCS.map((_, i) => (
-          <div
-            key={i}
-            className={`absolute w-3 h-3 rounded-full border-2 transition-colors duration-500 ${
-              isGear5 ? 'bg-white border-purple-400' : 'bg-[#2a2620] border-[#8b7355]'
-            }`}
-             style={{
-               top: `${(i / (ARCS.length - 1)) * 100}%`,
-               zIndex: 10
-             }}
-          />
-        ))}
+        {ARCS.map((arc, i) => {
+          const progress_val = topPosition.get();
+          const nodeProgress = (i / (ARCS.length - 1)) * 100;
+          const isActive = parseFloat(String(progress_val)) >= nodeProgress;
+          
+          return (
+            <motion.div
+              key={i}
+              className={`absolute w-3 h-3 rounded-full border-2 transition-all duration-700 ${
+                isGear5 
+                  ? (isActive 
+                      ? 'bg-purple-500 border-white shadow-[0_0_10px_rgba(168,85,247,0.8)]' 
+                      : 'bg-white border-purple-300 shadow-[0_0_5px_rgba(168,85,247,0.3)]')
+                  : (isActive 
+                      ? 'bg-amber-500 border-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.8)]' 
+                      : 'bg-[#2a2620] border-[#8b7355] shadow-[0_0_5px_rgba(0,0,0,0.5)]')
+              }`}
+              style={{
+                top: `${nodeProgress}%`,
+                zIndex: 10
+              }}
+              animate={isActive ? {
+                scale: [1, 1.3, 1],
+              } : {}}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              title={arc.title}
+            />
+          );
+        })}
 
         {/* The Ship */}
         <motion.div
@@ -113,25 +145,43 @@ const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
              }}
              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
            >
-             <div className="relative hover:scale-125 transition-transform duration-300 cursor-help">
-               <ShowShip progress={progress} />
+             <div className={`relative hover:scale-125 transition-all duration-300 cursor-help ${
+               isGear5 ? 'drop-shadow-[0_0_15px_rgba(168,85,247,0.6)]' : 'drop-shadow-[0_0_10px_rgba(245,158,11,0.5)]'
+             }`}>
+               <ShowShip progress={progress} isGear5={isGear5} />
              </div>
            </motion.div>
         </motion.div>
       </div>
 
       {/* Bottom Label */}
-      <div className={`text-[10px] font-serif uppercase tracking-[0.2em] writing-vertical-rl rotate-180 mt-6 transition-colors ${
-        isGear5 ? 'text-purple-600' : 'text-[#8b7355]'
+      <div className={`text-[10px] font-serif uppercase tracking-[0.2em] writing-vertical-rl rotate-180 mt-6 transition-all duration-700 font-bold ${
+        isGear5 ? 'text-purple-600 drop-shadow-[0_2px_4px_rgba(168,85,247,0.5)]' : 'text-[#c9a967] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'
       }`}>
         New World
       </div>
+
+      {/* Glowing Effect */}
+      <motion.div 
+        className={`absolute inset-0 rounded-full blur-2xl transition-all duration-700 pointer-events-none ${
+          isGear5 ? 'bg-purple-400/20' : 'bg-amber-600/10'
+        }`}
+        animate={{
+          opacity: [0.3, 0.6, 0.3]
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        style={{ zIndex: -1 }}
+      />
     </motion.div>
   );
 };
 
 // Component to handle ship switching conditionally
-const ShowShip: React.FC<{ progress: MotionValue<number> }> = ({ progress }) => {
+const ShowShip: React.FC<{ progress: MotionValue<number>; isGear5?: boolean }> = ({ progress, isGear5 }) => {
     const [isMerry, setIsMerry] = React.useState(true);
 
     React.useEffect(() => {
@@ -142,7 +192,11 @@ const ShowShip: React.FC<{ progress: MotionValue<number> }> = ({ progress }) => 
         return () => unsubscribe();
     }, [progress, isMerry]);
 
-    return isMerry ? <MerryIcon /> : <SunnyIcon />;
+    return (
+      <div className={`transition-all duration-700 ${isGear5 ? 'brightness-110 saturate-150' : ''}`}>
+        {isMerry ? <MerryIcon /> : <SunnyIcon />}
+      </div>
+    );
 }
 
 export default GrandLineMap;
