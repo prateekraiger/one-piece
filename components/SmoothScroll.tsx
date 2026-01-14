@@ -6,13 +6,8 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     // Ultra-smooth Awwwards-style scrolling
     const lenis = new Lenis({
-      duration: 1.8,
-      easing: (t) => {
-        // Custom easing for buttery smooth feel
-        return t < 0.5
-          ? 4 * t * t * t
-          : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      },
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Standard expo out for snappy feel
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,

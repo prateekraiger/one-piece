@@ -122,7 +122,7 @@ const ArcTimeline: React.FC = () => {
   });
 
   // Transform scroll into horizontal movement
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-90%"]); // Adjusted end point
+  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-65%"]); // Adjusted to stop earlier without empty space
   const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]); // Fade out instruction faster
 
   return (
@@ -130,7 +130,7 @@ const ArcTimeline: React.FC = () => {
       <section
         ref={sectionRef}
         className="relative bg-gradient-to-b from-ocean-black via-slate-950 to-ocean-black overflow-hidden"
-        style={{ height: '200vh' }} // Extended height for scroll-driven animation
+        style={{ height: '180vh' }} // Reduced height for tighter scroll
       >
 
         {/* Sticky container for horizontal scroll effect */}
@@ -160,7 +160,7 @@ const ArcTimeline: React.FC = () => {
             <motion.div
               ref={scrollContainerRef}
               style={{ x }}
-              className="flex gap-10 px-6 md:px-16 will-change-transform"
+              className="flex gap-10 px-6 md:px-16 will-change-transform pt-20" // added pt-20 to move cards down
             >
               {ARCS.map((arc, index) => (
                 <ArcCard
@@ -170,7 +170,7 @@ const ArcTimeline: React.FC = () => {
                   onSelect={setSelectedArc}
                 />
               ))}
-              <div className="w-screen shrink-0" /> {/* Spacer for end scroll */}
+              {/* Spacer removed to eliminate gap */}
             </motion.div>
           </div>
 
