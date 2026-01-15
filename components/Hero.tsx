@@ -70,16 +70,16 @@ const Hero: React.FC = () => {
           transition={{ duration: 1.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           <motion.span
-            className="mb-6 block text-xl font-black tracking-[0.6em] text-amber-400 font-sans uppercase drop-shadow-2xl"
+            className="mb-4 md:mb-6 block text-sm md:text-xl font-black tracking-[0.3em] md:tracking-[0.6em] text-amber-400 font-sans uppercase drop-shadow-2xl px-4"
             initial={{ letterSpacing: '0.2em' }}
-            animate={{ letterSpacing: '0.6em' }}
+            animate={{ letterSpacing: ['0.2em', '0.6em'] }}
             transition={{ duration: 1.5, ease: "easeOut" }}
           >
-            The Great Pirate Era
+            The Journey of Dreams
           </motion.span>
 
           <motion.h1
-            className="font-serif text-7xl md:text-[12rem] font-black tracking-tighter text-white drop-shadow-2xl leading-none"
+            className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] xl:text-[12rem] font-black tracking-tighter text-white drop-shadow-2xl leading-none px-4"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -90,12 +90,12 @@ const Hero: React.FC = () => {
           </motion.h1>
 
           <motion.p
-            className="mt-8 max-w-3xl text-2xl md:text-3xl font-light text-slate-200 font-serif italic opacity-90 drop-shadow-xl leading-relaxed"
+            className="mt-6 md:mt-8 max-w-3xl text-lg sm:text-xl md:text-2xl lg:text-3xl font-light text-slate-200 font-serif italic opacity-90 drop-shadow-xl leading-relaxed px-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.6 }}
           >
-            "I'm gonna be King of the Pirates."
+            "Where the sea calls and adventure awaits, we chase our dreams with unwavering resolve."
           </motion.p>
 
           {/* Decorative Line */}
@@ -108,18 +108,18 @@ const Hero: React.FC = () => {
         </motion.div>
 
         <motion.div
-          className="absolute bottom-16 left-1/2 -translate-x-1/2"
+          className="absolute bottom-12 md:bottom-16 left-1/2 -translate-x-1/2"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 1.2, repeat: Infinity, repeatType: "reverse" }}
         >
-          <div className="flex flex-col items-center gap-3">
-            <span className="text-sm uppercase tracking-[0.3em] text-amber-400 font-bold drop-shadow-lg">Begin the Voyage</span>
+          <div className="flex flex-col items-center gap-2 md:gap-3">
+            <span className="text-xs md:text-sm uppercase tracking-[0.3em] text-amber-400 font-bold drop-shadow-lg">Scroll to Explore</span>
             <div className="relative">
-              <div className="h-20 w-[2px] bg-gradient-to-b from-amber-500 to-transparent" />
+              <div className="h-16 md:h-20 w-[2px] bg-gradient-to-b from-amber-500 to-transparent" />
               <motion.div
-                className="absolute top-0 left-0 h-8 w-[2px] bg-amber-400"
-                animate={{ y: [0, 40, 0] }}
+                className="absolute top-0 left-0 h-6 md:h-8 w-[2px] bg-amber-400"
+                animate={{ y: [0, 32, 0] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               />
             </div>
