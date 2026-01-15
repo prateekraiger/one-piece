@@ -58,11 +58,12 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
             --gear5-white: #ffffff;
             --gear5-blue-light: #e0f2fe; /* Sky 100 */
             --gear5-blue: #38bdf8;       /* Sky 400 */
-            --gear5-blue-dark: #0284c7;  /* Sky 600 */
+            --gear5-blue-dark: #0369a1;  /* Sky 700 */
             --gear5-blue-accent: #0ea5e9; /* Sky 500 */
-            --gear5-gold: #fbbf24;
-            --gear5-amber: #f59e0b;
-            --gear5-gradient: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #bae6fd 100%);
+            --gear5-gold: #fbbf24;       /* Amber 400 */
+            --gear5-amber: #f59e0b;      /* Amber 500 */
+            --gear5-sun: #fcd34d;        /* Yellow 300 */
+            --gear5-gradient: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #fef3c7 100%);
           }
 
           /* ========== CLOUDY TEXT ANIMATION ========== */
@@ -99,9 +100,9 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
           body.gear5-active {
             background: linear-gradient(to bottom,
               #ffffff 0%,
-              #f0f9ff 25%,
-              #e0f2fe 50%,
-              #f0f9ff 75%,
+              #f0f9ff 15%,
+              #fef3c7 30%,
+              #f0f9ff 60%,
               #ffffff 100%) !important;
             color: #0f172a !important; /* Slate 900 */
             overflow-x: hidden;
@@ -111,8 +112,9 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
           /* Main Container */
           body.gear5-active main {
             animation: drumPulse 1.2s ease-in-out infinite;
-            background: radial-gradient(circle at 20% 30%, rgba(251, 191, 36, 0.1), transparent 50%),
-                        radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.1), transparent 50%) !important;
+            background: radial-gradient(circle at 20% 30%, rgba(251, 191, 36, 0.15), transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(56, 189, 248, 0.15), transparent 50%),
+                        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1), transparent 80%) !important;
           }
 
           @keyframes drumPulse {
