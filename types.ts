@@ -19,6 +19,8 @@ export interface Character {
   description: string;
   quote: string;
   color: string;
+  bgGradient?: string;
+  imageOverlay?: string;
 }
 
 export interface Gear {

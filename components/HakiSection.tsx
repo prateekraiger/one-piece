@@ -15,7 +15,7 @@ const HAKI_TYPES = [
     desc: 'An invisible armor that can be evolved into a weapon. It allows the user to bypass Devil Fruit defenses.',
     visualColor: 'bg-slate-900',
     icon: Shield,
-    image: 'https://i.pinimg.com/originals/b5/2f/9e/b52f9e8a8f7b6c5d4e3f2a1b0c9d8e7f.gif',
+    image: '/images/haki-armament-default.png',
     gear5Image: '/images/haki-armament.png',
     glowColor: 'rgba(15, 23, 42, 0.8)',
     auraColor: 'rgba(71, 85, 105, 0.6)'
@@ -27,7 +27,7 @@ const HAKI_TYPES = [
     desc: 'The power to hear the "voice" of living things. Grants extrasensory perception and future sight.',
     visualColor: 'bg-red-900/20',
     icon: Eye,
-    image: 'https://i.pinimg.com/originals/f2/e3/d4/f2e3d4c5b6a7988776655443322110ab.gif',
+    image: '/images/haki-observation-default.png',
     gear5Image: '/images/haki-observation.png',
     glowColor: 'rgba(220, 38, 38, 0.8)',
     auraColor: 'rgba(239, 68, 68, 0.6)'
@@ -39,7 +39,7 @@ const HAKI_TYPES = [
     desc: 'The power to overwhelm the will of others. It cannot be trained, only strengthened by personal growth.',
     visualColor: 'bg-amber-900/20',
     icon: Zap,
-    image: 'https://i.pinimg.com/originals/d6/c7/b8/d6c7b8a9f0e1d2c3b4a5968778695a4b.gif',
+    image: '/images/haki-conqueror-default.png',
     gear5Image: '/images/haki-conqueror.png',
     glowColor: 'rgba(217, 119, 6, 0.9)',
     auraColor: 'rgba(251, 191, 36, 0.7)'
@@ -149,13 +149,13 @@ const HakiSection: React.FC = () => {
                 transition={{ duration: 0.4, ease: "easeInOut" }}
               >
                 {/* Background Image */}
-                <div className={`absolute inset-0 transition-opacity duration-700 ${isGear5 ? 'opacity-100' : 'opacity-60 group-hover:opacity-80'}`}>
+                <div className={`absolute inset-0 transition-opacity duration-700 opacity-100`}>
                   <img
                     src={isGear5 && (haki as any).gear5Image ? (haki as any).gear5Image : haki.image}
                     alt={haki.name}
                     className={`w-full h-full object-cover transition-all duration-700 ${isGear5 ? 'brightness-[0.95] contrast-110 saturate-110 drop-shadow-lg' : ''}`}
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-b ${isGear5 ? 'from-black/0 via-transparent to-transparent' : 'from-black/80 via-black/50 to-black'}`} />
+                  <div className={`absolute inset-0 bg-gradient-to-b ${isGear5 ? 'from-black/0 via-transparent to-transparent' : 'from-transparent via-transparent to-black/90'}`} />
                 </div>
 
                 {/* MEGA AURA EFFECTS */}

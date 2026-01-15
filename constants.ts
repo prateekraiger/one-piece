@@ -67,6 +67,8 @@ export const CHARACTERS: Character[] = [
     image: '/characters/luffy.png',
     crew: true,
     color: 'from-red-600 to-red-900',
+    bgGradient: 'from-red-900 to-black',
+    imageOverlay: 'from-transparent via-red-900/20 to-red-900',
     description: 'The Captain of the Straw Hat Pirates. He ate the Gomu Gomu no Mi, becoming a rubber human. His dream is to find the One Piece and become the King of the Pirates. He fights with complete freedom.',
     quote: "I'm gonna be King of the Pirates!"
   },
@@ -79,6 +81,8 @@ export const CHARACTERS: Character[] = [
     image: '/characters/zoro.png',
     crew: true,
     color: 'from-green-600 to-green-900',
+    bgGradient: 'from-green-900 to-black',
+    imageOverlay: 'from-transparent via-green-900/20 to-green-900',
     description: 'A master swordsman who practices the Three Sword Style. He aims to become the World\'s Greatest Swordsman. His loyalty to his captain is absolute, and his ambition cuts through steel.',
     quote: "Nothing happened."
   },
@@ -90,7 +94,9 @@ export const CHARACTERS: Character[] = [
     role: 'Navigator',
     image: '/characters/nami.png',
     crew: true,
-    color: 'from-orange-400 to-orange-700',
+    color: 'from-pink-500 to-pink-700',
+    bgGradient: 'from-pink-900 to-black',
+    imageOverlay: 'from-transparent via-pink-900/20 to-pink-900',
     description: 'A genius navigator who can predict the weather with her body. She dreams of drawing a map of the entire world. She fights with the Clima-Tact, manipulating the weather itself.',
     quote: "Luffy... Help me."
   },
@@ -103,6 +109,8 @@ export const CHARACTERS: Character[] = [
     image: '/characters/usopp.png',
     crew: true,
     color: 'from-yellow-600 to-amber-800',
+    bgGradient: 'from-amber-900 to-black',
+    imageOverlay: 'from-transparent via-amber-900/20 to-amber-900',
     description: 'A sniper with terrifying accuracy and a negative attitude. He dreams of becoming a brave warrior of the sea. His lies often come true, and his aim never falters when it matters.',
     quote: "I have 8,000 followers!"
   },
@@ -115,6 +123,8 @@ export const CHARACTERS: Character[] = [
     image: '/characters/sanji.png',
     crew: true,
     color: 'from-blue-600 to-blue-900',
+    bgGradient: 'from-slate-900 to-black',
+    imageOverlay: 'from-transparent via-slate-900/20 to-slate-900',
     description: 'A chef who seeks the All Blue. He fights only with his legs to protect his hands for cooking. A gentleman who will never kick a woman, even if it kills him.',
     quote: "I was just... lighting my cigarette."
   },
@@ -127,6 +137,8 @@ export const CHARACTERS: Character[] = [
     image: '/characters/chopper.png',
     crew: true,
     color: 'from-pink-400 to-pink-700',
+    bgGradient: 'from-rose-900 to-black',
+    imageOverlay: 'from-transparent via-rose-900/20 to-rose-900',
     description: 'A reindeer who ate the Hito Hito no Mi. He is a skilled doctor who wants to cure every disease. Though often mistaken for a pet, he is a monster in his own right.',
     quote: "I'll become a doctor who can cure anything!"
   },
@@ -139,6 +151,8 @@ export const CHARACTERS: Character[] = [
     image: '/characters/robin.png',
     crew: true,
     color: 'from-purple-600 to-purple-900',
+    bgGradient: 'from-purple-900 to-black',
+    imageOverlay: 'from-transparent via-purple-900/20 to-purple-900',
     description: 'The sole survivor of Ohara. She can read Poneglyphs and seeks the true history of the world. For years she ran, but now she has found a place to call home.',
     quote: "I want to live!"
   },
@@ -151,6 +165,8 @@ export const CHARACTERS: Character[] = [
     image: '/characters/franky.png',
     crew: true,
     color: 'from-cyan-500 to-cyan-800',
+    bgGradient: 'from-cyan-900 to-black',
+    imageOverlay: 'from-transparent via-cyan-900/20 to-cyan-900',
     description: 'A cyborg shipwright who built the Thousand Sunny. He dreams of creating a ship that can sail to the end of the world. He runs on cola and is always SUPER!',
     quote: "SUUUUPER!"
   },
@@ -163,6 +179,8 @@ export const CHARACTERS: Character[] = [
     image: '/characters/brook.png',
     crew: true,
     color: 'from-slate-200 to-slate-500',
+    bgGradient: 'from-gray-900 to-black',
+    imageOverlay: 'from-transparent via-gray-900/20 to-gray-900',
     description: 'A revived skeleton musician. He waited 50 years to keep a promise to a whale. He fights with the chill of the underworld and cuts the soul itself.',
     quote: "May I see your panties?"
   },
@@ -175,6 +193,8 @@ export const CHARACTERS: Character[] = [
     image: '/characters/jinbe.png',
     crew: true,
     color: 'from-indigo-600 to-indigo-900',
+    bgGradient: 'from-indigo-900 to-black',
+    imageOverlay: 'from-transparent via-indigo-900/20 to-indigo-900',
     description: 'A whale shark Fish-Man and master of Fish-Man Karate. He dreams of peace between humans and Fish-Men. A man of honor who joined the crew after settling his debts.',
     quote: "I'm a man who wants to join the future Pirate King's crew!"
   }

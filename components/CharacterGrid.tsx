@@ -15,23 +15,23 @@ const CharacterDetail: React.FC<{ character: Character; onClose: () => void }> =
       transition={{ duration: 0.5 }}
       onClick={onClose}
     >
-      <motion.div
-         layoutId={`char-card-${character.id}`}
-         className="relative w-full h-full flex flex-col md:flex-row overflow-hidden bg-slate-900"
-         onClick={(e) => e.stopPropagation()}
-      >
-        {/* Cinematic Character Image */}
-        <div className="relative w-full md:w-1/2 h-1/2 md:h-full bg-black">
-           <motion.img
-            layoutId={`char-image-${character.id}`}
-            src={character.image}
-            className="absolute inset-0 w-full h-full object-contain md:object-cover"
-          />
-          <div className={`absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r ${isGear5 ? 'from-white via-white/50 to-transparent' : 'from-slate-900 via-transparent to-transparent'}`} />
-        </div>
+         <motion.div
+           layoutId={`char-card-${character.id}`}
+           className={`relative w-full h-full flex flex-col md:flex-row overflow-hidden ${isGear5 ? 'bg-white' : 'bg-black'}`} // Changed base bg to black for darker contrast
+           onClick={(e) => e.stopPropagation()}
+        >
+          {/* Cinematic Character Image */}
+          <div className="relative w-full md:w-1/2 h-1/2 md:h-full bg-black">
+             <motion.img
+              layoutId={`char-image-${character.id}`}
+              src={character.image}
+             className="absolute inset-0 w-full h-full object-contain md:object-cover"
+            />
+            <div className={`absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r ${isGear5 ? 'from-white via-white/50 to-transparent' : 'to-transparent'} ${isGear5 ? '' : (character.imageOverlay || 'from-slate-900 via-transparent')}`} />
+          </div>
 
         {/* Content Panel */}
-        <div className="relative w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center p-8 md:p-20 overflow-y-auto">
+        <div className={`relative w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center p-8 md:p-20 overflow-y-auto ${isGear5 ? 'bg-white' : `bg-gradient-to-br ${character.bgGradient || 'from-slate-900 to-slate-950'}`}`}>
            <button
              onClick={onClose}
              className={`absolute top-8 right-8 transition-colors z-50 p-2 ${isGear5 ? 'text-slate-400 hover:text-sky-500' : 'text-white/50 hover:text-amber-500'}`}
