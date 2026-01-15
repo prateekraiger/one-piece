@@ -5,8 +5,7 @@ import ArcTimeline from '../../components/ArcTimeline';
 import DevilFruitSection from '../../components/DevilFruitSection';
 import HakiSection from '../../components/HakiSection';
 import CharacterGrid from '../../components/CharacterGrid';
-import MemoriesGallery from '../../components/MemoriesGallery';
-import LegacyQuotes from '../../components/LegacyQuotes';
+
 
 const HomePage: React.FC = () => {
   return (
@@ -23,13 +22,7 @@ const HomePage: React.FC = () => {
         <HakiSection />
       </div>
 
-      <div id="memories">
-        <MemoriesGallery />
-      </div>
 
-      <div id="legacy">
-        <LegacyQuotes />
-      </div>
 
       <div id="crew">
         <CharacterGrid />
