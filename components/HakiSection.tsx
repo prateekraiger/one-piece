@@ -16,6 +16,7 @@ const HAKI_TYPES = [
     visualColor: 'bg-slate-900',
     icon: Shield,
     image: 'https://i.pinimg.com/originals/b5/2f/9e/b52f9e8a8f7b6c5d4e3f2a1b0c9d8e7f.gif',
+    gear5Image: '/images/haki-armament.png',
     glowColor: 'rgba(15, 23, 42, 0.8)',
     auraColor: 'rgba(71, 85, 105, 0.6)'
   },
@@ -27,6 +28,7 @@ const HAKI_TYPES = [
     visualColor: 'bg-red-900/20',
     icon: Eye,
     image: 'https://i.pinimg.com/originals/f2/e3/d4/f2e3d4c5b6a7988776655443322110ab.gif',
+    gear5Image: '/images/haki-observation.png',
     glowColor: 'rgba(220, 38, 38, 0.8)',
     auraColor: 'rgba(239, 68, 68, 0.6)'
   },
@@ -38,6 +40,7 @@ const HAKI_TYPES = [
     visualColor: 'bg-amber-900/20',
     icon: Zap,
     image: 'https://i.pinimg.com/originals/d6/c7/b8/d6c7b8a9f0e1d2c3b4a5968778695a4b.gif',
+    gear5Image: '/images/haki-conqueror.png',
     glowColor: 'rgba(217, 119, 6, 0.9)',
     auraColor: 'rgba(251, 191, 36, 0.7)'
   }
@@ -70,7 +73,7 @@ const HakiSection: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="haki" className="relative w-full py-32 bg-[#0a0a0a] overflow-hidden text-center">
+    <section ref={sectionRef} id="haki" className={`relative w-full py-32 overflow-hidden text-center transition-colors duration-1000 ${isGear5 ? 'bg-white' : 'bg-[#0a0a0a]'}`}>
       {/* SVG Filters for insane effects */}
       <svg className="hidden">
         <defs>
@@ -106,7 +109,7 @@ const HakiSection: React.FC = () => {
       </svg>
 
       <div className="container mx-auto px-6 relative z-10">
-        <h2 className="text-5xl md:text-7xl font-serif font-black text-white/10 mb-8 select-none absolute top-10 left-1/2 -translate-x-1/2 w-full">
+        <h2 className={`text-5xl md:text-7xl font-serif font-black mb-8 select-none absolute top-10 left-1/2 -translate-x-1/2 w-full ${isGear5 ? 'text-slate-200/50' : 'text-white/10'}`}>
           WILLPOWER
         </h2>
 
@@ -131,11 +134,12 @@ const HakiSection: React.FC = () => {
                 onClick={() => setActiveHaki(isActive ? null : haki.id)}
                 onHoverStart={() => setHoveredHaki(haki.id)}
                 onHoverEnd={() => setHoveredHaki(null)}
-                className={`relative cursor-pointer overflow-hidden rounded-2xl border-2 transition-all duration-700 ${
-                  isActive ? 'flex-[3] border-white/30' : 'flex-[1] hover:border-white/20 border-white/5'
-                } ${haki.visualColor}`}
+                whileHover={{ scale: 1.02 }}
+                className={`relative cursor-pointer overflow-hidden rounded-2xl border-2 transition-all duration-500 ease-out ${
+                  isActive ? `flex-[3] ${isGear5 ? 'border-sky-400 shadow-[0_0_60px_rgba(56,189,248,0.6)] scale-[1.01]' : 'border-white/30'}` : `flex-[1] ${isGear5 ? 'border-sky-100 hover:border-sky-300 hover:shadow-[0_0_40px_rgba(56,189,248,0.5)]' : 'hover:border-white/20 border-white/5'}`
+                } ${isGear5 ? 'bg-slate-900' : haki.visualColor}`}
                 style={{
-                  boxShadow: isHovered || isActive ? `0 0 60px ${haki.glowColor}, inset 0 0 60px ${haki.auraColor}` : 'none'
+                  boxShadow: isHovered || isActive ? `0 0 80px ${haki.glowColor}, inset 0 0 40px ${haki.auraColor}` : 'none'
                 }}
                 // Conqueror's Pressure Effect (Shake)
                 animate={isActive && haki.id === 'conqueror' ? {
@@ -145,13 +149,13 @@ const HakiSection: React.FC = () => {
                 transition={{ duration: 0.4, ease: "easeInOut" }}
               >
                 {/* Background Image */}
-                <div className="absolute inset-0 opacity-10 transition-opacity duration-700 group-hover:opacity-20">
+                <div className={`absolute inset-0 transition-opacity duration-700 ${isGear5 ? 'opacity-100' : 'opacity-60 group-hover:opacity-80'}`}>
                   <img
-                    src={haki.image}
+                    src={isGear5 && (haki as any).gear5Image ? (haki as any).gear5Image : haki.image}
                     alt={haki.name}
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full object-cover transition-all duration-700 ${isGear5 ? 'brightness-[0.95] contrast-110 saturate-110 drop-shadow-lg' : ''}`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black" />
+                  <div className={`absolute inset-0 bg-gradient-to-b ${isGear5 ? 'from-black/0 via-transparent to-transparent' : 'from-black/80 via-black/50 to-black'}`} />
                 </div>
 
                 {/* MEGA AURA EFFECTS */}
@@ -326,7 +330,7 @@ const HakiSection: React.FC = () => {
                    </>
                 )}
 
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/90 z-0" />
+                <div className={`absolute inset-0 bg-gradient-to-b z-0 ${isGear5 ? 'hidden' : 'from-transparent to-black/90'}`} />
 
                 <div className="relative h-full flex flex-col justify-end p-8 text-left z-10">
                   <motion.div layout="position" className="mb-4">
@@ -341,17 +345,17 @@ const HakiSection: React.FC = () => {
                       } : {}}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
-                      <haki.icon size={48} className="text-white" strokeWidth={1.5} />
+                      <haki.icon size={48} className={isGear5 ? `text-${haki.glowColor}` : 'text-white'} strokeWidth={1.5} style={{ color: isGear5 && haki.id === 'armament' ? '#334155' : undefined }} />
                     </motion.div>
                   </motion.div>
 
                   <motion.h4
                     layout="position"
-                    className={`font-serif text-2xl font-bold text-white mb-1 transition-all duration-300 ${isActive ? 'text-4xl' : ''}`}
+                    className={`font-serif text-2xl font-bold mb-1 transition-all duration-300 ${isActive ? 'text-4xl' : ''} ${isGear5 ? 'text-sky-300' : 'text-white'}`}
                     style={
                       (isActive || isHovered) ? {
                         textShadow: `0 0 30px ${haki.glowColor}, 0 0 60px ${haki.glowColor}`,
-                        ...(isActive && haki.id === 'armament' ? { color: '#e2e8f0' } : {})
+                        ...(isActive && haki.id === 'armament' ? { color: isGear5 ? '#7dd3fc' : '#e2e8f0' } : {})
                       } : {}
                     }
                   >
@@ -376,23 +380,23 @@ const HakiSection: React.FC = () => {
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden"
                       >
-                        <p className="text-slate-300 leading-relaxed max-w-lg relative mb-6">
+                        <p className={`leading-relaxed max-w-lg relative mb-6 font-medium ${isGear5 ? 'text-sky-200' : 'text-slate-300'}`}>
                           {haki.desc}
                         </p>
 
                         {/* Visual Interaction Area */}
-                        <div className="mt-8 h-32 w-full rounded-lg border-2 border-white/10 bg-black/50 flex items-center justify-center relative overflow-hidden group/demo"
+                        <div className={`mt-8 h-32 w-full rounded-lg border-2 flex items-center justify-center relative overflow-hidden group/demo ${isGear5 ? 'border-sky-200 bg-white/50' : 'border-white/10 bg-black/50'}`}
                           style={{
                             boxShadow: `inset 0 0 30px ${haki.auraColor}`
                           }}
                         >
-                           <span className="text-xs text-slate-600 uppercase z-10 relative font-bold tracking-wider">
+                           <span className={`text-xs uppercase z-10 relative font-bold tracking-wider ${isGear5 ? 'text-sky-600' : 'text-slate-600'}`}>
                              {haki.id === 'armament' ? 'Hardening Active' : haki.id === 'observation' ? 'Future Sight Active' : 'Conqueror\'s Haki Released'}
                            </span>
 
                            {haki.id === 'armament' && (
                              <motion.div
-                               className="absolute inset-0 bg-slate-900 opacity-0 group-hover/demo:opacity-90 transition-opacity duration-500 rounded-lg"
+                               className={`absolute inset-0 opacity-0 group-hover/demo:opacity-90 transition-opacity duration-500 rounded-lg ${isGear5 ? 'bg-slate-700' : 'bg-slate-900'}`}
                                style={{ filter: 'url(#metallic-shine)' }}
                              />
                            )}

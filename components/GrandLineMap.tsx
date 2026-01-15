@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { motion, useMotionValue } from 'framer-motion';
+import { motion, useMotionValue, MotionValue } from 'framer-motion';
 import { ARCS } from '../constants';
 import { useGear5 } from './Gear5Context';
 import gsap from 'gsap';
@@ -7,6 +7,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+interface GrandLineMapProps {
+  progress?: MotionValue<number>;
+}
+
+// ... Icons ...
 const MerryIcon = () => (
   <svg width="50" height="50" viewBox="0 0 100 100" className="drop-shadow-md">
     <g transform="translate(10, 10) scale(0.8)">
@@ -47,7 +52,7 @@ const SunnyIcon = () => (
     </svg>
 );
 
-const GrandLineMap: React.FC = () => {
+const GrandLineMap: React.FC<GrandLineMapProps> = ({ progress }) => {
   const { isGear5 } = useGear5();
   const mapRef = useRef<HTMLDivElement>(null);
   const shipRef = useRef<HTMLDivElement>(null);
@@ -58,6 +63,39 @@ const GrandLineMap: React.FC = () => {
   useEffect(() => {
     if (!mapRef.current || !shipRef.current || !lineRef.current) return;
 
+    // Use external progress if provided
+    if (progress) {
+       const unsubscribe = progress.on("change", (latest: number) => {
+         setCurrentProgress(latest);
+
+         if (lineRef.current) lineRef.current.style.height = `${latest * 95}%`;
+         if (shipRef.current) shipRef.current.style.top = `${latest * 95}%`;
+
+         if (latest > 0.45 && isMerry) {
+           setIsMerry(false);
+         } else if (latest <= 0.45 && !isMerry) {
+           setIsMerry(true);
+         }
+       });
+
+       // Initial pulse animation still needs GSAP or simple CSS
+       const ctx = gsap.context(() => {
+          gsap.to(mapRef.current, {
+            scale: 1.02,
+            duration: 2,
+            yoyo: true,
+            repeat: -1,
+            ease: 'power1.inOut',
+          });
+       }, mapRef);
+
+       return () => {
+         unsubscribe();
+         ctx.revert();
+       };
+    }
+
+    // Fallback to internal scroll trigger
     const ctx = gsap.context(() => {
       // Animate the progress line based on scroll
       gsap.to(lineRef.current, {
@@ -68,13 +106,13 @@ const GrandLineMap: React.FC = () => {
           end: 'bottom bottom',
           scrub: 1,
           onUpdate: (self) => {
-            const progress = self.progress;
-            setCurrentProgress(progress);
-            
+            const p = self.progress;
+            setCurrentProgress(p);
+
             // Switch ship at midpoint
-            if (progress > 0.45 && isMerry) {
+            if (p > 0.45 && isMerry) {
               setIsMerry(false);
-            } else if (progress <= 0.45 && !isMerry) {
+            } else if (p <= 0.45 && !isMerry) {
               setIsMerry(true);
             }
           },
@@ -103,7 +141,7 @@ const GrandLineMap: React.FC = () => {
     }, mapRef);
 
     return () => ctx.revert();
-  }, [isMerry]);
+  }, [progress, isMerry]);
 
   return (
     <motion.div

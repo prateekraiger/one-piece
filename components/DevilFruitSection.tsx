@@ -10,40 +10,43 @@ gsap.registerPlugin(ScrollTrigger);
 const FRUIT_TYPES = [
   {
     id: 'paramecia',
-    name: 'Paramecia',
-    kanji: '超人系',
+    name: 'Gomu Gomu no Mi',
+    kanji: 'ゴムゴムの実',
     desc: 'The power to alter one\'s body or environment. Infinite possibility. Chaos made manifest.',
     color: 'from-green-900/40 to-slate-900',
     border: 'group-hover:border-green-500/70',
     icon: Tornado,
     image: 'https://i.pinimg.com/originals/05/c8/95/05c8952bb0b11ce78b73b45b18f5d4df.gif',
+    gear5Image: '/images/gear5-paramecia.png',
     mainImage: 'https://i.pinimg.com/736x/a9/d2/4f/a9d24f4b3a3a7ca91f1f7e7e5c0c8e8e.jpg',
     glowColor: 'green',
     auraColor: 'rgba(34, 197, 94, 0.3)',
   },
   {
     id: 'zoan',
-    name: 'Zoan',
-    kanji: '動物系',
+    name: 'Hito Hito no Mi',
+    kanji: 'ヒトヒトの実',
     desc: 'The power of the beast. Evolution accelerated. The will of the animal resides within.',
     color: 'from-red-900/40 to-slate-900',
     border: 'group-hover:border-red-500/70',
     icon: Zap,
     image: 'https://i.pinimg.com/originals/e0/75/ba/e075ba13d38fe15bea4bf73aed06d0df.gif',
+    gear5Image: '/images/gear5-zoan.png',
     mainImage: 'https://i.pinimg.com/736x/0c/72/12/0c7212f3e5d5c5f5d5d5e5f5d5d5e5d5.jpg',
     glowColor: 'red',
     auraColor: 'rgba(239, 68, 68, 0.3)',
   },
   {
     id: 'logia',
-    name: 'Logia',
-    kanji: '自然系',
+    name: 'Mera Mera no Mi',
+    kanji: 'メラメラの実',
     desc: 'The power of nature itself. Fluidity and destruction. To become the element is to forsake mortality.',
     color: 'from-amber-900/40 to-slate-900',
     border: 'group-hover:border-amber-500/70',
     icon: Flame,
     image: 'https://i.pinimg.com/originals/f1/14/85/f11485eb5caba65ed67a88ddad0a51c1.gif',
-    mainImage: 'https://i.pinimg.com/originals/63/c7/45/63c745e3c3f5e5d5d5e5f5d5d5e5d5d5.gif',
+    gear5Image: '/images/gear5-logia.png',
+    mainImage: 'https://i.pinimg.com/originals/63/c7/45/63c745e3c3f5e5d5d5e5f5d5d5e5d5d5d5.gif',
     glowColor: 'amber',
     auraColor: 'rgba(251, 191, 36, 0.3)',
   }
@@ -74,9 +77,9 @@ const DevilFruitSection: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="devil-fruits" className="relative w-full py-16 px-6 bg-black overflow-hidden">
+    <section ref={sectionRef} id="devil-fruits" className={`relative w-full py-16 px-6 overflow-hidden ${isGear5 ? 'bg-white' : 'bg-black'}`}>
       {/* Atmosphere */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/10 via-black to-black opacity-50" />
+      <div className={`absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] opacity-50 ${isGear5 ? 'from-sky-100/50 via-white to-white' : 'from-purple-900/10 via-black to-black'}`} />
 
       {/* SVG Filters for Distortion Effect (Paramecia) */}
       <svg className="hidden">
@@ -127,10 +130,10 @@ const DevilFruitSection: React.FC = () => {
            </motion.h2>
            <h3 ref={titleRef} className={`text-4xl md:text-6xl font-serif font-bold mb-6 transition-all duration-700 ${
              isGear5
-               ? 'text-white cloudy-text'
+               ? 'text-sky-900 cloudy-text'
                : 'text-white'
            }`}>Devil Fruits</h3>
-           <p className="max-w-2xl mx-auto text-slate-500 font-light italic">
+           <p className={`max-w-2xl mx-auto font-light italic ${isGear5 ? 'text-slate-600' : 'text-slate-500'}`}>
              "They are the sea devil's incarnations. Those who eat them gain a power... but the sea hates them."
            </p>
         </div>
@@ -139,11 +142,10 @@ const DevilFruitSection: React.FC = () => {
           {FRUIT_TYPES.map((type, i) => (
             <motion.div
               key={type.id}
-              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.2, duration: 0.8 }}
-              className={`group relative h-[550px] border-2 border-white/5 bg-gradient-to-b ${type.color} p-8 overflow-hidden rounded-xl transition-all duration-700 ${type.border} hover:shadow-2xl`}
+              className={`group relative h-[550px] border-2 p-8 overflow-hidden rounded-xl transition-all duration-700 hover:shadow-2xl ${isGear5 ? 'bg-gradient-to-b from-slate-50 to-white border-sky-100 hover:border-sky-400' : `bg-gradient-to-b ${type.color} border-white/5 ${type.border}`}`}
               style={{
                 boxShadow: `0 0 0 0 ${type.auraColor}`
               }}
@@ -178,13 +180,15 @@ const DevilFruitSection: React.FC = () => {
               </div>
 
               {/* Devil Fruit Main Image Background */}
-              <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-all duration-700">
+              <div className={`absolute inset-0 transition-opacity duration-700 ${isGear5 ? 'opacity-100' : 'opacity-20 group-hover:opacity-30'}`}>
                 <img
-                  src={type.mainImage || type.image}
+                  src={isGear5 ? (type as any).gear5Image : (type.mainImage || type.image)}
                   alt={type.name}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-transform duration-700 ${isGear5 ? 'scale-90 object-contain' : 'scale-100'}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black" />
+                {!isGear5 && (
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black" />
+                )}
               </div>
 
               {/* Devil Fruit Icon */}
@@ -279,12 +283,14 @@ const DevilFruitSection: React.FC = () => {
                 ))}
               </div>
 
-              <div className="absolute top-4 left-4 text-8xl opacity-5 font-serif font-black select-none group-hover:opacity-10 transition-opacity">
+
+
+              <div className={`absolute top-4 left-4 text-8xl font-serif font-black select-none transition-opacity ${isGear5 ? 'text-slate-200/50 group-hover:text-slate-200' : 'opacity-5 group-hover:opacity-10'}`}>
                 {type.kanji}
               </div>
 
               <div className="h-full flex flex-col justify-end relative z-10">
-                <div className={`mb-6 opacity-50 group-hover:opacity-100 transition-all duration-500 ${
+                <div className={`mb-6 transition-all duration-500 ${isGear5 ? 'opacity-70 group-hover:opacity-100' : 'opacity-50 group-hover:opacity-100'} ${
                   type.id === 'paramecia' ? 'group-hover:translate-x-2 group-hover:-translate-y-2' : ''
                 } ${
                    type.id === 'zoan' ? 'group-hover:scale-125' : ''
@@ -295,21 +301,21 @@ const DevilFruitSection: React.FC = () => {
                   filter: type.id === 'logia' ? `drop-shadow(0 0 20px ${type.auraColor})` : 'none'
                 }}
                 >
-                   <type.icon size={48} className="text-white" strokeWidth={1.5} />
+                   <type.icon size={48} className={isGear5 ? `text-${type.glowColor}-500` : "text-white"} strokeWidth={1.5} />
                 </div>
-                <h4 className="text-3xl font-bold text-white mb-4 font-serif group-hover:text-shadow-lg transition-all"
+                <h4 className={`text-3xl font-bold mb-4 font-serif transition-all ${isGear5 ? 'text-sky-900 group-hover:text-sky-600' : 'text-white'}`}
                   style={{
                     textShadow: `0 0 20px ${type.auraColor}`
                   }}
                 >
                   {type.name}
                 </h4>
-                <div className="h-[2px] w-12 bg-white/20 mb-4 group-hover:w-full transition-all duration-700"
+                <div className={`h-[2px] w-12 mb-4 group-hover:w-full transition-all duration-700 ${isGear5 ? 'bg-sky-500/20' : 'bg-white/20'}`}
                   style={{
                     boxShadow: `0 0 10px ${type.auraColor}`
                   }}
                 />
-                <p className="text-slate-400 leading-relaxed text-sm group-hover:text-slate-100 transition-colors">
+                <p className={`leading-relaxed text-sm transition-colors ${isGear5 ? 'text-slate-600 group-hover:text-slate-800' : 'text-slate-400 group-hover:text-slate-100'}`}>
                   {type.desc}
                 </p>
               </div>
@@ -328,17 +334,17 @@ const DevilFruitSection: React.FC = () => {
           transition={{ duration: 1.5 }}
           className="mt-32 max-w-2xl mx-auto text-center px-6"
         >
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-amber-900/50 to-transparent mb-8" />
-          <p className="font-serif text-slate-400 text-lg md:text-xl leading-relaxed tracking-wide italic">
+          <div className={`h-px w-full bg-gradient-to-r from-transparent to-transparent mb-8 ${isGear5 ? 'via-sky-900/20' : 'via-amber-900/50'}`} />
+          <p className={`font-serif text-lg md:text-xl leading-relaxed tracking-wide italic ${isGear5 ? 'text-slate-600' : 'text-slate-400'}`}>
             "To consume the fruit is to make a covenant with demons.
             You will gain power enough to tear down the heavens, but know this:
             <br/><br/>
-            <span className="text-slate-200 not-italic font-bold">Freedom is the price.</span>
+            <span className={`not-italic font-bold ${isGear5 ? 'text-sky-700' : 'text-slate-200'}`}>Freedom is the price.</span>
             <br/>
             The sea—mother of all life—will reject you forever.
             You will sink like a hammer into the abyss, powerful, yet helpless."
           </p>
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-amber-900/50 to-transparent mt-8" />
+          <div className={`h-px w-full bg-gradient-to-r from-transparent to-transparent mt-8 ${isGear5 ? 'via-sky-900/20' : 'via-amber-900/50'}`} />
         </motion.div>
       </div>
     </section>
