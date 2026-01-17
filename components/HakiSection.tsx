@@ -136,8 +136,8 @@ const HakiSection: React.FC = () => {
                 onHoverEnd={() => setHoveredHaki(null)}
                 whileHover={{ scale: 1.02 }}
                 className={`relative cursor-pointer overflow-hidden rounded-2xl border-2 transition-all duration-500 ease-out ${
-                  isActive ? `flex-[3] ${isGear5 ? 'border-sky-400 shadow-[0_0_60px_rgba(56,189,248,0.6)] scale-[1.01]' : 'border-white/30'}` : `flex-[1] ${isGear5 ? 'border-sky-100 hover:border-sky-300 hover:shadow-[0_0_40px_rgba(56,189,248,0.5)]' : 'hover:border-white/20 border-white/5'}`
-                } ${isGear5 ? 'bg-slate-900' : haki.visualColor}`}
+                  isActive ? `flex-[3] ${isGear5 ? 'border-sky-400 shadow-[0_0_60px_rgba(56,189,248,0.5)] scale-[1.01]' : 'border-white/30'}` : `flex-[1] ${isGear5 ? 'border-sky-100 hover:border-sky-300 hover:shadow-[0_0_40px_rgba(56,189,248,0.4)]' : 'hover:border-white/20 border-white/5'}`
+                } ${isGear5 ? 'bg-white' : haki.visualColor}`}
                 style={{
                   boxShadow: isHovered || isActive ? `0 0 80px ${haki.glowColor}, inset 0 0 40px ${haki.auraColor}` : 'none'
                 }}
@@ -351,7 +351,7 @@ const HakiSection: React.FC = () => {
 
                   <motion.h4
                     layout="position"
-                    className={`font-serif text-2xl font-bold mb-1 transition-all duration-300 ${isActive ? 'text-4xl' : ''} ${isGear5 ? 'text-sky-300' : 'text-white'}`}
+                    className={`font-serif text-2xl font-bold mb-1 transition-all duration-300 ${isActive ? 'text-4xl' : ''} ${isGear5 ? 'text-sky-600' : 'text-white'}`}
                     style={
                       (isActive || isHovered) ? {
                         textShadow: `0 0 30px ${haki.glowColor}, 0 0 60px ${haki.glowColor}`,
@@ -380,17 +380,17 @@ const HakiSection: React.FC = () => {
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden"
                       >
-                        <p className={`leading-relaxed max-w-lg relative mb-6 font-medium ${isGear5 ? 'text-sky-200' : 'text-slate-300'}`}>
+                        <p className={`leading-relaxed max-w-lg relative mb-6 font-medium ${isGear5 ? 'text-slate-600' : 'text-slate-300'}`}>
                           {haki.desc}
                         </p>
 
                         {/* Visual Interaction Area */}
-                        <div className={`mt-8 h-32 w-full rounded-lg border-2 flex items-center justify-center relative overflow-hidden group/demo ${isGear5 ? 'border-sky-200 bg-white/50' : 'border-white/10 bg-black/50'}`}
+                        <div className={`mt-8 h-32 w-full rounded-lg border-2 flex items-center justify-center relative overflow-hidden group/demo ${isGear5 ? 'border-sky-200 bg-sky-50/50' : 'border-white/10 bg-black/50'}`}
                           style={{
                             boxShadow: `inset 0 0 30px ${haki.auraColor}`
                           }}
                         >
-                           <span className={`text-xs uppercase z-10 relative font-bold tracking-wider ${isGear5 ? 'text-sky-600' : 'text-slate-600'}`}>
+                           <span className={`text-xs uppercase z-10 relative font-bold tracking-wider ${isGear5 ? 'text-sky-700' : 'text-slate-600'}`}>
                              {haki.id === 'armament' ? 'Hardening Active' : haki.id === 'observation' ? 'Future Sight Active' : 'Conqueror\'s Haki Released'}
                            </span>
 

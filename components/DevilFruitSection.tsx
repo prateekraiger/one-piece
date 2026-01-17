@@ -59,8 +59,8 @@ const DevilFruitSection: React.FC = () => {
     >
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className={`absolute top-0 left-1/4 w-[50vw] h-[50vw] rounded-full blur-[120px] opacity-20 ${isGear5 ? 'bg-sky-300' : 'bg-purple-900'}`} />
-        <div className={`absolute bottom-0 right-1/4 w-[40vw] h-[40vw] rounded-full blur-[100px] opacity-20 ${isGear5 ? 'bg-amber-200' : 'bg-blue-900'}`} />
+        <div className={`absolute top-0 left-1/4 w-[50vw] h-[50vw] rounded-full blur-[120px] opacity-20 ${isGear5 ? 'bg-sky-200' : 'bg-purple-900'}`} />
+        <div className={`absolute bottom-0 right-1/4 w-[40vw] h-[40vw] rounded-full blur-[100px] opacity-20 ${isGear5 ? 'bg-sky-100' : 'bg-blue-900'}`} />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -69,7 +69,7 @@ const DevilFruitSection: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className={`text-5xl md:text-7xl font-serif font-black mb-6 tracking-tight ${isGear5 ? 'text-sky-900 cloudy-text' : 'text-white'}`}
+            className={`text-5xl md:text-7xl font-serif font-black mb-6 tracking-tight ${isGear5 ? 'cloudy-text' : 'text-white'}`}
           >
             DEVIL FRUITS
           </motion.h2>
@@ -94,7 +94,7 @@ const DevilFruitSection: React.FC = () => {
                 {/* Card Container */}
                 <motion.div
                   layout
-                  className={`absolute inset-0 transition-all duration-500 rounded-3xl overflow-hidden border flex flex-col ${isGear5 ? 'bg-white border-sky-100 group-hover:border-sky-300 group-hover:shadow-2xl group-hover:shadow-sky-200/50' : 'bg-zinc-900 border-white/10 group-hover:border-white/20 group-hover:shadow-2xl group-hover:shadow-purple-900/20'}`}
+                  className={`absolute inset-0 transition-all duration-500 rounded-3xl overflow-hidden border flex flex-col ${isGear5 ? 'bg-white border-sky-100 group-hover:border-sky-400 group-hover:shadow-2xl group-hover:shadow-sky-200/50' : 'bg-zinc-900 border-white/10 group-hover:border-white/20 group-hover:shadow-2xl group-hover:shadow-purple-900/20'}`}
                 >
 
                   {/* Image Container - Takes huge space when not selected, shrinks when selected */}
@@ -129,14 +129,14 @@ const DevilFruitSection: React.FC = () => {
                   >
                     <motion.div layout>
                       <motion.div layout className="flex items-center justify-between mb-2">
-                        <span className={`text-xs font-bold tracking-[0.2em] uppercase ${isGear5 ? 'text-sky-500' : 'text-slate-500'}`}>
+                        <span className={`text-xs font-bold tracking-[0.2em] uppercase ${isGear5 ? 'text-sky-600' : 'text-slate-500'}`}>
                           {fruit.id} Type
                         </span>
                         {isSelected && (
                           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                             <fruit.icon
                               size={24}
-                              color={isGear5 && fruit.id === 'zoan' ? '#0ea5e9' : fruit.accent}
+                              color={isGear5 && fruit.id === 'zoan' ? '#38BDF8' : fruit.accent}
                               className="opacity-80"
                             />
                           </motion.div>
@@ -156,7 +156,7 @@ const DevilFruitSection: React.FC = () => {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.2 }}
                         >
-                          <div className={`h-px w-12 mb-4 ${isGear5 ? 'bg-sky-200' : 'bg-white/10'}`} />
+                          <div className={`h-px w-12 mb-4 ${isGear5 ? 'bg-sky-300' : 'bg-white/10'}`} />
                           <p className={`text-sm leading-relaxed ${isGear5 ? 'text-slate-600' : 'text-slate-300'}`}>
                             {fruit.desc}
                           </p>

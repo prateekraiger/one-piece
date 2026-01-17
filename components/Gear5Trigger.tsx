@@ -35,7 +35,7 @@ const Gear5Trigger: React.FC = () => {
         onClick={toggleGear5}
         className={`fixed bottom-8 left-8 z-[100] p-4 rounded-full border-4 transition-all duration-700 overflow-visible backdrop-blur-sm ${
           isGear5
-            ? 'bg-gradient-to-br from-white via-purple-50 to-white border-purple-400 text-purple-600 shadow-[0_0_60px_rgba(168,85,247,0.9),0_0_120px_rgba(168,85,247,0.5),inset_0_0_20px_rgba(168,85,247,0.3)]'
+            ? 'bg-gradient-to-br from-white via-sky-50 to-white border-sky-400 text-sky-600 shadow-[0_0_60px_rgba(56,189,248,0.8),0_0_120px_rgba(56,189,248,0.4),inset_0_0_20px_rgba(56,189,248,0.2)]'
             : 'bg-gradient-to-br from-slate-900 via-black to-slate-900 border-amber-600/40 text-amber-500 hover:border-amber-500 hover:text-amber-400 shadow-[0_0_30px_rgba(0,0,0,0.8),inset_0_0_20px_rgba(245,158,11,0.1)]'
         }`}
         whileHover={{ scale: 1.15, rotate: isGear5 ? 0 : 15 }}
@@ -62,13 +62,13 @@ const Gear5Trigger: React.FC = () => {
           <NikaIcon />
         </motion.div>
 
-        {/* Multiple Ripple Effects for Awakening */}
+        {/* Multiple Ripple Effects for Awakening - Sky Blue Theme */}
         <AnimatePresence>
           {isGear5 && (
             <>
               <motion.div
                 key="ripple-1"
-                className="absolute inset-0 rounded-full border-[6px] border-purple-500"
+                className="absolute inset-0 rounded-full border-[6px] border-sky-400"
                 initial={{ scale: 1, opacity: 1 }}
                 animate={{ scale: [1, 2.5], opacity: [0.8, 0] }}
                 exit={{ opacity: 0 }}
@@ -76,7 +76,7 @@ const Gear5Trigger: React.FC = () => {
               />
               <motion.div
                 key="ripple-2"
-                className="absolute inset-0 rounded-full border-[6px] border-pink-400"
+                className="absolute inset-0 rounded-full border-[6px] border-sky-300"
                 initial={{ scale: 1, opacity: 1 }}
                 animate={{ scale: [1, 2.5], opacity: [0.6, 0] }}
                 exit={{ opacity: 0 }}
@@ -84,7 +84,7 @@ const Gear5Trigger: React.FC = () => {
               />
               <motion.div
                 key="ripple-3"
-                className="absolute inset-0 rounded-full border-[4px] border-yellow-300"
+                className="absolute inset-0 rounded-full border-[4px] border-sky-500"
                 initial={{ scale: 1, opacity: 1 }}
                 animate={{ scale: [1, 3], opacity: [0.4, 0] }}
                 exit={{ opacity: 0 }}
@@ -94,10 +94,10 @@ const Gear5Trigger: React.FC = () => {
           )}
         </AnimatePresence>
 
-        {/* Glow Effect */}
+        {/* Glow Effect - Sky Blue Theme */}
         <div className={`absolute inset-0 rounded-full blur-xl transition-all duration-700 ${
-          isGear5 
-            ? 'bg-purple-500 opacity-50 animate-pulse' 
+          isGear5
+            ? 'bg-sky-400 opacity-50 animate-pulse'
             : 'bg-amber-600 opacity-0 group-hover:opacity-30'
         }`} style={{ zIndex: -1 }} />
       </motion.button>
