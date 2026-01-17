@@ -16,6 +16,8 @@ import DevilFruitsPage from './pages/DevilFruitsPage';
 import HakiPage from './pages/HakiPage';
 import WantedPage from './pages/WantedPage';
 
+import { AnimatedThemeToggler } from './components/ui/animated-theme-toggler';
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -36,7 +38,7 @@ const Navbar = () => {
        </Link>
 
        {/* Desktop Nav */}
-       <div className="hidden md:flex gap-6 lg:gap-8 text-white text-xs font-bold uppercase tracking-[0.2em]">
+       <div className="hidden md:flex gap-6 lg:gap-8 text-white text-xs font-bold uppercase tracking-[0.2em] absolute left-1/2 -translate-x-1/2">
          {navLinks.map((link) => (
            <Link
              key={link.name}
@@ -48,14 +50,19 @@ const Navbar = () => {
          ))}
        </div>
 
-       {/* Mobile Menu Toggle */}
-       <button
-         onClick={() => setIsOpen(!isOpen)}
-         className="md:hidden text-white z-50 hover:text-cyan-400 transition-colors p-2"
-         aria-label="Toggle menu"
-       >
-         {isOpen ? <X size={24} /> : <Menu size={24} />}
-       </button>
+       {/* Right Side Actions */}
+       <div className="flex items-center gap-4 z-50">
+         <AnimatedThemeToggler />
+
+         {/* Mobile Menu Toggle */}
+         <button
+           onClick={() => setIsOpen(!isOpen)}
+           className="md:hidden text-white hover:text-cyan-400 transition-colors p-2"
+           aria-label="Toggle menu"
+         >
+           {isOpen ? <X size={24} /> : <Menu size={24} />}
+         </button>
+       </div>
 
        {/* Mobile Nav Overlay */}
        <AnimatePresence>
