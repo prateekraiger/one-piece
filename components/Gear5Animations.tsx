@@ -42,7 +42,7 @@ const Gear5Animations: React.FC = () => {
              />
           </motion.div>
 
-          {/* Bottom Right: Gear 5 Action */}
+          {/* Bottom Right: Dancing Luffy (Inverted) */}
           <motion.div
             initial={{ opacity: 0, scale: 0, y: 100, rotate: 20 }}
             animate={{
@@ -61,15 +61,15 @@ const Gear5Animations: React.FC = () => {
             className="fixed bottom-0 right-0 z-50 pointer-events-none w-48 md:w-64 lg:w-80 mix-blend-multiply"
           >
              <motion.img
-              src="/gifs/gear-5.gif"
-              alt="Gear 5 Action"
-              className="w-full h-auto drop-shadow-2xl"
+              src="/gifs/luffy-dance.gif"
+              alt="Luffy Dancing Inverted"
+              className="w-full h-auto drop-shadow-2xl scale-x-[-1]"
               animate={{
-                y: [0, -15, 0],
-                rotate: [0, 5, -5, 0]
+                y: [0, -20, 0],
+                rotate: [0, 5, -5, 0] // Adjusted rotation for symmetry if needed, or keep same
               }}
               transition={{
-                duration: 2.5,
+                duration: 2,
                 repeat: Infinity,
                 ease: "easeInOut",
                 delay: 0.5
