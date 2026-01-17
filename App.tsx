@@ -102,6 +102,8 @@ const Navbar = () => {
   );
 };
 
+import Gear5Animations from './components/Gear5Animations';
+
 const App: React.FC = () => {
   return (
     <Router>
@@ -111,6 +113,7 @@ const App: React.FC = () => {
             <NoiseOverlay />
             <SeaDust />
             <Gear5Trigger />
+            <Gear5Animations />
             <Navbar />
 
             <div className="pt-0">
