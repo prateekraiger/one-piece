@@ -217,7 +217,9 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
           body.gear5-active h2,
           body.gear5-active h3,
           body.gear5-active h4 {
-            color: #0c4a6e !important; /* Sky 900 */
+            color: #00FFFF !important; /* Requested Cyan */
+            text-shadow: 2px 2px 0px rgba(14, 165, 233, 0.2);
+            -webkit-text-stroke: 1px #0ea5e9; /* Stroke to make it readable on white */
           }
 
           body.gear5-active .text-slate-400,
@@ -322,14 +324,13 @@ export const Gear5Provider: React.FC<{ children: React.ReactNode }> = ({ childre
           /* Ensure text is clearly visible on white */
           body.gear5-active #haki .text-xl,
           body.gear5-active #devil-fruits .text-xl {
-             color: #0c4a6e !important;
-             font-weight: 700;
+             color: #15f4ee !important; /* Requested Electric Blue */
+             font-weight: 800;
+             text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+             -webkit-text-stroke: 0.5px #0369a1; /* Darker stroke for readability */
           }
 
-          body.gear5-active #haki .absolute.inset-0 {
-             /* Remove dark image overlays in Haki */
-             background: linear-gradient(to top, rgba(255,255,255,0.9), transparent) !important;
-          }
+
 
           /* Cards inner text */
           body.gear5-active #devil-fruits p,
