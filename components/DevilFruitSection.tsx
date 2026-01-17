@@ -1,351 +1,183 @@
 import React, { useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Tornado, Flame, Zap } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGear5 } from './Gear5Context';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const FRUIT_TYPES = [
   {
     id: 'paramecia',
     name: 'Gomu Gomu no Mi',
     kanji: 'ゴムゴムの実',
-    desc: 'The power to alter one\'s body or environment. Infinite possibility. Chaos made manifest.',
-    color: 'from-green-900/40 to-slate-900',
-    border: 'group-hover:border-green-500/70',
+    desc: 'The power of infinite elasticity. A body that can stretch, expand, and bounce back from anything. The most ridiculous power in the world.',
     icon: Tornado,
-    image: 'https://i.pinimg.com/originals/05/c8/95/05c8952bb0b11ce78b73b45b18f5d4df.gif',
-    gear5Image: '/images/gear5-paramecia.png',
-    mainImage: 'https://i.pinimg.com/736x/a9/d2/4f/a9d24f4b3a3a7ca91f1f7e7e5c0c8e8e.jpg',
-    glowColor: 'green',
-    auraColor: 'rgba(34, 197, 94, 0.3)',
+    image: '/images/paramecia-fruit.png',
+    color: 'from-purple-600 to-indigo-900',
+    accent: '#a855f7' // Purple 500
   },
   {
     id: 'zoan',
-    name: 'Hito Hito no Mi',
+    name: 'Hito Hito no Mi, Model: Nika',
     kanji: 'ヒトヒトの実',
-    desc: 'The power of the beast. Evolution accelerated. The will of the animal resides within.',
-    color: 'from-red-900/40 to-slate-900',
-    border: 'group-hover:border-red-500/70',
+    desc: 'The Warrior of Liberation. It grants the user a rubber body and brings a smile to the hearts of the people. The power appears only when the drums beat.',
     icon: Zap,
-    image: 'https://i.pinimg.com/originals/e0/75/ba/e075ba13d38fe15bea4bf73aed06d0df.gif',
-    gear5Image: '/images/gear5-zoan.png',
-    mainImage: 'https://i.pinimg.com/736x/0c/72/12/0c7212f3e5d5c5f5d5d5e5f5d5d5e5d5.jpg',
-    glowColor: 'red',
-    auraColor: 'rgba(239, 68, 68, 0.3)',
+    image: '/images/zoan-fruit.png',
+    color: 'from-slate-200 to-slate-500',
+    accent: '#ffffff' // White
   },
   {
     id: 'logia',
     name: 'Mera Mera no Mi',
     kanji: 'メラメラの実',
-    desc: 'The power of nature itself. Fluidity and destruction. To become the element is to forsake mortality.',
-    color: 'from-amber-900/40 to-slate-900',
-    border: 'group-hover:border-amber-500/70',
+    desc: 'The power of fire. Intangible destruction. To become the element itself is to transcend the physical realm.',
     icon: Flame,
-    image: 'https://i.pinimg.com/originals/f1/14/85/f11485eb5caba65ed67a88ddad0a51c1.gif',
-    gear5Image: '/images/gear5-logia.png',
-    mainImage: 'https://i.pinimg.com/originals/63/c7/45/63c745e3c3f5e5d5d5e5f5d5d5e5d5d5d5.gif',
-    glowColor: 'amber',
-    auraColor: 'rgba(251, 191, 36, 0.3)',
+    image: '/images/logia-fruit.png',
+    color: 'from-orange-500 to-red-800',
+    accent: '#f97316' // Orange 500
   }
 ];
 
 const DevilFruitSection: React.FC = () => {
   const { isGear5 } = useGear5();
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [selectedFruit, setSelectedFruit] = React.useState<string | null>(null);
 
-  useEffect(() => {
-    if (titleRef.current) {
-      gsap.fromTo(
-        titleRef.current,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: 'top 80%',
-            end: 'top 50%',
-            scrub: 1,
-          },
-        }
-      );
-    }
-  }, []);
+  // Parallax setup
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [150, -150]);
 
   return (
-    <section ref={sectionRef} id="devil-fruits" className={`relative w-full py-16 px-6 overflow-hidden ${isGear5 ? 'bg-white' : 'bg-black'}`}>
-      {/* Atmosphere */}
-      <div className={`absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] opacity-50 ${isGear5 ? 'from-sky-100/50 via-white to-white' : 'from-purple-900/10 via-black to-black'}`} />
+    <section
+      ref={containerRef}
+      id="devil-fruits"
+      className={`relative py-32 overflow-hidden transition-colors duration-1000 ${isGear5 ? 'bg-white' : 'bg-[#050505]'}`}
+    >
+      {/* Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className={`absolute top-0 left-1/4 w-[50vw] h-[50vw] rounded-full blur-[120px] opacity-20 ${isGear5 ? 'bg-sky-300' : 'bg-purple-900'}`} />
+        <div className={`absolute bottom-0 right-1/4 w-[40vw] h-[40vw] rounded-full blur-[100px] opacity-20 ${isGear5 ? 'bg-amber-200' : 'bg-blue-900'}`} />
+      </div>
 
-      {/* SVG Filters for Distortion Effect (Paramecia) */}
-      <svg className="hidden">
-        <defs>
-          <filter id="fruit-turbulence">
-            <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise">
-              <animate attributeName="baseFrequency" values="0.02;0.04;0.02" dur="4s" repeatCount="indefinite" />
-            </feTurbulence>
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" />
-          </filter>
-
-          {/* Glow filters for each type */}
-          <filter id="glow-green" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-
-          <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-
-          <filter id="glow-amber" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-      </svg>
-
-      <div className="container mx-auto relative z-10">
-        <div className="mb-20 text-center">
-           <motion.h2
-             initial={{ opacity: 0, letterSpacing: '0.1em' }}
-             whileInView={{ opacity: 1, letterSpacing: '0.2em' }}
-             transition={{ duration: 1 }}
-             className="text-amber-700/80 font-serif text-sm uppercase tracking-widest mb-4"
-           >
-             Forbidden Archives
-           </motion.h2>
-           <h3 ref={titleRef} className={`text-4xl md:text-6xl font-serif font-bold mb-6 transition-all duration-700 ${
-             isGear5
-               ? 'text-sky-900 cloudy-text'
-               : 'text-white'
-           }`}>Devil Fruits</h3>
-           <p className={`max-w-2xl mx-auto font-light italic ${isGear5 ? 'text-slate-600' : 'text-slate-500'}`}>
-             "They are the sea devil's incarnations. Those who eat them gain a power... but the sea hates them."
-           </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {FRUIT_TYPES.map((type, i) => (
-            <motion.div
-              key={type.id}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.2, duration: 0.8 }}
-              className={`group relative h-[550px] border-2 p-8 overflow-hidden rounded-xl transition-all duration-700 hover:shadow-2xl ${isGear5 ? 'bg-gradient-to-b from-slate-50 to-white border-sky-100 hover:border-sky-400' : `bg-gradient-to-b ${type.color} border-white/5 ${type.border}`}`}
-              style={{
-                boxShadow: `0 0 0 0 ${type.auraColor}`
-              }}
-              whileHover={{
-                boxShadow: `0 0 60px 10px ${type.auraColor}, 0 0 120px 20px ${type.auraColor}`,
-                scale: 1.02,
-                y: -5
-              }}
-            >
-              {/* Animated Aura Rings */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-                {[...Array(3)].map((_, idx) => (
-                  <motion.div
-                    key={idx}
-                    className={`absolute inset-0 rounded-xl border-2`}
-                    style={{
-                      borderColor: type.auraColor,
-                      filter: 'blur(4px)'
-                    }}
-                    animate={{
-                      scale: [1, 1.15, 1],
-                      opacity: [0.5, 0, 0.5],
-                    }}
-                    transition={{
-                      duration: 2.5,
-                      repeat: Infinity,
-                      delay: idx * 0.8,
-                      ease: "easeInOut"
-                    }}
-                  />
-                ))}
-              </div>
-
-              {/* Devil Fruit Main Image Background */}
-              <div className={`absolute inset-0 transition-opacity duration-700 ${isGear5 ? 'opacity-100' : 'opacity-20 group-hover:opacity-30'}`}>
-                <img
-                  src={isGear5 ? (type as any).gear5Image : (type.mainImage || type.image)}
-                  alt={type.name}
-                  className={`w-full h-full object-cover transition-transform duration-700 ${isGear5 ? 'scale-90 object-contain' : 'scale-100'}`}
-                />
-                {!isGear5 && (
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black" />
-                )}
-              </div>
-
-              {/* Devil Fruit Icon */}
-              <div className="absolute top-8 right-8 w-32 h-32 overflow-hidden rounded-full opacity-40 group-hover:opacity-90 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12"
-                style={{ filter: `url(#glow-${type.glowColor})` }}
-              >
-                <img
-                  src={type.image}
-                  alt={type.name}
-                  className="w-full h-full object-cover"
-                />
-                <div className={`absolute inset-0 bg-gradient-radial from-transparent to-${type.glowColor}-900/50`} />
-              </div>
-
-              {/* --- TYPE SPECIFIC VISUALS --- */}
-              <div className="absolute inset-0 z-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-
-                {/* Paramecia: Spatial Distortion */}
-                {type.id === 'paramecia' && (
-                   <div
-                     className="absolute inset-0 bg-green-500/10 mix-blend-overlay"
-                     style={{ filter: 'url(#fruit-turbulence)' }}
-                   />
-                )}
-
-                {/* Zoan: Breathing Silhouette */}
-                {type.id === 'zoan' && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.div
-                      className="w-64 h-64 rounded-full bg-red-500/20 blur-3xl"
-                      animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.7, 0.3] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                  </div>
-                )}
-
-                {/* Logia: Elemental Particles */}
-                {type.id === 'logia' && (
-                  <div className="absolute inset-0 overflow-hidden">
-                    {[...Array(8)].map((_, j) => (
-                       <motion.div
-                         key={j}
-                         className="absolute w-2 h-2 bg-amber-400 rounded-full"
-                         style={{
-                           left: `${Math.random() * 100}%`,
-                           bottom: '-10px',
-                           filter: 'blur(2px)',
-                           boxShadow: '0 0 10px rgba(251, 191, 36, 0.8)'
-                         }}
-                         animate={{
-                           y: [0, -550],
-                           opacity: [0, 1, 1, 0],
-                           scale: [0.5, 1.5, 2, 0]
-                         }}
-                         transition={{
-                           duration: 3 + Math.random() * 3,
-                           repeat: Infinity,
-                           delay: Math.random() * 2,
-                           ease: "easeOut"
-                         }}
-                       />
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Floating Energy Orbs */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none overflow-hidden">
-                {[...Array(5)].map((_, idx) => (
-                  <motion.div
-                    key={`orb-${idx}`}
-                    className="absolute w-1 h-1 rounded-full"
-                    style={{
-                      backgroundColor: type.auraColor,
-                      boxShadow: `0 0 10px 2px ${type.auraColor}`,
-                      left: `${20 + idx * 15}%`,
-                      top: `${30 + (idx % 3) * 20}%`
-                    }}
-                    animate={{
-                      y: [-20, 20, -20],
-                      x: [-10, 10, -10],
-                      scale: [1, 1.5, 1],
-                      opacity: [0.3, 1, 0.3]
-                    }}
-                    transition={{
-                      duration: 3 + idx * 0.5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: idx * 0.3
-                    }}
-                  />
-                ))}
-              </div>
-
-
-
-              <div className={`absolute top-4 left-4 text-8xl font-serif font-black select-none transition-opacity ${isGear5 ? 'text-slate-200/50 group-hover:text-slate-200' : 'opacity-5 group-hover:opacity-10'}`}>
-                {type.kanji}
-              </div>
-
-              <div className="h-full flex flex-col justify-end relative z-10">
-                <div className={`mb-6 transition-all duration-500 ${isGear5 ? 'opacity-70 group-hover:opacity-100' : 'opacity-50 group-hover:opacity-100'} ${
-                  type.id === 'paramecia' ? 'group-hover:translate-x-2 group-hover:-translate-y-2' : ''
-                } ${
-                   type.id === 'zoan' ? 'group-hover:scale-125' : ''
-                } ${
-                   type.id === 'logia' ? 'group-hover:animate-pulse' : ''
-                }`}
-                style={{
-                  filter: type.id === 'logia' ? `drop-shadow(0 0 20px ${type.auraColor})` : 'none'
-                }}
-                >
-                   <type.icon size={48} className={isGear5 ? `text-${type.glowColor}-500` : "text-white"} strokeWidth={1.5} />
-                </div>
-                <h4 className={`text-3xl font-bold mb-4 font-serif transition-all ${isGear5 ? 'text-sky-900 group-hover:text-sky-600' : 'text-white'}`}
-                  style={{
-                    textShadow: `0 0 20px ${type.auraColor}`
-                  }}
-                >
-                  {type.name}
-                </h4>
-                <div className={`h-[2px] w-12 mb-4 group-hover:w-full transition-all duration-700 ${isGear5 ? 'bg-sky-500/20' : 'bg-white/20'}`}
-                  style={{
-                    boxShadow: `0 0 10px ${type.auraColor}`
-                  }}
-                />
-                <p className={`leading-relaxed text-sm transition-colors ${isGear5 ? 'text-slate-600 group-hover:text-slate-800' : 'text-slate-400 group-hover:text-slate-100'}`}>
-                  {type.desc}
-                </p>
-              </div>
-
-              {/* Hover Glow Overlay */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
-            </motion.div>
-          ))}
-        </div>
-
-        {/* --- MANDATORY CONCLUSION --- */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ margin: "-50px" }}
-          transition={{ duration: 1.5 }}
-          className="mt-32 max-w-2xl mx-auto text-center px-6"
-        >
-          <div className={`h-px w-full bg-gradient-to-r from-transparent to-transparent mb-8 ${isGear5 ? 'via-sky-900/20' : 'via-amber-900/50'}`} />
-          <p className={`font-serif text-lg md:text-xl leading-relaxed tracking-wide italic ${isGear5 ? 'text-slate-600' : 'text-slate-400'}`}>
-            "To consume the fruit is to make a covenant with demons.
-            You will gain power enough to tear down the heavens, but know this:
-            <br/><br/>
-            <span className={`not-italic font-bold ${isGear5 ? 'text-sky-700' : 'text-slate-200'}`}>Freedom is the price.</span>
-            <br/>
-            The sea—mother of all life—will reject you forever.
-            You will sink like a hammer into the abyss, powerful, yet helpless."
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="text-center mb-24">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className={`text-5xl md:text-7xl font-serif font-black mb-6 tracking-tight ${isGear5 ? 'text-sky-900 cloudy-text' : 'text-white'}`}
+          >
+            DEVIL FRUITS
+          </motion.h2>
+          <p className={`text-lg max-w-2xl mx-auto font-light leading-relaxed ${isGear5 ? 'text-slate-600' : 'text-slate-400'}`}>
+            Treasure of the Sea. One bite grants god-like power in exchange for the ability to swim.
           </p>
-          <div className={`h-px w-full bg-gradient-to-r from-transparent to-transparent mt-8 ${isGear5 ? 'via-sky-900/20' : 'via-amber-900/50'}`} />
-        </motion.div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          {FRUIT_TYPES.map((fruit, i) => {
+            const y = i === 0 ? y1 : i === 1 ? y2 : y3;
+            const isSelected = selectedFruit === fruit.id;
+
+            return (
+              <motion.div
+                key={fruit.id}
+                style={{ y }}
+                layout
+                onClick={() => setSelectedFruit(isSelected ? null : fruit.id)}
+                className={`group relative h-[600px] rounded-3xl overflow-hidden cursor-pointer transition-all duration-500`}
+              >
+                {/* Card Container */}
+                <motion.div
+                  layout
+                  className={`absolute inset-0 transition-all duration-500 rounded-3xl overflow-hidden border flex flex-col ${isGear5 ? 'bg-white border-sky-100 group-hover:border-sky-300 group-hover:shadow-2xl group-hover:shadow-sky-200/50' : 'bg-zinc-900 border-white/10 group-hover:border-white/20 group-hover:shadow-2xl group-hover:shadow-purple-900/20'}`}
+                >
+
+                  {/* Image Container - Takes huge space when not selected, shrinks when selected */}
+                  <motion.div
+                    layout
+                    className={`relative w-full overflow-hidden transition-all duration-500 ${isSelected ? 'h-[40%]' : 'h-[75%]'}`}
+                  >
+                    <motion.img
+                      layoutId={`image-${fruit.id}`}
+                      src={fruit.image}
+                      alt={fruit.name}
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.7, ease: "easeOut" }}
+                      className="w-full h-full object-cover"
+                    />
+
+                    {/* Subtle Overlay gradient */}
+                    <div className={`absolute inset-0 bg-gradient-to-t ${isGear5 ? 'from-white via-transparent to-transparent' : 'from-zinc-900 via-transparent to-transparent'}`} />
+
+                    {/* Floating Icon Overlay on Image when NOT selected */}
+                    {!isSelected && (
+                      <div className="absolute top-6 right-6 p-3 rounded-full backdrop-blur-md bg-white/10 border border-white/20">
+                         <fruit.icon size={24} color={isGear5 ? '#0ea5e9' : fruit.accent} />
+                      </div>
+                    )}
+                  </motion.div>
+
+                  {/* Content Container */}
+                  <motion.div
+                    layout
+                    className={`relative p-8 flex flex-col ${isSelected ? 'h-[60%] justify-start' : 'h-[25%] justify-center'}`}
+                  >
+                    <motion.div layout>
+                      <motion.div layout className="flex items-center justify-between mb-2">
+                        <span className={`text-xs font-bold tracking-[0.2em] uppercase ${isGear5 ? 'text-sky-500' : 'text-slate-500'}`}>
+                          {fruit.id} Type
+                        </span>
+                        {isSelected && (
+                          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                            <fruit.icon
+                              size={24}
+                              color={isGear5 && fruit.id === 'zoan' ? '#0ea5e9' : fruit.accent}
+                              className="opacity-80"
+                            />
+                          </motion.div>
+                        )}
+                      </motion.div>
+
+                      <motion.h3 layout className={`text-3xl font-serif font-bold mb-1 ${isGear5 ? 'text-slate-800' : 'text-white'}`}>
+                        {fruit.name}
+                      </motion.h3>
+                      <motion.p layout className={`text-sm font-serif mb-4 opacity-60 ${isGear5 ? 'text-slate-500' : 'text-slate-400'}`}>
+                        {fruit.kanji}
+                      </motion.p>
+
+                      {isSelected && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.2 }}
+                        >
+                          <div className={`h-px w-12 mb-4 ${isGear5 ? 'bg-sky-200' : 'bg-white/10'}`} />
+                          <p className={`text-sm leading-relaxed ${isGear5 ? 'text-slate-600' : 'text-slate-300'}`}>
+                            {fruit.desc}
+                          </p>
+                          <p className="mt-4 text-xs italic opacity-50">
+                            Click to collapse
+                          </p>
+                        </motion.div>
+                      )}
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Hover indicator bar (only when not selected) */}
+                  {!isSelected && (
+                    <div className={`absolute bottom-0 left-0 h-1 w-0 group-hover:w-full transition-all duration-500 ${isGear5 ? 'bg-sky-400' : 'bg-white/20'}`} />
+                  )}
+
+                </motion.div>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

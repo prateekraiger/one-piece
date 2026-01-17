@@ -51,7 +51,7 @@ export const ARCS: Arc[] = [
     title: 'Egghead Island',
     jpTitle: 'エッグヘッド',
     description: 'The Island of the Future. Dr. Vegapunk, the Seraphim, and a shocking revelation about the Void Century.',
-    image: 'https://i.pinimg.com/736x/21/5c/55/215c5520775c742c388b13916960f845.jpg',
+    image: '/arcs/egghead.png',
     color: 'from-cyan-400 to-indigo-900',
     quote: "This world... as it is now... will sink into the sea!",
   }
