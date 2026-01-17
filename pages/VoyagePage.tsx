@@ -1,6 +1,6 @@
 import React from 'react';
-import ArcTimeline from '../../components/ArcTimeline';
-import GrandLineMap from '../../components/GrandLineMap';
+import ArcTimeline from '../components/ArcTimeline';
+import GrandLineMap from '../components/GrandLineMap';
 
 const VoyagePage: React.FC = () => {
     // GrandLineMap was previously in ArcTimeline or handled along with it.

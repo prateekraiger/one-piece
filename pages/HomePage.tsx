@@ -1,10 +1,10 @@
 import React from 'react';
-import Hero from '../../components/Hero';
-import LuffyShowcase from '../../components/LuffyShowcase';
-import ArcTimeline from '../../components/ArcTimeline';
-import DevilFruitSection from '../../components/DevilFruitSection';
-import HakiSection from '../../components/HakiSection';
-import CharacterGrid from '../../components/CharacterGrid';
+import Hero from '../components/Hero';
+import LuffyShowcase from '../components/LuffyShowcase';
+import ArcTimeline from '../components/ArcTimeline';
+import DevilFruitSection from '../components/DevilFruitSection';
+import HakiSection from '../components/HakiSection';
+import CharacterGrid from '../components/CharacterGrid';
 
 
 const HomePage: React.FC = () => {

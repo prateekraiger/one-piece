@@ -10,11 +10,11 @@ import Gear5Trigger from './components/Gear5Trigger';
 import { Menu, X } from 'lucide-react';
 
 // Pages
-import HomePage from './src/pages/HomePage';
-import VoyagePage from './src/pages/VoyagePage';
-import DevilFruitsPage from './src/pages/DevilFruitsPage';
-import HakiPage from './src/pages/HakiPage';
-import WantedPage from './src/pages/WantedPage';
+import HomePage from './pages/HomePage';
+import VoyagePage from './pages/VoyagePage';
+import DevilFruitsPage from './pages/DevilFruitsPage';
+import HakiPage from './pages/HakiPage';
+import WantedPage from './pages/WantedPage';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,8 +49,8 @@ const Navbar = () => {
        </div>
 
        {/* Mobile Menu Toggle */}
-       <button 
-         onClick={() => setIsOpen(!isOpen)} 
+       <button
+         onClick={() => setIsOpen(!isOpen)}
          className="md:hidden text-white z-50 hover:text-cyan-400 transition-colors p-2"
          aria-label="Toggle menu"
        >
@@ -66,9 +66,9 @@ const Navbar = () => {
              exit={{ opacity: 0, y: -20 }}
              className="absolute top-0 left-0 w-full h-screen bg-black/98 backdrop-blur-xl flex flex-col items-center justify-center gap-8 text-xl font-serif font-bold uppercase tracking-widest md:hidden z-40"
            >
-             <Link 
-               to="/" 
-               onClick={() => setIsOpen(false)} 
+             <Link
+               to="/"
+               onClick={() => setIsOpen(false)}
                className={`text-white hover:text-cyan-400 transition-colors ${location.pathname === '/' ? 'text-cyan-400' : ''}`}
              >
                Home
@@ -83,7 +83,7 @@ const Navbar = () => {
                  {link.name}
                </Link>
              ))}
-             
+
              {/* Mobile Menu Decoration */}
              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2">
                {[...Array(3)].map((_, i) => (

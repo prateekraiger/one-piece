@@ -1,5 +1,5 @@
 import React from 'react';
-import HakiSection from '../../components/HakiSection';
+import HakiSection from '../components/HakiSection';
 
 const HakiPage: React.FC = () => {
   return (

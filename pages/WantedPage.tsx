@@ -1,5 +1,5 @@
 import React from 'react';
-import CharacterGrid from '../../components/CharacterGrid';
+import CharacterGrid from '../components/CharacterGrid';
 
 const WantedPage: React.FC = () => {
   return (

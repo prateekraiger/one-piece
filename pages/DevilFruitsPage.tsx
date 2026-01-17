@@ -1,5 +1,5 @@
 import React from 'react';
-import DevilFruitSection from '../../components/DevilFruitSection';
+import DevilFruitSection from '../components/DevilFruitSection';
 
 const DevilFruitsPage: React.FC = () => {
   return (
