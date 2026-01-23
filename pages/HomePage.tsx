@@ -5,6 +5,7 @@ import ArcTimeline from '../components/ArcTimeline';
 import DevilFruitSection from '../components/DevilFruitSection';
 import HakiSection from '../components/HakiSection';
 import CharacterGrid from '../components/CharacterGrid';
+import HilulukQuote from '../components/HilulukQuote';
 
 
 const HomePage: React.FC = () => {
@@ -12,6 +13,8 @@ const HomePage: React.FC = () => {
     <>
       <Hero />
       <LuffyShowcase />
+
+      <HilulukQuote />
 
       <section id="voyage" className="relative min-h-screen">
         <ArcTimeline />
