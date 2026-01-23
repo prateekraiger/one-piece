@@ -40,18 +40,18 @@ const Navbar = () => {
   }, [isOpen]);
 
   // Stagger animation for menu items
-  const menuVariants = {
+  const menuVariants: Variants = {
     closed: {
       clipPath: "circle(0% at 100% 0%)",
-      transition: { duration: 0.5, ease: "circIn", staggerDirection: -1 }
+      transition: { duration: 0.5, ease: "easeInOut", staggerDirection: -1 }
     },
     open: {
       clipPath: "circle(150% at 100% 0%)",
-      transition: { duration: 0.5, ease: "circOut", staggerChildren: 0.1, delayChildren: 0.2 }
+      transition: { duration: 0.5, ease: "easeInOut", staggerChildren: 0.1, delayChildren: 0.2 }
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     closed: { opacity: 0, y: 50 },
     open: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
   };
